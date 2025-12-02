@@ -139,11 +139,11 @@ export function SimpleDesignForm() {
       <div 
         className="fixed inset-0 z-0"
         style={{
-          backgroundImage: `url('/manhattan-skyline-bw.svg')`,
+          backgroundImage: `url('/manhattan-skyline-photo.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          filter: 'brightness(1.5) contrast(0.8) opacity(0.4) sepia(20%) saturate(0.8)',
+          filter: 'brightness(0.7) contrast(1.2) opacity(0.6) grayscale(100%)',
         }}
       />
       
