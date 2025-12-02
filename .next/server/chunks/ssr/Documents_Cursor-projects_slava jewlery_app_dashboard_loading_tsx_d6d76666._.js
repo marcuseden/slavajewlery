@@ -1,3 +1,0 @@
-module.exports=[77849,a=>{"use strict";var b=a.i(73520);function c(){return(0,b.jsx)("div",{className:"min-h-screen bg-slate-950 flex items-center justify-center",children:(0,b.jsx)("div",{className:"animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400"})})}a.s(["default",()=>c])}];
-
-//# sourceMappingURL=Documents_Cursor-projects_slava%20jewlery_app_dashboard_loading_tsx_d6d76666._.js.map

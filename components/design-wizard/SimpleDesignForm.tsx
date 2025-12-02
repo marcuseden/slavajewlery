@@ -237,11 +237,11 @@ export function SimpleDesignForm() {
         }}
       />
       
-      {/* Black overlay with 20% opacity */}
+      {/* Black overlay for readability */}
       <div 
         className="fixed inset-0 z-1 pointer-events-none bg-black"
         style={{
-          opacity: 0.2
+          opacity: 0.35
         }}
       />
 
