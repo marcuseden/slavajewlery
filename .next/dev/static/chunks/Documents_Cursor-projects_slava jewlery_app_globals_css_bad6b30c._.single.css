@@ -685,6 +685,10 @@
     margin-inline: auto;
   }
 
+  .mt-0 {
+    margin-top: calc(var(--spacing) * 0);
+  }
+
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
   }

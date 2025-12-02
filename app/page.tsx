@@ -91,7 +91,7 @@ export default function HomePage() {
         <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24 pt-24">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
+            <div className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
               {/* Trust Badge */}
               <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-black/10 border border-gray-600/20 rounded-full text-gray-300 text-sm">
                 <CheckCircle className="w-4 h-4" />
@@ -100,14 +100,14 @@ export default function HomePage() {
           </div>
           
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-100 leading-tight">
-                Design Your Dream Jewelry with{" "}
+                Design Your Dream Jewelry{" "}
                 <span className="bg-gradient-to-r from-gray-300 via-white to-gray-200 bg-clip-text text-transparent">
-                  AI Magic
+                  Instantly
                 </span>
           </h1>
           
               <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl lg:max-w-none mx-auto lg:mx-0">
-                Simply describe your vision in words. Our AI instantly creates photorealistic designs 
+                Simply describe your vision in words. We instantly create photorealistic designs 
                 and detailed specifications. Master jewelers in NYC handcraft your unique piece 
                 and deliver it in just{" "}
                 <span className="font-semibold text-gray-300">5 business days</span>.
@@ -134,8 +134,8 @@ export default function HomePage() {
                     <Sparkles className="w-5 h-5 text-gray-300" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-200">AI-Powered</p>
-                    <p className="text-sm text-slate-400">Instant designs</p>
+                    <p className="font-medium text-slate-200">Instant Design</p>
+                    <p className="text-sm text-slate-400">In 30 seconds</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-center sm:justify-start space-x-3">
@@ -160,7 +160,7 @@ export default function HomePage() {
             </div>
 
             {/* Hero Images */}
-            <div className="relative mt-8 lg:mt-0">
+            <div className="relative mt-0 lg:mt-0 order-1 lg:order-2">
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {exampleDesigns.slice(0, 4).map((design, index) => (
                   <Link 
@@ -347,7 +347,7 @@ export default function HomePage() {
               </h3>
               <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
                 Describe any jewelry piece you can imagine - from vintage Victorian rings to modern minimalist necklaces. 
-                Our AI understands style, materials, and celebrity inspiration.
+                We understand style, materials, and celebrity inspiration.
               </p>
               <Link href="/design">
                 <Button className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-bold px-8 py-4 text-lg">
@@ -364,10 +364,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-4">
-              Real AI-Generated Designs
+              Real Custom Designs
             </h2>
             <p className="text-xl text-stone-400 max-w-3xl mx-auto">
-              These stunning pieces were created from simple text descriptions using our AI. 
+              These stunning pieces were created from simple text descriptions. 
               Each design is unique and ready to become reality in just 5 days.
               </p>
             </div>
@@ -391,9 +391,6 @@ export default function HomePage() {
                       <Sparkles className="w-12 h-12 text-stone-500" />
                     </div>
                   )}
-                  <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                    AI Generated
-                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
                     <div className="text-gray-300 font-medium text-sm bg-black/50 backdrop-blur-sm px-3 py-2 rounded-full">
                       Click to edit prompt →
@@ -473,7 +470,7 @@ export default function HomePage() {
             Ready to Create Your Dream Piece?
           </h2>
           <p className="text-xl text-stone-400 mb-8 max-w-2xl mx-auto">
-            Join thousands of customers who've brought their jewelry visions to life with AI. 
+            Join thousands of customers who've brought their jewelry visions to life. 
             Your perfect piece is just one description away.
           </p>
           <div className="space-y-4">
@@ -485,7 +482,7 @@ export default function HomePage() {
             </Link>
           </Button>
             <p className="text-stone-500 text-sm">
-              Free AI design generation • No commitment until you love it • 5-day delivery guaranteed
+              Free design generation • No commitment until you love it • 5-day delivery guaranteed
             </p>
           </div>
         </div>
@@ -498,7 +495,7 @@ export default function HomePage() {
             <div>
               <h3 className="font-bold text-xl mb-4 text-stone-100">Make It</h3>
               <p className="text-stone-400 mb-4">
-                AI-powered custom jewelry, handcrafted in NYC. Where technology meets artistry.
+                Custom jewelry, handcrafted in NYC. Where technology meets artistry.
               </p>
               <div className="flex space-x-2">
                 {[1,2,3,4,5].map(i => (
@@ -510,7 +507,7 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4 text-stone-200">Product</h4>
               <ul className="space-y-2 text-stone-400">
-                <li><Link href="/design" className="hover:text-stone-300 transition-colors">AI Design Tool</Link></li>
+                <li><Link href="/design" className="hover:text-stone-300 transition-colors">Design Tool</Link></li>
                 <li><Link href="#examples" className="hover:text-stone-300 transition-colors">Design Examples</Link></li>
                 <li><Link href="#guarantee" className="hover:text-stone-300 transition-colors">Guarantees</Link></li>
               </ul>
@@ -535,7 +532,7 @@ export default function HomePage() {
           </div>
           <div className="pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-stone-500 text-sm mb-4 md:mb-0">
-              © 2024 Make It Jewelry Studio. Handcrafted with AI and love in NYC.
+              © 2024 Make It Jewelry Studio. Handcrafted with love in NYC.
             </p>
             <div className="flex items-center space-x-4 text-stone-400 text-sm">
               <span>🇺🇸 Made in NYC</span>

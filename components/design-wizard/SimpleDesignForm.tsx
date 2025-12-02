@@ -353,9 +353,6 @@ export function SimpleDesignForm() {
                   alt={currentExample.title}
                   className="w-full h-full object-contain"
                 />
-                <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                  AI Generated
-                </div>
               </div>
             </div>
           </div>
@@ -641,7 +638,7 @@ export function SimpleDesignForm() {
               
               <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
                 <p className="text-stone-300 mb-4">
-                  Here are AI-powered tips to improve your jewelry description:
+                  Here are expert tips to improve your jewelry description:
                 </p>
                 
                 <div className="space-y-3">

@@ -1,2 +1,94 @@
 [00:00:01.076] Server  LOG      ✓ Ready in 824ms
 [00:00:16.628] Server  LOG      ○ Compiling / ...
+[00:04:39.969] Server  ERROR    ⨯ ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+
+[00:04:40.222] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:04:40.821] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:04:40.821] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:04:41.049] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:04:41.226] Browser ERROR   uncaughtError: Error: ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+
+[00:04:41.460] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:04:41.460] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:04:58.896] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/checkout/page.tsx:455:1
+Parsing ecmascript source code failed
+  453 |     </AuthProvider>
+  454 |   );
+> 455 | }
+      | ^
+  456 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:06:38.542] Server  LOG      ✓ Compiled in 209ms
+[00:08:36.269] Server  LOG      ✓ Compiled in 108ms
+[00:08:46.284] Server  LOG      ✓ Compiled in 67ms
+[00:09:10.652] Server  LOG      ✓ Compiled in 46ms
+[00:09:20.498] Server  LOG      ✓ Compiled in 28ms
+[00:10:15.620] Server  LOG      ✓ Compiled in 67ms
+[00:10:33.553] Server  LOG      ✓ Compiled in 88ms
