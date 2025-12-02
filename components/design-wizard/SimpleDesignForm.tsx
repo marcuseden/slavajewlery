@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
+import { Star, HelpCircle, X } from 'lucide-react';
 
 // Simplified tag clouds - only Type, Style, and Material
 const JEWELRY_TYPES = [
@@ -65,6 +66,7 @@ export function SimpleDesignForm() {
   const [error, setError] = useState('');
   const [showTips, setShowTips] = useState(true);
   const [currentExample, setCurrentExample] = useState<typeof EXAMPLE_PROMPTS[0] | null>(null);
+  const [showPromptTips, setShowPromptTips] = useState(false);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
@@ -136,6 +138,67 @@ export function SimpleDesignForm() {
     const newVision = currentText + separator + text;
     setVision(newVision);
   };
+
+  // Evaluate prompt quality on a 1-5 scale
+  const getPromptQuality = (text: string): number => {
+    const length = text.trim().length;
+    if (length < 20) return 0;
+    if (length < 50) return 1;
+    if (length < 100) return 2;
+    
+    let score = 2;
+    
+    // Check for specific jewelry elements
+    const jewelryTypes = ['ring', 'necklace', 'bracelet', 'earring', 'pendant', 'brooch', 'chain', 'anklet'];
+    const materials = ['gold', 'silver', 'platinum', 'diamond', 'pearl', 'ruby', 'emerald', 'sapphire', 'titanium', 'steel'];
+    const styles = ['vintage', 'modern', 'art deco', 'classic', 'minimalist', 'bohemian', 'punk', 'romantic', 'gothic', 'elegant'];
+    const descriptors = ['brilliant', 'sparkling', 'polished', 'matte', 'textured', 'smooth', 'carved', 'engraved'];
+    
+    if (jewelryTypes.some(type => text.toLowerCase().includes(type))) score += 0.5;
+    if (materials.some(material => text.toLowerCase().includes(material))) score += 0.5;
+    if (styles.some(style => text.toLowerCase().includes(style))) score += 0.5;
+    if (descriptors.some(desc => text.toLowerCase().includes(desc))) score += 0.5;
+    
+    // Check for inspiration sources
+    if (text.toLowerCase().includes('inspired by')) score += 0.5;
+    
+    return Math.min(5, Math.round(score));
+  };
+
+  const getQualityMessage = (quality: number): string => {
+    switch (quality) {
+      case 0: return 'Too short - Add more details';
+      case 1: return 'Basic prompt - Needs improvement';
+      case 2: return 'Good start - Add specifics';
+      case 3: return 'Detailed prompt - Well done!';
+      case 4: return 'Excellent prompt - Very detailed!';
+      case 5: return 'Perfect prompt - AI ready!';
+      default: return 'Keep typing...';
+    }
+  };
+
+  const getPromptTips = (quality: number): string[] => {
+    const allTips = [
+      '💍 Specify jewelry type (ring, necklace, bracelet, earrings)',
+      '✨ Include materials (gold, silver, platinum, diamonds)',
+      '🎨 Add style inspiration (vintage, modern, art deco, minimalist)',
+      '👑 Mention celebrity or era inspiration (Grace Kelly, 1920s, etc.)',
+      '🔹 Describe gemstones (diamonds, pearls, sapphires, emeralds)',
+      '🎯 Include finish details (polished, matte, brushed, textured)',
+      '📏 Specify size or scale (delicate, chunky, statement piece)',
+      '🎪 Add setting style (prong, bezel, pave, channel)',
+      '🌟 Include emotional tone (elegant, edgy, romantic, bold)',
+      '🏛️ Reference architectural elements (geometric, curved, angular)'
+    ];
+    
+    if (quality < 3) {
+      return allTips.slice(0, 6); // Show first 6 tips for lower quality
+    } else {
+      return allTips.slice(6); // Show advanced tips for higher quality
+    }
+  };
+
+  const promptQuality = getPromptQuality(vision);
 
   return (
     <div className="min-h-screen relative bg-slate-950">
@@ -272,12 +335,12 @@ export function SimpleDesignForm() {
             <h3 className="text-lg font-semibold text-stone-100 mb-4 text-center">
               {currentExample.title}
             </h3>
-            <div className="max-w-md mx-auto">
-              <div className="aspect-square relative rounded-lg overflow-hidden border border-stone-600">
+            <div className="max-w-4xl mx-auto">
+              <div className="aspect-video relative rounded-lg overflow-hidden border border-stone-600 bg-stone-800">
                 <img
                   src={currentExample.image}
                   alt={currentExample.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
                 <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
                   AI Generated
@@ -342,10 +405,26 @@ export function SimpleDesignForm() {
                 <span className={`text-sm ${vision.length >= 20 ? 'text-stone-400' : 'text-stone-500'}`}>
                   {vision.length}/20 characters minimum
                 </span>
-                {vision.length >= 100 && (
-                  <span className="text-sm text-stone-400">
-                    Great detail! 👍
-                  </span>
+                {vision.length >= 20 && (
+                  <button
+                    onClick={() => setShowPromptTips(true)}
+                    className="flex items-center gap-2 text-sm text-stone-300 hover:text-stone-200 transition-colors group"
+                  >
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`w-3 h-3 ${
+                            star <= promptQuality
+                              ? 'fill-yellow-400 text-yellow-400'
+                              : 'fill-stone-600 text-stone-600'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span>{getQualityMessage(promptQuality)}</span>
+                    <HelpCircle className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
                 )}
               </div>
             </div>

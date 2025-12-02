@@ -28,7 +28,7 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -54,7 +54,7 @@ export function Header() {
               {user ? (
                 <div className="flex items-center space-x-3">
                   <Link href="/dashboard">
-                    <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-slate-800">
+                    <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-gray-800">
                       <User className="w-4 h-4 mr-2" />
                       Dashboard
                     </Button>
@@ -63,7 +63,7 @@ export function Header() {
                     onClick={handleSignOut}
                     variant="ghost"
                     size="sm"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800"
+                    className="text-slate-300 hover:text-white hover:bg-gray-800"
                   >
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign Out
@@ -80,7 +80,7 @@ export function Header() {
                     onClick={() => setIsAuthModalOpen(true)}
                     variant="ghost"
                     size="sm"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800"
+                    className="text-slate-300 hover:text-white hover:bg-gray-800"
                   >
                     Sign In
                   </Button>
@@ -96,7 +96,7 @@ export function Header() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-gray-800 transition-colors"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -115,7 +115,7 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                    className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
                   >
                     {item.label}
                   </a>
@@ -126,7 +126,7 @@ export function Header() {
                 {user ? (
                   <>
                     <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800">
+                      <Button variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-gray-800">
                         <User className="w-4 h-4 mr-2" />
                         Dashboard
                       </Button>
@@ -137,7 +137,7 @@ export function Header() {
                         setIsMobileMenuOpen(false);
                       }}
                       variant="ghost"
-                      className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800"
+                      className="w-full justify-start text-slate-300 hover:text-white hover:bg-gray-800"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out
@@ -156,7 +156,7 @@ export function Header() {
                         setIsMobileMenuOpen(false);
                       }}
                       variant="ghost"
-                      className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800"
+                      className="w-full justify-start text-slate-300 hover:text-white hover:bg-gray-800"
                     >
                       Sign In
                     </Button>
