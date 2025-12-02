@@ -1108,6 +1108,265 @@ function Header() {
     }, void 0, true);
 }
 }),
+"[project]/Documents/Cursor-projects/slava jewlery/lib/jewelry-pricing.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// Jewelry pricing calculator with real-time spot prices
+__turbopack_context__.s([
+    "calculateJewelryPrice",
+    ()=>calculateJewelryPrice,
+    "getSpotPrices",
+    ()=>getSpotPrices,
+    "parseJewelrySpecs",
+    ()=>parseJewelrySpecs
+]);
+async function getSpotPrices() {
+    try {
+        // In production, replace with real API call
+        // const response = await fetch('https://metals-api.com/api/latest?access_key=YOUR_KEY&base=USD&symbols=XAU,XAG,XPT');
+        // Mock spot prices (USD per troy ounce) - replace with real API
+        return {
+            gold: 2040,
+            silver: 24.50,
+            platinum: 950,
+            lastUpdated: new Date()
+        };
+    } catch (error) {
+        console.error('Error fetching spot prices:', error);
+        // Fallback prices
+        return {
+            gold: 2000,
+            silver: 25,
+            platinum: 950,
+            lastUpdated: new Date()
+        };
+    }
+}
+// Convert troy ounce to grams (1 troy ounce = 31.1035 grams)
+const TROY_OUNCE_TO_GRAMS = 31.1035;
+// Estimate material weight based on jewelry type and size
+function estimateMaterialWeight(specs) {
+    const baseWeights = {
+        ring: {
+            small: 2.5,
+            medium: 4.0,
+            large: 6.5
+        },
+        necklace: {
+            small: 8.0,
+            medium: 15.0,
+            large: 25.0
+        },
+        bracelet: {
+            small: 6.0,
+            medium: 12.0,
+            large: 20.0
+        },
+        earrings: {
+            small: 2.0,
+            medium: 4.0,
+            large: 8.0
+        },
+        pendant: {
+            small: 3.0,
+            medium: 6.0,
+            large: 12.0
+        },
+        brooch: {
+            small: 4.0,
+            medium: 8.0,
+            large: 15.0
+        }
+    };
+    let baseWeight = baseWeights[specs.type][specs.size];
+    // Adjust for complexity
+    const complexityMultiplier = {
+        simple: 1.0,
+        moderate: 1.3,
+        complex: 1.6,
+        intricate: 2.0
+    };
+    return baseWeight * complexityMultiplier[specs.complexity];
+}
+// Estimate labor hours based on jewelry type and complexity
+function estimateLaborHours(specs) {
+    const baseLaborHours = {
+        ring: {
+            simple: 3,
+            moderate: 6,
+            complex: 12,
+            intricate: 20
+        },
+        necklace: {
+            simple: 4,
+            moderate: 8,
+            complex: 16,
+            intricate: 30
+        },
+        bracelet: {
+            simple: 3,
+            moderate: 6,
+            complex: 12,
+            intricate: 25
+        },
+        earrings: {
+            simple: 2,
+            moderate: 4,
+            complex: 8,
+            intricate: 15
+        },
+        pendant: {
+            simple: 2,
+            moderate: 4,
+            complex: 8,
+            intricate: 15
+        },
+        brooch: {
+            simple: 3,
+            moderate: 6,
+            complex: 12,
+            intricate: 20
+        }
+    };
+    let baseHours = baseLaborHours[specs.type][specs.complexity];
+    // Adjust for size
+    const sizeMultiplier = {
+        small: 0.8,
+        medium: 1.0,
+        large: 1.4
+    };
+    return baseHours * sizeMultiplier[specs.size];
+}
+// Calculate gemstone cost
+function calculateGemstoneCost(specs) {
+    if (!specs.hasGemstones || !specs.gemstoneCarat || !specs.gemstoneType) {
+        return 0;
+    }
+    // Approximate price per carat (USD) - in production, use gemstone price APIs
+    const pricePerCarat = {
+        diamond: 5000,
+        ruby: 1500,
+        emerald: 2000,
+        sapphire: 1200,
+        pearl: 300
+    };
+    return specs.gemstoneCarat * pricePerCarat[specs.gemstoneType];
+}
+async function calculateJewelryPrice(specs) {
+    const spotPrices = await getSpotPrices();
+    // Calculate material cost
+    const materialWeight = estimateMaterialWeight(specs);
+    let materialPricePerGram;
+    if (specs.material === 'gold' || specs.material === 'white-gold' || specs.material === 'rose-gold') {
+        const karat = specs.karat || 14;
+        const goldPurity = karat / 24; // 14k = 58.3% gold, 18k = 75% gold
+        materialPricePerGram = spotPrices.gold / TROY_OUNCE_TO_GRAMS * goldPurity;
+    } else if (specs.material === 'platinum') {
+        materialPricePerGram = spotPrices.platinum / TROY_OUNCE_TO_GRAMS;
+    } else if (specs.material === 'silver') {
+        materialPricePerGram = spotPrices.silver / TROY_OUNCE_TO_GRAMS;
+    } else {
+        materialPricePerGram = spotPrices.silver / TROY_OUNCE_TO_GRAMS; // fallback
+    }
+    const materialCost = materialWeight * materialPricePerGram;
+    // Calculate labor cost
+    const laborHours = estimateLaborHours(specs);
+    const laborRate = 85; // USD per hour for skilled jeweler
+    const laborCost = laborHours * laborRate;
+    // Calculate gemstone cost
+    const gemstoneCost = calculateGemstoneCost(specs);
+    // Calculate subtotal and apply 60% margin
+    const subtotal = materialCost + laborCost + gemstoneCost;
+    const margin = subtotal * 0.60; // 60% margin
+    const finalPrice = subtotal + margin;
+    return {
+        materialCost: Math.round(materialCost),
+        laborCost: Math.round(laborCost),
+        gemstoneCost: Math.round(gemstoneCost),
+        subtotal: Math.round(subtotal),
+        margin: Math.round(margin),
+        finalPrice: Math.round(finalPrice),
+        breakdown: {
+            materialWeight: Math.round(materialWeight * 100) / 100,
+            materialPricePerGram: Math.round(materialPricePerGram * 100) / 100,
+            laborHours: Math.round(laborHours * 100) / 100,
+            laborRate
+        }
+    };
+}
+function parseJewelrySpecs(prompt) {
+    const lowerPrompt = prompt.toLowerCase();
+    // Determine jewelry type
+    let type = 'ring'; // default
+    if (lowerPrompt.includes('necklace')) type = 'necklace';
+    else if (lowerPrompt.includes('bracelet')) type = 'bracelet';
+    else if (lowerPrompt.includes('earring')) type = 'earrings';
+    else if (lowerPrompt.includes('pendant')) type = 'pendant';
+    else if (lowerPrompt.includes('brooch')) type = 'brooch';
+    // Determine material
+    let material = 'gold'; // default
+    let karat = 14; // default
+    if (lowerPrompt.includes('platinum')) {
+        material = 'platinum';
+    } else if (lowerPrompt.includes('silver') || lowerPrompt.includes('sterling')) {
+        material = 'silver';
+    } else if (lowerPrompt.includes('white gold')) {
+        material = 'white-gold';
+    } else if (lowerPrompt.includes('rose gold') || lowerPrompt.includes('pink gold')) {
+        material = 'rose-gold';
+    }
+    // Extract karat if mentioned
+    if (lowerPrompt.includes('18k') || lowerPrompt.includes('18 karat')) karat = 18;
+    else if (lowerPrompt.includes('14k') || lowerPrompt.includes('14 karat')) karat = 14;
+    else if (lowerPrompt.includes('10k') || lowerPrompt.includes('10 karat')) karat = 10;
+    // Determine if it has gemstones
+    const hasGemstones = lowerPrompt.includes('diamond') || lowerPrompt.includes('ruby') || lowerPrompt.includes('emerald') || lowerPrompt.includes('sapphire') || lowerPrompt.includes('pearl') || lowerPrompt.includes('stone') || lowerPrompt.includes('gem');
+    // Determine gemstone type and size
+    let gemstoneType;
+    let gemstoneCarat = 0;
+    if (hasGemstones) {
+        if (lowerPrompt.includes('diamond')) gemstoneType = 'diamond';
+        else if (lowerPrompt.includes('ruby')) gemstoneType = 'ruby';
+        else if (lowerPrompt.includes('emerald')) gemstoneType = 'emerald';
+        else if (lowerPrompt.includes('sapphire')) gemstoneType = 'sapphire';
+        else if (lowerPrompt.includes('pearl')) gemstoneType = 'pearl';
+        // Estimate carat size based on keywords
+        if (lowerPrompt.includes('large') || lowerPrompt.includes('statement')) {
+            gemstoneCarat = type === 'ring' ? 2.0 : 1.5;
+        } else if (lowerPrompt.includes('small') || lowerPrompt.includes('delicate')) {
+            gemstoneCarat = 0.5;
+        } else {
+            gemstoneCarat = 1.0; // default
+        }
+    }
+    // Determine complexity
+    let complexity = 'moderate'; // default
+    if (lowerPrompt.includes('simple') || lowerPrompt.includes('minimalist') || lowerPrompt.includes('clean')) {
+        complexity = 'simple';
+    } else if (lowerPrompt.includes('intricate') || lowerPrompt.includes('ornate') || lowerPrompt.includes('detailed')) {
+        complexity = 'intricate';
+    } else if (lowerPrompt.includes('complex') || lowerPrompt.includes('elaborate')) {
+        complexity = 'complex';
+    }
+    // Determine size
+    let size = 'medium'; // default
+    if (lowerPrompt.includes('delicate') || lowerPrompt.includes('small') || lowerPrompt.includes('petite')) {
+        size = 'small';
+    } else if (lowerPrompt.includes('large') || lowerPrompt.includes('statement') || lowerPrompt.includes('chunky')) {
+        size = 'large';
+    }
+    return {
+        type,
+        material,
+        karat: material.includes('gold') ? karat : undefined,
+        hasGemstones,
+        gemstoneCarat: hasGemstones ? gemstoneCarat : undefined,
+        gemstoneType,
+        complexity,
+        size
+    };
+}
+}),
 "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -1122,7 +1381,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$proje
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$Header$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Cursor-projects/slava jewlery/components/Header.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/Documents/Cursor-projects/slava jewlery/node_modules/lucide-react/dist/esm/icons/star.js [app-ssr] (ecmascript) <export default as Star>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$question$2d$mark$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HelpCircle$3e$__ = __turbopack_context__.i("[project]/Documents/Cursor-projects/slava jewlery/node_modules/lucide-react/dist/esm/icons/circle-question-mark.js [app-ssr] (ecmascript) <export default as HelpCircle>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/Documents/Cursor-projects/slava jewlery/node_modules/lucide-react/dist/esm/icons/x.js [app-ssr] (ecmascript) <export default as X>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calculator$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Calculator$3e$__ = __turbopack_context__.i("[project]/Documents/Cursor-projects/slava jewlery/node_modules/lucide-react/dist/esm/icons/calculator.js [app-ssr] (ecmascript) <export default as Calculator>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$lib$2f$jewelry$2d$pricing$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Documents/Cursor-projects/slava jewlery/lib/jewelry-pricing.ts [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -1379,12 +1642,31 @@ function SimpleDesignForm() {
         }
     };
     const promptQuality = getPromptQuality(vision);
+    // Calculate pricing when prompt changes and has sufficient quality
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (vision.length >= 50 && promptQuality >= 2) {
+            setIsCalculatingPrice(true);
+            const specs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$lib$2f$jewelry$2d$pricing$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["parseJewelrySpecs"])(vision);
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$lib$2f$jewelry$2d$pricing$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["calculateJewelryPrice"])(specs).then((pricing)=>{
+                setPricingBreakdown(pricing);
+                setIsCalculatingPrice(false);
+            }).catch((error)=>{
+                console.error('Pricing calculation error:', error);
+                setIsCalculatingPrice(false);
+            });
+        } else {
+            setPricingBreakdown(null);
+        }
+    }, [
+        vision,
+        promptQuality
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen relative bg-slate-950",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$Header$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Header"], {}, void 0, false, {
                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                lineNumber: 208,
+                lineNumber: 227,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1398,7 +1680,7 @@ function SimpleDesignForm() {
                 }
             }, void 0, false, {
                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                lineNumber: 211,
+                lineNumber: 230,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1408,7 +1690,7 @@ function SimpleDesignForm() {
                 }
             }, void 0, false, {
                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                lineNumber: 223,
+                lineNumber: 242,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1420,7 +1702,7 @@ function SimpleDesignForm() {
                 }
             }, void 0, false, {
                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                lineNumber: 231,
+                lineNumber: 250,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1434,7 +1716,7 @@ function SimpleDesignForm() {
                                 children: "Design Your Dream Jewelry"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 243,
+                                lineNumber: 262,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1442,13 +1724,13 @@ function SimpleDesignForm() {
                                 children: "Describe your vision and watch AI bring it to life with photorealistic images"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 246,
+                                lineNumber: 265,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 242,
+                        lineNumber: 261,
                         columnNumber: 9
                     }, this),
                     showTips && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1462,7 +1744,7 @@ function SimpleDesignForm() {
                                         children: "Quick Tags"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 255,
+                                        lineNumber: 274,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1471,13 +1753,13 @@ function SimpleDesignForm() {
                                         children: "Hide ×"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 258,
+                                        lineNumber: 277,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 254,
+                                lineNumber: 273,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1490,7 +1772,7 @@ function SimpleDesignForm() {
                                                 children: "Type"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 269,
+                                                lineNumber: 288,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1501,18 +1783,18 @@ function SimpleDesignForm() {
                                                         children: type
                                                     }, type, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 274,
+                                                        lineNumber: 293,
                                                         columnNumber: 21
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 272,
+                                                lineNumber: 291,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 268,
+                                        lineNumber: 287,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1522,7 +1804,7 @@ function SimpleDesignForm() {
                                                 children: "Style"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 287,
+                                                lineNumber: 306,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1533,18 +1815,18 @@ function SimpleDesignForm() {
                                                         children: style
                                                     }, style, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 292,
+                                                        lineNumber: 311,
                                                         columnNumber: 21
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 290,
+                                                lineNumber: 309,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 286,
+                                        lineNumber: 305,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1554,7 +1836,7 @@ function SimpleDesignForm() {
                                                 children: "Material"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 305,
+                                                lineNumber: 324,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1565,30 +1847,30 @@ function SimpleDesignForm() {
                                                         children: material
                                                     }, material, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 310,
+                                                        lineNumber: 329,
                                                         columnNumber: 21
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 308,
+                                                lineNumber: 327,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 304,
+                                        lineNumber: 323,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 266,
+                                lineNumber: 285,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 253,
+                        lineNumber: 272,
                         columnNumber: 11
                     }, this),
                     !showTips && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1599,12 +1881,12 @@ function SimpleDesignForm() {
                             children: "Show design helpers and inspiration"
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                            lineNumber: 326,
+                            lineNumber: 345,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 325,
+                        lineNumber: 344,
                         columnNumber: 11
                     }, this),
                     currentExample && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1615,7 +1897,7 @@ function SimpleDesignForm() {
                                 children: currentExample.title
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 338,
+                                lineNumber: 357,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1629,7 +1911,7 @@ function SimpleDesignForm() {
                                             className: "w-full h-full object-contain"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 343,
+                                            lineNumber: 362,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1637,24 +1919,24 @@ function SimpleDesignForm() {
                                             children: "AI Generated"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 348,
+                                            lineNumber: 367,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 342,
+                                    lineNumber: 361,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 341,
+                                lineNumber: 360,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 337,
+                        lineNumber: 356,
                         columnNumber: 11
                     }, this),
                     !currentExample && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1665,7 +1947,7 @@ function SimpleDesignForm() {
                                 children: "Get Inspired by Celebrity Styles"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 359,
+                                lineNumber: 378,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1684,7 +1966,7 @@ function SimpleDesignForm() {
                                                 className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 373,
+                                                lineNumber: 392,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1696,17 +1978,17 @@ function SimpleDesignForm() {
                                                         children: example.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 380,
+                                                        lineNumber: 399,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                    lineNumber: 379,
+                                                    lineNumber: 398,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 378,
+                                                lineNumber: 397,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1714,24 +1996,24 @@ function SimpleDesignForm() {
                                                 children: "Select"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 383,
+                                                lineNumber: 402,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, index, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 364,
+                                        lineNumber: 383,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 362,
+                                lineNumber: 381,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 358,
+                        lineNumber: 377,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1747,7 +2029,7 @@ function SimpleDesignForm() {
                                             children: currentExample ? 'Customize this design or describe something new' : 'Describe your jewelry vision'
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 396,
+                                            lineNumber: 415,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1759,7 +2041,7 @@ function SimpleDesignForm() {
                                             rows: 6
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 399,
+                                            lineNumber: 418,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1773,7 +2055,7 @@ function SimpleDesignForm() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                    lineNumber: 408,
+                                                    lineNumber: 427,
                                                     columnNumber: 17
                                                 }, this),
                                                 vision.length >= 20 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1792,44 +2074,44 @@ function SimpleDesignForm() {
                                                                     className: `w-3 h-3 ${star <= promptQuality ? 'fill-yellow-400 text-yellow-400' : 'fill-stone-600 text-stone-600'}`
                                                                 }, star, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                                    lineNumber: 418,
+                                                                    lineNumber: 437,
                                                                     columnNumber: 25
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                            lineNumber: 416,
+                                                            lineNumber: 435,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: getQualityMessage(promptQuality)
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                            lineNumber: 428,
+                                                            lineNumber: 447,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$question$2d$mark$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HelpCircle$3e$__["HelpCircle"], {
                                                             className: "w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                            lineNumber: 429,
+                                                            lineNumber: 448,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                    lineNumber: 412,
+                                                    lineNumber: 431,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 407,
+                                            lineNumber: 426,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 395,
+                                    lineNumber: 414,
                                     columnNumber: 13
                                 }, this),
                                 error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1839,20 +2121,303 @@ function SimpleDesignForm() {
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 437,
+                                        lineNumber: 456,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 436,
+                                    lineNumber: 455,
                                     columnNumber: 15
                                 }, this),
-                                currentExample && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                    className: "w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg mb-3",
-                                    children: "Order This Design ($2,500+)"
-                                }, void 0, false, {
+                                currentExample && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-3",
+                                    children: [
+                                        isCalculatingPrice ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "bg-stone-800 border border-stone-600 rounded-lg p-4 text-center",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center justify-center gap-2 text-stone-300",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calculator$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Calculator$3e$__["Calculator"], {
+                                                        className: "w-4 h-4 animate-pulse"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                        lineNumber: 467,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        children: "Calculating price..."
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                        lineNumber: 468,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                lineNumber: 466,
+                                                columnNumber: 21
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 465,
+                                            columnNumber: 19
+                                        }, this) : pricingBreakdown ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "bg-stone-800 border border-stone-600 rounded-lg p-4",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "text-center mb-3",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-2xl font-bold text-white",
+                                                            children: [
+                                                                "$",
+                                                                pricingBreakdown.finalPrice.toLocaleString()
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                            lineNumber: 474,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-sm text-stone-400",
+                                                            children: "Estimated price"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                            lineNumber: 477,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                    lineNumber: 473,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("details", {
+                                                    className: "text-xs text-stone-400",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("summary", {
+                                                            className: "cursor-pointer hover:text-stone-300 mb-2",
+                                                            children: "Price breakdown"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                            lineNumber: 481,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "space-y-1 pl-4 border-l border-stone-600",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex justify-between",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "Materials (",
+                                                                                pricingBreakdown.breakdown.materialWeight,
+                                                                                "g)"
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 486,
+                                                                            columnNumber: 27
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "$",
+                                                                                pricingBreakdown.materialCost
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 487,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                    lineNumber: 485,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex justify-between",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "Labor (",
+                                                                                pricingBreakdown.breakdown.laborHours,
+                                                                                "h)"
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 490,
+                                                                            columnNumber: 27
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "$",
+                                                                                pricingBreakdown.laborCost
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 491,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                    lineNumber: 489,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                pricingBreakdown.gemstoneCost > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex justify-between",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: "Gemstones"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 495,
+                                                                            columnNumber: 29
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "$",
+                                                                                pricingBreakdown.gemstoneCost
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 496,
+                                                                            columnNumber: 29
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                    lineNumber: 494,
+                                                                    columnNumber: 27
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex justify-between border-t border-stone-700 pt-1",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: "Subtotal"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 500,
+                                                                            columnNumber: 27
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "$",
+                                                                                pricingBreakdown.subtotal
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 501,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                    lineNumber: 499,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex justify-between",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: "Margin (60%)"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 504,
+                                                                            columnNumber: 27
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "$",
+                                                                                pricingBreakdown.margin
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 505,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                    lineNumber: 503,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex justify-between font-semibold text-stone-200 border-t border-stone-700 pt-1",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: "Final Price"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 508,
+                                                                            columnNumber: 27
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            children: [
+                                                                                "$",
+                                                                                pricingBreakdown.finalPrice
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                            lineNumber: 509,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                                    lineNumber: 507,
+                                                                    columnNumber: 25
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                            lineNumber: 484,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                    lineNumber: 480,
+                                                    columnNumber: 21
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 472,
+                                            columnNumber: 19
+                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "bg-stone-800 border border-stone-600 rounded-lg p-4 text-center",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "text-stone-400 text-sm",
+                                                children: "Add more details to calculate price"
+                                            }, void 0, false, {
+                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                lineNumber: 516,
+                                                columnNumber: 21
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 515,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                            className: "w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg",
+                                            children: [
+                                                "Order This Design ($",
+                                                pricingBreakdown?.finalPrice.toLocaleString() || '2,500+',
+                                                ")"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 522,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 443,
+                                    lineNumber: 462,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1866,49 +2431,50 @@ function SimpleDesignForm() {
                                                 className: "animate-spin rounded-full h-5 w-5 border-b-2 border-stone-900"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 455,
+                                                lineNumber: 535,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: "Generating design..."
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 456,
+                                                lineNumber: 536,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 454,
+                                        lineNumber: 534,
                                         columnNumber: 17
                                     }, this) : currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 448,
+                                    lineNumber: 528,
                                     columnNumber: 13
                                 }, this),
                                 currentExample && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                     variant: "outline",
-                                    className: "w-full border-stone-600 text-stone-300 hover:bg-stone-800 mt-3",
+                                    className: "w-full border-stone-600 text-stone-300 hover:bg-stone-800",
                                     onClick: ()=>{
                                         setCurrentExample(null);
                                         setVision('');
+                                        setPricingBreakdown(null);
                                     },
                                     children: "Start Fresh Design"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 465,
+                                    lineNumber: 545,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                            lineNumber: 394,
+                            lineNumber: 413,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 393,
+                        lineNumber: 412,
                         columnNumber: 9
                     }, this),
                     generatedImages.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1919,7 +2485,7 @@ function SimpleDesignForm() {
                                 children: "Your Generated Design"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 482,
+                                lineNumber: 563,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1935,12 +2501,12 @@ function SimpleDesignForm() {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                    lineNumber: 490,
+                                                    lineNumber: 571,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 489,
+                                                lineNumber: 570,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1951,7 +2517,7 @@ function SimpleDesignForm() {
                                                         children: image.type.replace('_', ' ')
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 497,
+                                                        lineNumber: 578,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1962,24 +2528,24 @@ function SimpleDesignForm() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 500,
+                                                        lineNumber: 581,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 496,
+                                                lineNumber: 577,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, index, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 488,
+                                        lineNumber: 569,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 486,
+                                lineNumber: 567,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1992,7 +2558,7 @@ function SimpleDesignForm() {
                                             children: "Love this design?"
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 510,
+                                            lineNumber: 591,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2000,7 +2566,7 @@ function SimpleDesignForm() {
                                             children: "Our master jewelers in NYC can bring this vision to life. Each piece is handcrafted to perfection with premium materials and attention to detail."
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 513,
+                                            lineNumber: 594,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2011,7 +2577,7 @@ function SimpleDesignForm() {
                                                     children: "Request Custom Quote"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                    lineNumber: 518,
+                                                    lineNumber: 599,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2024,30 +2590,156 @@ function SimpleDesignForm() {
                                                     children: "Generate Another Design"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                    lineNumber: 521,
+                                                    lineNumber: 602,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                            lineNumber: 517,
+                                            lineNumber: 598,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 509,
+                                    lineNumber: 590,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 508,
+                                lineNumber: 589,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 481,
+                        lineNumber: 562,
+                        columnNumber: 11
+                    }, this),
+                    showPromptTips && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-stone-900 border border-stone-700 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center justify-between p-6 border-b border-stone-700",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                            className: "text-xl font-semibold text-stone-100",
+                                            children: [
+                                                "Improve Your Prompt (Quality: ",
+                                                promptQuality,
+                                                "/5)"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 623,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: ()=>setShowPromptTips(false),
+                                            className: "p-2 hover:bg-stone-800 rounded-lg transition-colors",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
+                                                className: "w-5 h-5 text-stone-400"
+                                            }, void 0, false, {
+                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                lineNumber: 630,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 626,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                    lineNumber: 622,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "p-6 space-y-4 max-h-96 overflow-y-auto",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-stone-300 mb-4",
+                                            children: "Here are AI-powered tips to improve your jewelry description:"
+                                        }, void 0, false, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 635,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "space-y-3",
+                                            children: getPromptTips(promptQuality).map((tip, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-start gap-3 p-3 bg-stone-800 rounded-lg",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-stone-400 font-mono text-sm",
+                                                            children: String(index + 1).padStart(2, '0')
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                            lineNumber: 642,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "text-stone-200 text-sm",
+                                                            children: tip
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                            lineNumber: 645,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, index, true, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                    lineNumber: 641,
+                                                    columnNumber: 21
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 639,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "mt-6 p-4 bg-stone-800 rounded-lg",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                    className: "font-medium text-stone-200 mb-2",
+                                                    children: "💡 Pro Tip:"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                    lineNumber: 651,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-stone-300 text-sm",
+                                                    children: "The more specific you are, the more accurate our AI pricing becomes. Include materials, size, style, and any gemstones for the best results."
+                                                }, void 0, false, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                                    lineNumber: 652,
+                                                    columnNumber: 19
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                            lineNumber: 650,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                                    lineNumber: 634,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                            lineNumber: 621,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
+                        lineNumber: 620,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2058,7 +2750,7 @@ function SimpleDesignForm() {
                                 children: "Celebrity & Subculture Inspired Examples"
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 539,
+                                lineNumber: 662,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2076,7 +2768,7 @@ function SimpleDesignForm() {
                                                         className: "w-full h-full object-cover"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 550,
+                                                        lineNumber: 673,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2084,13 +2776,13 @@ function SimpleDesignForm() {
                                                         children: "AI Generated"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 555,
+                                                        lineNumber: 678,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 549,
+                                                lineNumber: 672,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2101,7 +2793,7 @@ function SimpleDesignForm() {
                                                         children: example.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 560,
+                                                        lineNumber: 683,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2113,7 +2805,7 @@ function SimpleDesignForm() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 561,
+                                                        lineNumber: 684,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2121,24 +2813,24 @@ function SimpleDesignForm() {
                                                         children: "Click to use this prompt →"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                        lineNumber: 562,
+                                                        lineNumber: 685,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                                lineNumber: 559,
+                                                lineNumber: 682,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, index, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                        lineNumber: 544,
+                                        lineNumber: 667,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 542,
+                                lineNumber: 665,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2148,30 +2840,30 @@ function SimpleDesignForm() {
                                     children: '💡 Try combinations like "Madonna punk style" or "Grace Kelly elegance" for unique results'
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                    lineNumber: 570,
+                                    lineNumber: 693,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                                lineNumber: 569,
+                                lineNumber: 692,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                        lineNumber: 538,
+                        lineNumber: 661,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-                lineNumber: 241,
+                lineNumber: 260,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/design-wizard/SimpleDesignForm.tsx",
-        lineNumber: 207,
+        lineNumber: 226,
         columnNumber: 5
     }, this);
 }
@@ -2213,4 +2905,4 @@ function DesignPage() {
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__bb725c56._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__4451f21c._.js.map

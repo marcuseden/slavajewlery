@@ -5,7 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
-import { Star, HelpCircle, X } from 'lucide-react';
+import { Star, HelpCircle, X, Calculator } from 'lucide-react';
+import { calculateJewelryPrice, parseJewelrySpecs, type PricingBreakdown } from '@/lib/jewelry-pricing';
 
 // Simplified tag clouds - only Type, Style, and Material
 const JEWELRY_TYPES = [
@@ -67,6 +68,8 @@ export function SimpleDesignForm() {
   const [showTips, setShowTips] = useState(true);
   const [currentExample, setCurrentExample] = useState<typeof EXAMPLE_PROMPTS[0] | null>(null);
   const [showPromptTips, setShowPromptTips] = useState(false);
+  const [pricingBreakdown, setPricingBreakdown] = useState<PricingBreakdown | null>(null);
+  const [isCalculatingPrice, setIsCalculatingPrice] = useState(false);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
@@ -199,6 +202,25 @@ export function SimpleDesignForm() {
   };
 
   const promptQuality = getPromptQuality(vision);
+
+  // Calculate pricing when prompt changes and has sufficient quality
+  useEffect(() => {
+    if (vision.length >= 50 && promptQuality >= 2) {
+      setIsCalculatingPrice(true);
+      const specs = parseJewelrySpecs(vision);
+      calculateJewelryPrice(specs)
+        .then(pricing => {
+          setPricingBreakdown(pricing);
+          setIsCalculatingPrice(false);
+        })
+        .catch(error => {
+          console.error('Pricing calculation error:', error);
+          setIsCalculatingPrice(false);
+        });
+    } else {
+      setPricingBreakdown(null);
+    }
+  }, [vision, promptQuality]);
 
   return (
     <div className="min-h-screen relative bg-slate-950">
@@ -437,9 +459,70 @@ export function SimpleDesignForm() {
 
             {/* Order This Button - Show when example is selected */}
             {currentExample && (
-              <Button className="w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg mb-3">
-                Order This Design ($2,500+)
-              </Button>
+              <div className="space-y-3">
+                {/* Dynamic Pricing Display */}
+                {isCalculatingPrice ? (
+                  <div className="bg-stone-800 border border-stone-600 rounded-lg p-4 text-center">
+                    <div className="flex items-center justify-center gap-2 text-stone-300">
+                      <Calculator className="w-4 h-4 animate-pulse" />
+                      <span>Calculating price...</span>
+                    </div>
+                  </div>
+                ) : pricingBreakdown ? (
+                  <div className="bg-stone-800 border border-stone-600 rounded-lg p-4">
+                    <div className="text-center mb-3">
+                      <div className="text-2xl font-bold text-white">
+                        ${pricingBreakdown.finalPrice.toLocaleString()}
+                      </div>
+                      <div className="text-sm text-stone-400">Estimated price</div>
+                    </div>
+                    
+                    <details className="text-xs text-stone-400">
+                      <summary className="cursor-pointer hover:text-stone-300 mb-2">
+                        Price breakdown
+                      </summary>
+                      <div className="space-y-1 pl-4 border-l border-stone-600">
+                        <div className="flex justify-between">
+                          <span>Materials ({pricingBreakdown.breakdown.materialWeight}g)</span>
+                          <span>${pricingBreakdown.materialCost}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Labor ({pricingBreakdown.breakdown.laborHours}h)</span>
+                          <span>${pricingBreakdown.laborCost}</span>
+                        </div>
+                        {pricingBreakdown.gemstoneCost > 0 && (
+                          <div className="flex justify-between">
+                            <span>Gemstones</span>
+                            <span>${pricingBreakdown.gemstoneCost}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between border-t border-stone-700 pt-1">
+                          <span>Subtotal</span>
+                          <span>${pricingBreakdown.subtotal}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Margin (60%)</span>
+                          <span>${pricingBreakdown.margin}</span>
+                        </div>
+                        <div className="flex justify-between font-semibold text-stone-200 border-t border-stone-700 pt-1">
+                          <span>Final Price</span>
+                          <span>${pricingBreakdown.finalPrice}</span>
+                        </div>
+                      </div>
+                    </details>
+                  </div>
+                ) : (
+                  <div className="bg-stone-800 border border-stone-600 rounded-lg p-4 text-center">
+                    <div className="text-stone-400 text-sm">
+                      Add more details to calculate price
+                    </div>
+                  </div>
+                )}
+                
+                <Button className="w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg">
+                  Order This Design (${pricingBreakdown?.finalPrice.toLocaleString() || '2,500+'})
+                </Button>
+              </div>
             )}
 
             <Button
@@ -461,10 +544,11 @@ export function SimpleDesignForm() {
             {currentExample && (
               <Button 
                 variant="outline" 
-                className="w-full border-stone-600 text-stone-300 hover:bg-stone-800 mt-3"
+                className="w-full border-stone-600 text-stone-300 hover:bg-stone-800"
                 onClick={() => {
                   setCurrentExample(null);
                   setVision('');
+                  setPricingBreakdown(null);
                 }}
               >
                 Start Fresh Design
@@ -531,7 +615,49 @@ export function SimpleDesignForm() {
           </div>
         )}
 
-        {/* Example Prompts Slider */}
+        {/* Prompt Tips Modal */}
+        {showPromptTips && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-stone-900 border border-stone-700 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
+              <div className="flex items-center justify-between p-6 border-b border-stone-700">
+                <h3 className="text-xl font-semibold text-stone-100">
+                  Improve Your Prompt (Quality: {promptQuality}/5)
+                </h3>
+                <button
+                  onClick={() => setShowPromptTips(false)}
+                  className="p-2 hover:bg-stone-800 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-stone-400" />
+                </button>
+              </div>
+              
+              <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
+                <p className="text-stone-300 mb-4">
+                  Here are AI-powered tips to improve your jewelry description:
+                </p>
+                
+                <div className="space-y-3">
+                  {getPromptTips(promptQuality).map((tip, index) => (
+                    <div key={index} className="flex items-start gap-3 p-3 bg-stone-800 rounded-lg">
+                      <span className="text-stone-400 font-mono text-sm">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <p className="text-stone-200 text-sm">{tip}</p>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 p-4 bg-stone-800 rounded-lg">
+                  <h4 className="font-medium text-stone-200 mb-2">💡 Pro Tip:</h4>
+                  <p className="text-stone-300 text-sm">
+                    The more specific you are, the more accurate our AI pricing becomes. 
+                    Include materials, size, style, and any gemstones for the best results.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="mt-16">
           <h3 className="text-xl font-semibold text-stone-200 mb-6 text-center">
             Celebrity & Subculture Inspired Examples
