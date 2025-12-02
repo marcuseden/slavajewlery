@@ -4,37 +4,49 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-// Tag cloud data
+// Simplified tag clouds - only Type, Style, and Material
 const JEWELRY_TYPES = [
   'engagement ring', 'wedding band', 'necklace', 'earrings', 'bracelet', 
-  'pendant', 'cocktail ring', 'tennis bracelet', 'statement earrings', 
-  'charm bracelet', 'choker', 'cuff bracelet', 'stud earrings', 'chain necklace'
+  'pendant', 'cocktail ring', 'tennis bracelet', 'choker', 'cuff bracelet'
 ];
 
 const STYLES = [
-  'vintage', 'modern', 'minimalist', 'art deco', 'victorian', 'bohemian',
-  'classic', 'contemporary', 'bold', 'delicate', 'geometric', 'organic',
-  'industrial', 'romantic', 'edgy', 'sophisticated', 'timeless', 'trendy'
+  'vintage', 'modern', 'minimalist', 'art deco', 'classic', 'bohemian',
+  'punk', 'disco', 'victorian', 'romantic', 'bold', 'delicate'
 ];
 
 const MATERIALS = [
-  'platinum', '14k gold', '18k gold', 'white gold', 'yellow gold', 'rose gold',
-  'sterling silver', 'titanium', 'palladium', 'two-tone gold', 'brushed metal',
-  'polished finish', 'matte finish', 'hammered texture'
+  'platinum', 'yellow gold', 'white gold', 'rose gold', 'sterling silver',
+  '14k gold', '18k gold', 'brushed steel', 'polished finish', 'matte finish'
 ];
 
-const CELEBRITY_INSPIRATIONS = [
-  'Audrey Hepburn elegance', 'Grace Kelly sophistication', 'Elizabeth Taylor glamour',
-  'Coco Chanel minimalism', 'Diana Spencer timeless', 'Kate Middleton classic',
-  'Meghan Markle modern', 'Blake Lively bohemian', 'Emma Stone vintage',
-  'Rihanna bold', 'Taylor Swift romantic', 'Zendaya edgy'
-];
-
-const DECADE_STYLES = [
-  '1920s art deco', '1930s Hollywood glamour', '1940s wartime elegance',
-  '1950s feminine curves', '1960s mod geometric', '1970s bohemian freedom',
-  '1980s bold statements', '1990s minimalist chic', '2000s maximalist',
-  '2010s vintage revival', '2020s sustainable luxury'
+// Example prompts with celebrity and subculture inspiration
+const EXAMPLE_PROMPTS = [
+  {
+    title: "Madonna Punk Ring",
+    prompt: "A bold punk rock cocktail ring inspired by Madonna, chunky silver with spikes and dark gemstone, edgy 1980s rebellion style",
+    image: "/example-designs.json" // Will load from our generated examples
+  },
+  {
+    title: "Grace Kelly Classic",
+    prompt: "A classic engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond, timeless 1950s Hollywood glamour",
+    image: "/example-designs.json"
+  },
+  {
+    title: "Bowie Art Deco Earrings", 
+    prompt: "Statement art deco earrings inspired by David Bowie, geometric gold design with angular patterns, 1920s glamour meets rock star attitude",
+    image: "/example-designs.json"
+  },
+  {
+    title: "Frida Bohemian Bracelet",
+    prompt: "A bohemian charm bracelet inspired by Frida Kahlo, rose gold with colorful gemstones and artistic charms, Mexican folk art influence",
+    image: "/example-designs.json"
+  },
+  {
+    title: "Cher Disco Statement",
+    prompt: "Bold disco-era statement earrings inspired by Cher, large geometric hoops in white gold with sparkling crystals, 1970s glamour",
+    image: "/example-designs.json"
+  }
 ];
 
 interface GeneratedImage {
@@ -144,12 +156,12 @@ export function SimpleDesignForm() {
           </p>
         </div>
 
-        {/* Tag Clouds and Tips */}
+        {/* Simplified Tag Clouds */}
         {showTips && (
           <div className="bg-stone-900 border border-stone-700 rounded-lg p-6 mb-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold text-stone-100">
-                Build Your Description
+                Quick Tags
               </h2>
               <button
                 onClick={() => setShowTips(false)}
@@ -159,114 +171,58 @@ export function SimpleDesignForm() {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Left Column - Tag Clouds */}
-              <div className="space-y-6">
-                {/* Jewelry Types */}
-                <div>
-                  <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                    Jewelry Type
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {JEWELRY_TYPES.map((type) => (
-                      <button
-                        key={type}
-                        onClick={() => addToVision(type)}
-                        className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
-                      >
-                        {type}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Styles */}
-                <div>
-                  <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                    Style
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {STYLES.map((style) => (
-                      <button
-                        key={style}
-                        onClick={() => addToVision(style)}
-                        className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
-                      >
-                        {style}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Materials */}
-                <div>
-                  <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                    Materials
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {MATERIALS.map((material) => (
-                      <button
-                        key={material}
-                        onClick={() => addToVision(material)}
-                        className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
-                      >
-                        {material}
-                      </button>
-                    ))}
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Type */}
+              <div>
+                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
+                  Type
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {JEWELRY_TYPES.map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => addToVision(type)}
+                      className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
+                    >
+                      {type}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* Right Column - Inspiration */}
-              <div className="space-y-6">
-                {/* Celebrity Inspirations */}
-                <div>
-                  <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                    Celebrity Style
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {CELEBRITY_INSPIRATIONS.map((celeb) => (
-                      <button
-                        key={celeb}
-                        onClick={() => addToVision(`inspired by ${celeb}`)}
-                        className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
-                      >
-                        {celeb}
-                      </button>
-                    ))}
-                  </div>
+              {/* Style */}
+              <div>
+                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
+                  Style
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {STYLES.map((style) => (
+                    <button
+                      key={style}
+                      onClick={() => addToVision(style)}
+                      className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
+                    >
+                      {style}
+                    </button>
+                  ))}
                 </div>
+              </div>
 
-                {/* Decade Styles */}
-                <div>
-                  <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                    Era & Decade
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {DECADE_STYLES.map((decade) => (
-                      <button
-                        key={decade}
-                        onClick={() => addToVision(decade)}
-                        className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
-                      >
-                        {decade}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Prompting Tips */}
-                <div>
-                  <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                    Pro Tips
-                  </h3>
-                  <div className="space-y-2 text-sm text-stone-400">
-                    <p>💡 <strong>Be specific</strong> about stone shapes, sizes, and settings</p>
-                    <p>🎨 <strong>Mention textures</strong> like "milgrain details" or "hammered finish"</p>
-                    <p>✨ <strong>Add context</strong> like "for everyday wear" or "statement piece"</p>
-                    <p>🏛️ <strong>Reference eras</strong> like "Art Deco geometry" or "Victorian romance"</p>
-                    <p>👑 <strong>Celebrity style</strong> helps define overall aesthetic and elegance</p>
-                  </div>
+              {/* Material */}
+              <div>
+                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
+                  Material
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {MATERIALS.map((material) => (
+                    <button
+                      key={material}
+                      onClick={() => addToVision(material)}
+                      className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
+                    >
+                      {material}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -392,45 +348,35 @@ export function SimpleDesignForm() {
           </div>
         )}
 
-        {/* Enhanced Examples */}
+        {/* Example Prompts Slider */}
         <div className="mt-16">
           <h3 className="text-xl font-semibold text-stone-200 mb-6 text-center">
-            Example Prompts with Style Inspirations
+            Celebrity & Subculture Inspired Examples
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              {
-                text: "A vintage art deco engagement ring with platinum setting, oval diamond center stone, and small sapphire accents in geometric patterns, inspired by 1920s art deco elegance",
-                tags: ["vintage", "art deco", "1920s"]
-              },
-              {
-                text: "A minimalist modern necklace with delicate chain and simple geometric pendant in 14k yellow gold, inspired by Coco Chanel minimalism",
-                tags: ["minimalist", "modern", "Coco Chanel"]
-              },
-              {
-                text: "A bold statement cocktail ring featuring large emerald-cut emerald surrounded by diamonds in white gold, inspired by Elizabeth Taylor glamour",
-                tags: ["bold", "statement", "Elizabeth Taylor"]
-              },
-              {
-                text: "A classic tennis bracelet with brilliant round diamonds in continuous line, platinum setting, inspired by Grace Kelly sophistication",
-                tags: ["classic", "tennis bracelet", "Grace Kelly"]
-              }
-            ].map((example, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {EXAMPLE_PROMPTS.map((example, index) => (
               <button
                 key={index}
-                onClick={() => setVision(example.text)}
-                className="text-left p-4 bg-stone-800 border border-stone-600 rounded-lg hover:bg-stone-700 transition-all group"
+                onClick={() => setVision(example.prompt)}
+                className="text-left bg-stone-800 border border-stone-600 rounded-lg hover:bg-stone-700 hover:border-stone-500 transition-all group overflow-hidden"
               >
-                <p className="text-stone-300 text-sm italic mb-2">"{example.text}"</p>
-                <div className="flex flex-wrap gap-1">
-                  {example.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-stone-700 text-stone-400 text-xs rounded-full group-hover:bg-stone-600">
-                      {tag}
-                    </span>
-                  ))}
+                <div className="aspect-square bg-stone-700 flex items-center justify-center">
+                  <span className="text-stone-400 text-sm">AI Generated Preview</span>
+                </div>
+                <div className="p-4">
+                  <h4 className="font-medium text-stone-200 mb-2">{example.title}</h4>
+                  <p className="text-stone-400 text-sm line-clamp-3">"{example.prompt}"</p>
+                  <div className="mt-3 text-xs text-stone-500 group-hover:text-stone-400">
+                    Click to use this prompt →
+                  </div>
                 </div>
               </button>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <p className="text-stone-400 text-sm">
+              💡 Try combinations like "Madonna punk style" or "Grace Kelly elegance" for unique results
+            </p>
           </div>
         </div>
       </div>
