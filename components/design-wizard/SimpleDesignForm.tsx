@@ -64,12 +64,18 @@ export function SimpleDesignForm() {
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [error, setError] = useState('');
   const [showTips, setShowTips] = useState(true);
+  const [currentExample, setCurrentExample] = useState<typeof EXAMPLE_PROMPTS[0] | null>(null);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
     const promptFromUrl = searchParams.get('prompt');
     if (promptFromUrl) {
       setVision(promptFromUrl);
+      // Find which example this prompt matches
+      const matchingExample = EXAMPLE_PROMPTS.find(example => example.prompt === promptFromUrl);
+      if (matchingExample) {
+        setCurrentExample(matchingExample);
+      }
       // If there's a prompt, hide tips to focus on the form
       setShowTips(false);
     }
@@ -151,7 +157,7 @@ export function SimpleDesignForm() {
       <div 
         className="fixed inset-0 z-1 pointer-events-none"
         style={{
-          background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(30, 41, 59, 0.7) 70%, rgba(2, 6, 23, 0.85) 100%)'
+          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.8) 100%)'
         }}
       />
       
@@ -159,9 +165,9 @@ export function SimpleDesignForm() {
       <div 
         className="fixed inset-0 z-2 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                       radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.05) 0%, transparent 40%),
-                       radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 45%)`
+          background: `radial-gradient(ellipse at 25% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                       radial-gradient(ellipse at 50% 85%, rgba(255, 255, 255, 0.015) 0%, transparent 40%),
+                       radial-gradient(ellipse at 75% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 45%)`
         }}
       />
 
@@ -260,12 +266,69 @@ export function SimpleDesignForm() {
           </div>
         )}
 
+        {/* Example Image - Show above input when example is selected */}
+        {currentExample && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-stone-100 mb-4 text-center">
+              {currentExample.title}
+            </h3>
+            <div className="max-w-md mx-auto">
+              <div className="aspect-square relative rounded-lg overflow-hidden border border-stone-600">
+                <img
+                  src={currentExample.image}
+                  alt={currentExample.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+                  AI Generated
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Show example carousel when no example is selected */}
+        {!currentExample && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-stone-100 mb-4 text-center">
+              Get Inspired by Celebrity Styles
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+              {EXAMPLE_PROMPTS.map((example, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setVision(example.prompt);
+                    setCurrentExample(example);
+                    setShowTips(false);
+                  }}
+                  className="aspect-square relative rounded-lg overflow-hidden border border-stone-600 hover:border-stone-500 transition-all group"
+                >
+                  <img
+                    src={example.image}
+                    alt={example.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <p className="text-white text-xs font-medium truncate">{example.title}</p>
+                    </div>
+                  </div>
+                  <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    Select
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Input Form */}
         <div className="bg-stone-900 border border-stone-700 rounded-lg p-8 mb-8">
           <div className="space-y-6">
             <div>
               <label htmlFor="vision" className="block text-lg font-medium text-stone-200 mb-4">
-                Describe your jewelry vision
+                {currentExample ? 'Customize this design or describe something new' : 'Describe your jewelry vision'}
               </label>
               <textarea
                 id="vision"
@@ -293,6 +356,13 @@ export function SimpleDesignForm() {
               </div>
             )}
 
+            {/* Order This Button - Show when example is selected */}
+            {currentExample && (
+              <Button className="w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg mb-3">
+                Order This Design ($2,500+)
+              </Button>
+            )}
+
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || !vision.trim() || vision.length < 20}
@@ -304,9 +374,23 @@ export function SimpleDesignForm() {
                   <span>Generating design...</span>
                 </div>
               ) : (
-                'Generate Jewelry Design'
+                currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'
               )}
             </Button>
+
+            {/* Clear Selection Button */}
+            {currentExample && (
+              <Button 
+                variant="outline" 
+                className="w-full border-stone-600 text-stone-300 hover:bg-stone-800 mt-3"
+                onClick={() => {
+                  setCurrentExample(null);
+                  setVision('');
+                }}
+              >
+                Start Fresh Design
+              </Button>
+            )}
           </div>
         </div>
 

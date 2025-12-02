@@ -81,7 +81,7 @@ export default function HomePage() {
         <div 
           className="fixed inset-0 z-1 pointer-events-none"
           style={{
-            background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(30, 41, 59, 0.7) 70%, rgba(2, 6, 23, 0.85) 100%)'
+            background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.8) 100%)'
           }}
         />
         
@@ -89,22 +89,22 @@ export default function HomePage() {
         <div 
           className="fixed inset-0 z-2 pointer-events-none"
           style={{
-            background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                         radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.05) 0%, transparent 40%),
-                         radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 45%)`
+            background: `radial-gradient(ellipse at 25% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                         radial-gradient(ellipse at 50% 85%, rgba(255, 255, 255, 0.015) 0%, transparent 40%),
+                         radial-gradient(ellipse at 75% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 45%)`
           }}
         />
       
       {/* Content */}
       <div className="relative z-10">
 
-        {/* Hero Section */}
+      {/* Hero Section */}
         <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24 pt-24">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-black/10 border border-gray-600/20 rounded-full text-gray-300 text-sm">
                 <CheckCircle className="w-4 h-4" />
                 <span className="hidden sm:inline">Delivered in 5 Business Days</span>
                 <span className="sm:hidden">5-Day Delivery</span>
@@ -112,7 +112,7 @@ export default function HomePage() {
           
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-100 leading-tight">
                 Design Your Dream Jewelry with{" "}
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-gray-300 via-white to-gray-200 bg-clip-text text-transparent">
                   AI Magic
                 </span>
           </h1>
@@ -121,11 +121,11 @@ export default function HomePage() {
                 Simply describe your vision in words. Our AI instantly creates photorealistic designs 
                 and detailed specifications. Master jewelers in NYC handcraft your unique piece 
                 and deliver it in just{" "}
-                <span className="font-semibold text-cyan-400">5 business days</span>.
+                <span className="font-semibold text-gray-300">5 business days</span>.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
-                <Button asChild className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg group shadow-lg">
+                <Button asChild className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-semibold px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg group shadow-lg">
               <Link href="/design">
                     <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                     <span className="hidden sm:inline">Start Designing Now</span>
@@ -141,8 +141,8 @@ export default function HomePage() {
               {/* Key Features */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8">
                 <div className="flex items-center justify-center sm:justify-start space-x-3">
-                  <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-blue-400" />
+                  <div className="w-10 h-10 bg-black/20 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-gray-300" />
                   </div>
                   <div>
                     <p className="font-medium text-slate-200">AI-Powered</p>
@@ -151,7 +151,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center justify-center sm:justify-start space-x-3">
                   <div className="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-cyan-400" />
+                    <Clock className="w-5 h-5 text-gray-300" />
                   </div>
                   <div>
                     <p className="font-medium text-slate-200">5-Day Delivery</p>
@@ -203,7 +203,7 @@ export default function HomePage() {
                               </span>
                             ))}
                           </div>
-                          <p className="text-cyan-400 text-xs mt-2 font-medium">Click to edit and design →</p>
+                          <p className="text-gray-300 text-xs mt-2 font-medium">Click to edit and design →</p>
                         </div>
                       </div>
                     )}
@@ -240,7 +240,7 @@ export default function HomePage() {
             <div className="flex items-center space-x-2">
               <div className="flex">
                 {[1,2,3,4,5].map(i => (
-                  <Star key={i} className="w-5 h-5 fill-blue-400 text-blue-400" />
+                  <Star key={i} className="w-5 h-5 fill-blue-400 text-gray-300" />
                 ))}
               </div>
               <span className="text-stone-300 ml-2">"Absolutely stunning results" - Sarah M.</span>
@@ -255,7 +255,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-4">
               From Words to Wearable Art
-            </h2>
+          </h2>
             <p className="text-xl text-stone-400 max-w-2xl mx-auto">
               See how simple descriptions become stunning jewelry in seconds
             </p>
@@ -272,7 +272,7 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <div className="text-cyan-400 text-sm font-medium mb-1">
+                  <div className="text-gray-300 text-sm font-medium mb-1">
                     → Grace Kelly Elegance
                   </div>
                 </div>
@@ -284,7 +284,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <Link href={`/design?prompt=${encodeURIComponent('A classic solitaire engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond center stone, elegant cathedral setting, 1950s Hollywood glamour style')}`}>
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold">
+                  <Button className="w-full bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-semibold">
                     Make This Design
                   </Button>
                 </Link>
@@ -301,7 +301,7 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <div className="text-cyan-400 text-sm font-medium mb-1">
+                  <div className="text-gray-300 text-sm font-medium mb-1">
                     → Madonna Rebellion
                   </div>
                 </div>
@@ -313,7 +313,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <Link href={`/design?prompt=${encodeURIComponent('A bold punk rock cocktail ring inspired by Madonna, chunky black metal band with silver spikes and dark onyx center stone, edgy 1980s rebellion style')}`}>
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold">
+                  <Button className="w-full bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-semibold">
                     Make This Design
                   </Button>
                 </Link>
@@ -330,7 +330,7 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <div className="text-cyan-400 text-sm font-medium mb-1">
+                  <div className="text-gray-300 text-sm font-medium mb-1">
                     → Audrey Sophistication
                   </div>
                 </div>
@@ -342,7 +342,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <Link href={`/design?prompt=${encodeURIComponent('An elegant multi-strand pearl necklace inspired by Audrey Hepburn, graduated white pearls with diamond clasp, classic 1960s sophistication and timeless grace')}`}>
-                  <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold">
+                  <Button className="w-full bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-semibold">
                     Make This Design
                   </Button>
                 </Link>
@@ -352,7 +352,7 @@ export default function HomePage() {
 
           {/* Call to Action */}
           <div className="text-center mt-16">
-            <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-2xl p-8 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-black/10 to-gray-800/10 border border-gray-600/20 rounded-2xl p-8 max-w-4xl mx-auto">
               <h3 className="text-2xl font-bold text-white mb-4">
                 Ready to Create Your Own?
               </h3>
@@ -361,7 +361,7 @@ export default function HomePage() {
                 Our AI understands style, materials, and celebrity inspiration.
               </p>
               <Link href="/design">
-                <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold px-8 py-4 text-lg">
+                <Button className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-bold px-8 py-4 text-lg">
                   Start Designing Now →
                 </Button>
               </Link>
@@ -406,7 +406,7 @@ export default function HomePage() {
                     AI Generated
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-                    <div className="text-cyan-400 font-medium text-sm bg-black/50 backdrop-blur-sm px-3 py-2 rounded-full">
+                    <div className="text-gray-300 font-medium text-sm bg-black/50 backdrop-blur-sm px-3 py-2 rounded-full">
                       Click to edit prompt →
                     </div>
                   </div>
@@ -429,7 +429,7 @@ export default function HomePage() {
             </div>
 
           <div className="text-center">
-            <Button asChild className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-6 text-lg group">
+            <Button asChild className="bg-black hover:bg-gray-900 text-white font-semibold px-8 py-6 text-lg group">
               <Link href="/design">
                 Create Your Own Design
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -440,7 +440,7 @@ export default function HomePage() {
       </section>
 
       {/* Guarantee Section */}
-      <section id="guarantee" className="px-6 py-20 bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
+      <section id="guarantee" className="px-6 py-20 bg-gradient-to-r from-black/10 to-gray-800/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-6">
@@ -454,12 +454,12 @@ export default function HomePage() {
           
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
-              <Clock className="w-16 h-16 mx-auto mb-4 text-blue-400" />
+              <Clock className="w-16 h-16 mx-auto mb-4 text-gray-300" />
               <h3 className="font-semibold text-stone-100 mb-3 text-xl">5-Day Delivery</h3>
               <p className="text-stone-400">Guaranteed delivery in 5 business days or your money back. No exceptions.</p>
             </div>
             <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
-              <Award className="w-16 h-16 mx-auto mb-4 text-blue-400" />
+              <Award className="w-16 h-16 mx-auto mb-4 text-gray-300" />
               <h3 className="font-semibold text-stone-100 mb-3 text-xl">Master Craftsmanship</h3>
               <p className="text-stone-400">Every piece crafted by NYC's finest jewelers with decades of experience.</p>
             </div>
@@ -488,7 +488,7 @@ export default function HomePage() {
             Your perfect piece is just one description away.
           </p>
           <div className="space-y-4">
-            <Button asChild className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-12 py-8 text-xl group">
+            <Button asChild className="bg-black hover:bg-gray-900 text-white font-bold px-12 py-8 text-xl group">
             <Link href="/design">
                 <Sparkles className="w-6 h-6 mr-3" />
               Start Designing Now
@@ -513,7 +513,7 @@ export default function HomePage() {
               </p>
               <div className="flex space-x-2">
                 {[1,2,3,4,5].map(i => (
-              <Star key={i} className="w-4 h-4 fill-blue-400 text-blue-400" />
+              <Star key={i} className="w-4 h-4 fill-blue-400 text-gray-300" />
                 ))}
                 <span className="text-stone-400 text-sm ml-2">4.9/5 from 500+ reviews</span>
               </div>
@@ -556,7 +556,7 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-      </div>
+    </div>
     </div>
     </AuthProvider>
   );
