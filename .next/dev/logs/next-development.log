@@ -98,3 +98,4 @@ Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
 [00:14:03.468] Server  LOG      ✓ Compiled in 49ms
 [00:14:19.267] Server  LOG      ✓ Compiled in 41ms
 [00:14:31.658] Server  LOG      ✓ Compiled in 36ms
+[00:23:09.955] Server  LOG        Reload env: .env.local

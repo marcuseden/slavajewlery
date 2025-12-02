@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'newest';
 
     let query = supabase
-      .from('shared_designs')
+      .from('designs')
       .select(`
         *,
         creator:profiles(email)

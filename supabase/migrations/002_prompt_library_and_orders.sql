@@ -2,9 +2,9 @@
 -- Run this after the initial schema
 
 -- Shared designs/prompts library
-CREATE TABLE shared_designs (
+CREATE TABLE IF NOT EXISTS shared_designs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  creator_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  creator_id UUID REFERENCES users(id) ON DELETE SET NULL,
   title TEXT NOT NULL,
   prompt TEXT NOT NULL,
   tags TEXT[] DEFAULT '{}',
@@ -22,16 +22,12 @@ CREATE TABLE shared_designs (
   updated_at TIMESTAMP DEFAULT NOW(),
   featured_at TIMESTAMP,
   
-  -- Search optimization
-  search_vector tsvector GENERATED ALWAYS AS (
-    setweight(to_tsvector('english', title), 'A') ||
-    setweight(to_tsvector('english', prompt), 'B') ||
-    setweight(to_tsvector('english', array_to_string(tags, ' ')), 'C')
-  ) STORED
+  -- Search optimization (will use trigger instead of generated column)
+  search_vector tsvector
 );
 
--- Orders table
-CREATE TABLE orders (
+-- Orders table  
+CREATE TABLE IF NOT EXISTS orders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE SET NULL,
   shared_design_id UUID REFERENCES shared_designs(id) ON DELETE SET NULL,
@@ -66,7 +62,7 @@ CREATE TABLE orders (
 );
 
 -- User favorites
-CREATE TABLE user_favorites (
+CREATE TABLE IF NOT EXISTS user_favorites (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   shared_design_id UUID REFERENCES shared_designs(id) ON DELETE CASCADE,
@@ -75,7 +71,7 @@ CREATE TABLE user_favorites (
 );
 
 -- Design shares/social media tracking
-CREATE TABLE design_shares (
+CREATE TABLE IF NOT EXISTS design_shares (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   shared_design_id UUID REFERENCES shared_designs(id) ON DELETE CASCADE,
   user_id UUID REFERENCES users(id) ON DELETE SET NULL,
@@ -85,7 +81,7 @@ CREATE TABLE design_shares (
 );
 
 -- Commission payments tracking
-CREATE TABLE commission_payments (
+CREATE TABLE IF NOT EXISTS commission_payments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   creator_id UUID REFERENCES users(id) ON DELETE CASCADE,
   order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
@@ -98,18 +94,18 @@ CREATE TABLE commission_payments (
 );
 
 -- Indexes for performance
-CREATE INDEX idx_shared_designs_search ON shared_designs USING gin(search_vector);
-CREATE INDEX idx_shared_designs_creator ON shared_designs(creator_id);
-CREATE INDEX idx_shared_designs_public ON shared_designs(is_public) WHERE is_public = true;
-CREATE INDEX idx_shared_designs_featured ON shared_designs(featured_at) WHERE featured_at IS NOT NULL;
-CREATE INDEX idx_shared_designs_popular ON shared_designs(total_orders DESC);
+CREATE INDEX IF NOT EXISTS idx_shared_designs_search ON shared_designs USING gin(search_vector);
+CREATE INDEX IF NOT EXISTS idx_shared_designs_creator ON shared_designs(creator_id);
+CREATE INDEX IF NOT EXISTS idx_shared_designs_public ON shared_designs(is_public) WHERE is_public = true;
+CREATE INDEX IF NOT EXISTS idx_shared_designs_featured ON shared_designs(featured_at) WHERE featured_at IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_shared_designs_popular ON shared_designs(total_orders DESC);
 
-CREATE INDEX idx_orders_user ON orders(user_id);
-CREATE INDEX idx_orders_status ON orders(status);
-CREATE INDEX idx_orders_created ON orders(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+CREATE INDEX IF NOT EXISTS idx_orders_created ON orders(created_at DESC);
 
-CREATE INDEX idx_user_favorites_user ON user_favorites(user_id);
-CREATE INDEX idx_design_shares_design ON design_shares(shared_design_id);
+CREATE INDEX IF NOT EXISTS idx_user_favorites_user ON user_favorites(user_id);
+CREATE INDEX IF NOT EXISTS idx_design_shares_design ON design_shares(shared_design_id);
 
 -- Row Level Security
 ALTER TABLE shared_designs ENABLE ROW LEVEL SECURITY;
@@ -120,36 +116,66 @@ ALTER TABLE commission_payments ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
 -- Shared designs: public designs visible to all, private only to creator
+DROP POLICY IF EXISTS "Public designs are visible to everyone" ON shared_designs;
 CREATE POLICY "Public designs are visible to everyone" ON shared_designs
   FOR SELECT USING (is_public = true OR auth.uid() = creator_id);
 
+DROP POLICY IF EXISTS "Users can create shared designs" ON shared_designs;
 CREATE POLICY "Users can create shared designs" ON shared_designs
   FOR INSERT WITH CHECK (auth.uid() = creator_id);
 
+DROP POLICY IF EXISTS "Users can update their own designs" ON shared_designs;
 CREATE POLICY "Users can update their own designs" ON shared_designs
   FOR UPDATE USING (auth.uid() = creator_id);
 
 -- Orders: users can only see their own orders
+DROP POLICY IF EXISTS "Users can view their own orders" ON orders;
 CREATE POLICY "Users can view their own orders" ON orders
   FOR SELECT USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can create orders" ON orders;
 CREATE POLICY "Users can create orders" ON orders
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own orders" ON orders;
 CREATE POLICY "Users can update their own orders" ON orders
   FOR UPDATE USING (auth.uid() = user_id);
 
 -- User favorites: users can only manage their own favorites
+DROP POLICY IF EXISTS "Users can manage their own favorites" ON user_favorites;
 CREATE POLICY "Users can manage their own favorites" ON user_favorites
   FOR ALL USING (auth.uid() = user_id);
 
 -- Design shares: all authenticated users can create shares
+DROP POLICY IF EXISTS "Authenticated users can create shares" ON design_shares;
 CREATE POLICY "Authenticated users can create shares" ON design_shares
   FOR INSERT WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Users can view all shares" ON design_shares;
 CREATE POLICY "Users can view all shares" ON design_shares
   FOR SELECT TO authenticated;
 
 -- Commission payments: creators can view their own payments
+DROP POLICY IF EXISTS "Creators can view their commission payments" ON commission_payments;
 CREATE POLICY "Creators can view their commission payments" ON commission_payments
   FOR SELECT USING (auth.uid() = creator_id);
+
+-- Create function to update search vector
+DROP FUNCTION IF EXISTS update_shared_designs_search_vector() CASCADE;
+CREATE OR REPLACE FUNCTION update_shared_designs_search_vector()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.search_vector :=
+    setweight(to_tsvector('english', NEW.title), 'A') ||
+    setweight(to_tsvector('english', NEW.prompt), 'B') ||
+    setweight(to_tsvector('english', array_to_string(NEW.tags, ' ')), 'C');
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+-- Create trigger to automatically update search vector
+DROP TRIGGER IF EXISTS trigger_update_search_vector ON shared_designs;
+CREATE TRIGGER trigger_update_search_vector
+  BEFORE INSERT OR UPDATE ON shared_designs
+  FOR EACH ROW
+  EXECUTE FUNCTION update_shared_designs_search_vector();

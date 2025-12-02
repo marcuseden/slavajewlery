@@ -1,0 +1,45 @@
+[dotenv@17.2.3] injecting env (7) from .env.local -- tip: ⚙️  override existing env vars with { override: true }
+🏭 Starting production of 100 trending jewelry designs...
+
+📋 All designs follow manufacturing rules and are producible
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Category: Engagement Rings (15 designs)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+[1/100] Generating: Engagement Rings - Classic solitaire with round brilliant diamond
+📝 Prompt: Classic solitaire with round brilliant diamond in rose gold with brushed finish, inspired by Contemporary minimalist, hand-crafted with traditional techniques, professional jewelry design
+🎨 Generating image...
+💾 Image saved: design-1-classic-solitaire-with-round-b.png
+✅ Design 1 saved to database: dd939bbe-0b07-46bc-9621-5a780495eeeb
+
+[2/100] Generating: Engagement Rings - Oval diamond halo setting
+📝 Prompt: Oval diamond halo setting in sterling silver with rhodium plating, featuring 0.5 carat emerald cut diamond, inspired by Gothic dramatic, hand-crafted with traditional techniques, professional jewelry design
+🎨 Generating image...
+💾 Image saved: design-2-oval-diamond-halo-setting.png
+✅ Design 2 saved to database: 3f12415a-dfd9-4b69-8d30-02a57e4a5074
+
+[3/100] Generating: Engagement Rings - Emerald cut three-stone
+📝 Prompt: Emerald cut three-stone in sterling silver with rhodium plating, inspired by Jennifer Lopez glamour, hand-crafted with traditional techniques, professional jewelry design
+🎨 Generating image...
+💾 Image saved: design-3-emerald-cut-three-stone.png
+✅ Design 3 saved to database: 3602711d-8f72-4163-80ce-ef7e1bfd50a2
+
+[4/100] Generating: Engagement Rings - Vintage art deco inspired
+📝 Prompt: Vintage art deco inspired in antiqued sterling silver, featuring birthstone accent stones, inspired by Gothic dramatic, hand-crafted with traditional techniques, professional jewelry design
+🎨 Generating image...
+💾 Image saved: design-4-vintage-art-deco-inspired.png
+✅ Design 4 saved to database: f58bf7e3-8565-49a7-9ff9-cb74fb505ce9
+
+[5/100] Generating: Engagement Rings - Modern minimalist bezel setting
+📝 Prompt: Modern minimalist bezel setting in polished platinum, inspired by Taylor Swift romantic, hand-crafted with traditional techniques, professional jewelry design
+🎨 Generating image...
+💾 Image saved: design-5-modern-minimalist-bezel-settin.png
+✅ Design 5 saved to database: 32f55622-caa7-488b-ba9f-1e98e9b8604f
+
+[6/100] Generating: Engagement Rings - Pear-shaped diamond with side stones
+📝 Prompt: Pear-shaped diamond with side stones in antiqued sterling silver, inspired by Meghan Markle modern minimalism, hand-crafted with traditional techniques, professional jewelry design
+🎨 Generating image...
