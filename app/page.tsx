@@ -90,8 +90,8 @@ export default function HomePage() {
       {/* Hero Section */}
         <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24 pt-24">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-6 sm:space-y-8 text-center">
               {/* Trust Badge */}
               <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-black/10 border border-gray-600/20 rounded-full text-gray-300 text-sm">
                 <CheckCircle className="w-4 h-4" />
@@ -106,14 +106,14 @@ export default function HomePage() {
                 </span>
           </h1>
           
-              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl lg:max-w-none mx-auto lg:mx-0">
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
                 Simply describe your vision in words. We instantly create photorealistic designs 
                 and detailed specifications. Master jewelers in NYC handcraft your unique piece 
                 and deliver it in just{" "}
                 <span className="font-semibold text-gray-300">5 business days</span>.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto justify-center">
                 <Button asChild className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-semibold px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg group shadow-lg">
               <Link href="/design">
                     <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
@@ -128,8 +128,8 @@ export default function HomePage() {
           </div>
 
               {/* Key Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8">
-                <div className="flex items-center justify-center sm:justify-start space-x-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 max-w-2xl mx-auto">
+                <div className="flex items-center justify-center space-x-3">
                   <div className="w-10 h-10 bg-black/20 rounded-full flex items-center justify-center">
                     <Sparkles className="w-5 h-5 text-gray-300" />
                   </div>
@@ -138,7 +138,7 @@ export default function HomePage() {
                     <p className="text-sm text-slate-400">In 30 seconds</p>
                   </div>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start space-x-3">
+                <div className="flex items-center justify-center space-x-3">
                   <div className="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center">
                     <Clock className="w-5 h-5 text-gray-300" />
                   </div>
@@ -147,7 +147,7 @@ export default function HomePage() {
                     <p className="text-sm text-slate-400">Guaranteed</p>
                   </div>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start space-x-3">
+                <div className="flex items-center justify-center space-x-3">
                   <div className="w-10 h-10 bg-teal-500/20 rounded-full flex items-center justify-center">
                     <Award className="w-5 h-5 text-teal-400" />
                   </div>
@@ -159,51 +159,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Hero Images */}
-            <div className="relative mt-0 lg:mt-0 order-1 lg:order-2">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {exampleDesigns.slice(0, 4).map((design, index) => (
-                  <Link 
-                    key={index} 
-                    href={`/design?prompt=${encodeURIComponent(design.prompt || '')}`}
-                    className="relative group cursor-pointer"
-                  >
-                    <div className="aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 group-hover:border-cyan-500 transition-all">
-                      {design.image_url ? (
-                        <img
-                          src={design.image_url}
-                          alt={design.title}
-                          className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-500">
-                          <Sparkles className="w-6 sm:w-8 h-6 sm:h-8" />
-                        </div>
-                      )}
-                    </div>
-                    {design.title && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4">
-                          <p className="text-white text-xs sm:text-sm font-medium">{design.title}</p>
-                          <div className="flex space-x-1 mt-1">
-                            {design.tags?.slice(0, 2).map((tag, i) => (
-                              <span key={i} className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <p className="text-gray-300 text-xs mt-2 font-medium">Click to edit and design →</p>
-                        </div>
-                      </div>
-                    )}
-                  </Link>
-                ))}
-              </div>
-              
-              {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-16 sm:w-24 h-16 sm:h-24 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
-              <div className="absolute -bottom-4 -left-4 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-full blur-xl opacity-20 animate-pulse delay-1000"></div>
-            </div>
           </div>
         </div>
       </section>
