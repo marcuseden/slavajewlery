@@ -69,7 +69,7 @@ export function Header() {
                     Sign Out
                   </Button>
                   <Link href="/design">
-                    <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-6">
+                    <Button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6">
                       Design Now
                     </Button>
                   </Link>
@@ -85,7 +85,7 @@ export function Header() {
                     Sign In
                   </Button>
                   <Link href="/design">
-                    <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-6">
+                    <Button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6">
                       Design Now
                     </Button>
                   </Link>
@@ -143,7 +143,7 @@ export function Header() {
                       Sign Out
                     </Button>
                     <Link href="/design" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button className="w-full bg-amber-500 hover:bg-amber-600 text-black font-semibold">
+                      <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold">
                         Design Now
                       </Button>
                     </Link>
@@ -161,7 +161,7 @@ export function Header() {
                       Sign In
                     </Button>
                     <Link href="/design" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button className="w-full bg-amber-500 hover:bg-amber-600 text-black font-semibold">
+                      <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold">
                         Design Now
                       </Button>
                     </Link>

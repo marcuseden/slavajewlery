@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Header } from '@/components/Header';
 
 // Simplified tag clouds - only Type, Style, and Material
 const JEWELRY_TYPES = [
@@ -24,28 +26,28 @@ const MATERIALS = [
 const EXAMPLE_PROMPTS = [
   {
     title: "Madonna Punk Ring",
-    prompt: "A bold punk rock cocktail ring inspired by Madonna, chunky silver with spikes and dark gemstone, edgy 1980s rebellion style",
-    image: "/example-designs.json" // Will load from our generated examples
+    prompt: "A bold punk rock cocktail ring inspired by Madonna, chunky black metal band with silver spikes and dark onyx center stone, edgy 1980s rebellion style",
+    image: "/designs/madonna-punk-ring-hero_angle.png"
   },
   {
     title: "Grace Kelly Classic",
-    prompt: "A classic engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond, timeless 1950s Hollywood glamour",
-    image: "/example-designs.json"
+    prompt: "A classic solitaire engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond center stone, elegant cathedral setting, 1950s Hollywood glamour style",
+    image: "/designs/grace-kelly-ring-hero_angle.png"
   },
   {
-    title: "Bowie Art Deco Earrings", 
-    prompt: "Statement art deco earrings inspired by David Bowie, geometric gold design with angular patterns, 1920s glamour meets rock star attitude",
-    image: "/example-designs.json"
+    title: "Bowie Lightning Earrings", 
+    prompt: "Statement lightning bolt earrings inspired by David Bowie, geometric gold design with angular zigzag pattern, art deco meets rock star glamour",
+    image: "/designs/bowie-lightning-earrings-hero_angle.png"
   },
   {
     title: "Frida Bohemian Bracelet",
-    prompt: "A bohemian charm bracelet inspired by Frida Kahlo, rose gold with colorful gemstones and artistic charms, Mexican folk art influence",
-    image: "/example-designs.json"
+    prompt: "A bohemian charm bracelet inspired by Frida Kahlo, rose gold setting with turquoise stones and small artistic charms, Mexican folk art influence with organic flowing design",
+    image: "/designs/frida-turquoise-bracelet-hero_angle.png"
   },
   {
-    title: "Cher Disco Statement",
-    prompt: "Bold disco-era statement earrings inspired by Cher, large geometric hoops in white gold with sparkling crystals, 1970s glamour",
-    image: "/example-designs.json"
+    title: "Audrey Hepburn Elegance",
+    prompt: "An elegant multi-strand pearl necklace inspired by Audrey Hepburn, graduated white pearls with diamond clasp, classic 1960s sophistication and timeless grace",
+    image: "/designs/audrey-pearl-necklace-hero_angle.png"
   }
 ];
 
@@ -56,11 +58,22 @@ interface GeneratedImage {
 }
 
 export function SimpleDesignForm() {
+  const searchParams = useSearchParams();
   const [vision, setVision] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [error, setError] = useState('');
   const [showTips, setShowTips] = useState(true);
+
+  // Pre-fill the form with prompt from URL parameters
+  useEffect(() => {
+    const promptFromUrl = searchParams.get('prompt');
+    if (promptFromUrl) {
+      setVision(promptFromUrl);
+      // If there's a prompt, hide tips to focus on the form
+      setShowTips(false);
+    }
+  }, [searchParams]);
 
   const handleGenerate = async () => {
     if (!vision.trim() || vision.length < 20) {
@@ -120,33 +133,10 @@ export function SimpleDesignForm() {
 
   return (
     <div className="min-h-screen bg-stone-950">
-      {/* Header */}
-      <header className="border-b border-stone-800 bg-stone-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-xl font-semibold text-stone-100 hover:text-stone-300 transition-colors">
-                Slava Jewelry Studio
-              </Link>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="text-stone-400 text-sm">
-                AI Design Generator
-              </div>
-              <Link 
-                href="/"
-                className="text-stone-400 hover:text-stone-300 text-sm transition-colors"
-              >
-                Home
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto px-4 py-12 pt-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-stone-100 mb-4">
             Design Your Dream Jewelry
@@ -360,8 +350,15 @@ export function SimpleDesignForm() {
                 onClick={() => setVision(example.prompt)}
                 className="text-left bg-stone-800 border border-stone-600 rounded-lg hover:bg-stone-700 hover:border-stone-500 transition-all group overflow-hidden"
               >
-                <div className="aspect-square bg-stone-700 flex items-center justify-center">
-                  <span className="text-stone-400 text-sm">AI Generated Preview</span>
+                <div className="aspect-square relative bg-stone-700 overflow-hidden">
+                  <img
+                    src={example.image}
+                    alt={example.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+                    AI Generated
+                  </div>
                 </div>
                 <div className="p-4">
                   <h4 className="font-medium text-stone-200 mb-2">{example.title}</h4>

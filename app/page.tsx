@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Sparkles, Clock, Award, Shield, ArrowRight, Star, CheckCircle } from "lucide-react";
+import { AuthProvider } from '@/components/AuthProvider';
+import { Header } from '@/components/Header';
 
 interface ExampleDesign {
   id: string;
@@ -48,8 +50,11 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen relative bg-slate-950">
-      {/* Manhattan Skyline Background */}
+    <AuthProvider>
+      <div className="min-h-screen relative bg-slate-950">
+        <Header />
+        
+        {/* Manhattan Skyline Background */}
       <div 
         className="fixed inset-0 z-0"
         style={{
@@ -82,8 +87,8 @@ export default function HomePage() {
       {/* Content */}
       <div className="relative z-10">
 
-      {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+        {/* Hero Section */}
+        <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24 pt-24">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
@@ -158,8 +163,12 @@ export default function HomePage() {
             <div className="relative mt-8 lg:mt-0">
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {exampleDesigns.slice(0, 4).map((design, index) => (
-                  <div key={index} className="relative group">
-                    <div className="aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 group-hover:border-slate-600 transition-all">
+                  <Link 
+                    key={index} 
+                    href={`/design?prompt=${encodeURIComponent(design.prompt || '')}`}
+                    className="relative group cursor-pointer"
+                  >
+                    <div className="aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 group-hover:border-cyan-500 transition-all">
                       {design.image_url ? (
                         <img
                           src={design.image_url}
@@ -183,10 +192,11 @@ export default function HomePage() {
                               </span>
                             ))}
                           </div>
+                          <p className="text-cyan-400 text-xs mt-2 font-medium">Click to edit and design →</p>
                         </div>
                       </div>
                     )}
-                  </div>
+                  </Link>
                 ))}
               </div>
               
@@ -292,7 +302,11 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {exampleDesigns.slice(0, 6).map((design, index) => (
-              <div key={index} className="bg-stone-900 rounded-2xl overflow-hidden border border-stone-700 group hover:border-stone-600 transition-all hover:transform hover:scale-105">
+              <Link 
+                key={index}
+                href={`/design?prompt=${encodeURIComponent(design.prompt || '')}`}
+                className="bg-stone-900 rounded-2xl overflow-hidden border border-stone-700 group hover:border-cyan-500 transition-all hover:transform hover:scale-105 cursor-pointer"
+              >
                 <div className="aspect-square relative">
                   {design.image_url ? (
                     <img
@@ -308,6 +322,11 @@ export default function HomePage() {
                   <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
                     AI Generated
                   </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+                    <div className="text-cyan-400 font-medium text-sm bg-black/50 backdrop-blur-sm px-3 py-2 rounded-full">
+                      Click to edit prompt →
+                    </div>
+                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="font-semibold text-stone-100 mb-2">{design.title || 'Custom Design'}</h3>
@@ -322,7 +341,7 @@ export default function HomePage() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
             </div>
 
@@ -456,5 +475,6 @@ export default function HomePage() {
       </footer>
       </div>
     </div>
+    </AuthProvider>
   );
 }
