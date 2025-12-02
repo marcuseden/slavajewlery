@@ -132,11 +132,41 @@ export function SimpleDesignForm() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-950">
+    <div className="min-h-screen relative bg-slate-950">
       <Header />
+      
+      {/* Manhattan Skyline Background */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `url('/manhattan-skyline-bw.svg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
+          backgroundRepeat: 'no-repeat',
+          filter: 'brightness(1.5) contrast(0.8) opacity(0.4) sepia(20%) saturate(0.8)',
+        }}
+      />
+      
+      {/* Overlay gradient */}
+      <div 
+        className="fixed inset-0 z-1 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(30, 41, 59, 0.7) 70%, rgba(2, 6, 23, 0.85) 100%)'
+        }}
+      />
+      
+      {/* Subtle city lights effect */}
+      <div 
+        className="fixed inset-0 z-2 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                       radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.05) 0%, transparent 40%),
+                       radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 45%)`
+        }}
+      />
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12 pt-24">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-12 pt-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-stone-100 mb-4">
             Design Your Dream Jewelry

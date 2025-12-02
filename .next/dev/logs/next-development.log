@@ -3941,3 +3941,93 @@ Debug info:
 [00:44:45.812] Server  LOG      ✓ Compiled in 24ms
 [00:44:52.076] Server  LOG      ✓ Compiled in 41ms
 [00:44:58.224] Server  LOG      ✓ Compiled in 32ms
+[00:45:46.474] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/page.tsx:465:1
+Parsing ecmascript source code failed
+  463 |     </div>
+  464 |   );
+> 465 | }
+      | ^
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Server Component]
+[00:45:46.474] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/page.tsx:465:1
+Parsing ecmascript source code failed
+  463 |     </div>
+  464 |   );
+> 465 | }
+      | ^
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/page.tsx [Server Component]
+[00:45:47.521] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/page.tsx
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+
+Caused by:
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+
+Debug info:
+- An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+- Execution of <ModuleChunkItem as EcmascriptChunkItem>::content_with_async_module_info failed
+- Execution of *EcmascriptChunkItemContent::new failed
+- Execution of EcmascriptModuleContent::new failed
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+[00:45:47.521] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/page.tsx
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+
+Caused by:
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+
+Debug info:
+- An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+- Execution of <ModuleChunkItem as EcmascriptChunkItem>::content_with_async_module_info failed
+- Execution of *EcmascriptChunkItemContent::new failed
+- Execution of EcmascriptModuleContent::new failed
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+[00:45:47.521] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/page.tsx
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+
+Caused by:
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+
+Debug info:
+- An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+- Execution of <ModuleChunkItem as EcmascriptChunkItem>::content_with_async_module_info failed
+- Execution of *EcmascriptChunkItemContent::new failed
+- Execution of EcmascriptModuleContent::new failed
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+[00:45:47.521] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/page.tsx
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+
+Caused by:
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+
+Debug info:
+- An error occurred while generating the chunk item [project]/Documents/Cursor-projects/slava jewlery/app/page.tsx [app-rsc] (ecmascript)
+- Execution of <ModuleChunkItem as EcmascriptChunkItem>::content_with_async_module_info failed
+- Execution of *EcmascriptChunkItemContent::new failed
+- Execution of EcmascriptModuleContent::new failed
+- Expected export to be in eval context "default" ImportMap { imports: {}, namespace_imports: {("clientProxy", #21): 1}, reexports: [], references: {ImportMapReference { module_path: "./page.tsx", imported_symbol: ModuleEvaluation, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }, ImportMapReference { module_path: "./page.tsx", imported_symbol: Exports, annotations: ImportAnnotations { map: {"__turbopack-helper__": "true", "turbopack-transition": "next-ecmascript-client-reference"} }, issue_source: Some(IssueSource { source: ResolvedVc(RawVc::TaskCell(755, "turbopack_core::file_source::FileSource#0")), range: None }) }}, has_imports: true, has_exports: false, has_top_level_await: false, strict: false, attributes: {}, full_star_imports: {"./page.tsx"}, exports: {} }
+[00:46:54.463] Server  LOG      ✓ Compiled in 91ms
+[00:47:05.010] Server  LOG      ✓ Compiled in 35ms
+[00:48:16.404] Server  LOG      ✓ Compiled in 80ms
+[00:48:25.326] Server  LOG      ✓ Compiled in 32ms

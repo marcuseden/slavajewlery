@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Black and white gradient for buildings -->
+    <linearGradient id="buildingGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a202c;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Subtle lighting effects -->
+    <linearGradient id="windowLight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a5568;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#718096;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#4a5568;stop-opacity:0.3" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Manhattan Skyline Silhouette -->
+  <g fill="url(#buildingGradient)" opacity="0.8">
+    <!-- Lower Manhattan / Financial District -->
+    <rect x="50" y="650" width="20" height="250"/>
+    <rect x="80" y="600" width="25" height="300"/>
+    <rect x="115" y="580" width="30" height="320"/>
+    <rect x="155" y="550" width="35" height="350"/>
+    
+    <!-- One World Trade Center -->
+    <rect x="200" y="350" width="40" height="550"/>
+    <polygon points="200,350 220,300 240,350"/>
+    
+    <!-- Surrounding towers -->
+    <rect x="250" y="450" width="30" height="450"/>
+    <rect x="290" y="500" width="25" height="400"/>
+    <rect x="325" y="480" width="35" height="420"/>
+    
+    <!-- Brooklyn Bridge area -->
+    <rect x="370" y="520" width="20" height="380"/>
+    <rect x="400" y="540" width="25" height="360"/>
+    
+    <!-- Midtown Manhattan -->
+    <rect x="450" y="450" width="30" height="450"/>
+    <rect x="490" y="400" width="35" height="500"/>
+    <rect x="535" y="350" width="40" height="550"/>
+    
+    <!-- Empire State Building area -->
+    <rect x="585" y="250" width="45" height="650"/>
+    <polygon points="585,250 607.5,200 630,250"/>
+    
+    <!-- Chrysler Building -->
+    <rect x="640" y="300" width="35" height="600"/>
+    <polygon points="640,300 657.5,250 675,300"/>
+    
+    <!-- More Midtown -->
+    <rect x="685" y="380" width="30" height="520"/>
+    <rect x="725" y="420" width="40" height="480"/>
+    <rect x="775" y="350" width="35" height="550"/>
+    <rect x="820" y="400" width="30" height="500"/>
+    
+    <!-- Central Park East -->
+    <rect x="860" y="500" width="25" height="400"/>
+    <rect x="895" y="480" width="30" height="420"/>
+    <rect x="935" y="450" width="35" height="450"/>
+    
+    <!-- Upper Manhattan -->
+    <rect x="980" y="520" width="25" height="380"/>
+    <rect x="1015" y="550" width="20" height="350"/>
+    <rect x="1045" y="580" width="25" height="320"/>
+    <rect x="1080" y="600" width="30" height="300"/>
+    
+    <!-- Additional variety -->
+    <rect x="1120" y="620" width="20" height="280"/>
+    <rect x="1150" y="640" width="25" height="260"/>
+    <rect x="1185" y="660" width="15" height="240"/>
+  </g>
+  
+  <!-- Subtle window lighting effects -->
+  <g opacity="0.15">
+    <rect x="210" y="400" width="20" height="3" fill="#ffffff"/>
+    <rect x="210" y="450" width="20" height="3" fill="#ffffff"/>
+    <rect x="210" y="500" width="20" height="3" fill="#ffffff"/>
+    <rect x="595" y="300" width="25" height="3" fill="#ffffff"/>
+    <rect x="595" y="350" width="25" height="3" fill="#ffffff"/>
+    <rect x="650" y="350" width="15" height="3" fill="#ffffff"/>
+    <rect x="650" y="400" width="15" height="3" fill="#ffffff"/>
+    <rect x="730" y="450" width="20" height="3" fill="#ffffff"/>
+    <rect x="790" y="400" width="15" height="3" fill="#ffffff"/>
+  </g>
+</svg>

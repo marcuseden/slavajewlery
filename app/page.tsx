@@ -69,11 +69,11 @@ export default function HomePage() {
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: `url('/manhattan-skyline.svg')`,
+            backgroundImage: `url('/manhattan-skyline-bw.svg')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center bottom',
             backgroundRepeat: 'no-repeat',
-            filter: 'grayscale(100%) contrast(1.2) brightness(0.6) opacity(0.8)',
+            filter: 'brightness(1.5) contrast(0.8) opacity(0.4) sepia(20%) saturate(0.8)',
           }}
         />
         
@@ -81,7 +81,7 @@ export default function HomePage() {
         <div 
           className="fixed inset-0 z-1 pointer-events-none"
           style={{
-            background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.5) 0%, rgba(15, 23, 42, 0.7) 40%, rgba(30, 41, 59, 0.8) 70%, rgba(2, 6, 23, 0.9) 100%)'
+            background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(30, 41, 59, 0.7) 70%, rgba(2, 6, 23, 0.85) 100%)'
           }}
         />
         

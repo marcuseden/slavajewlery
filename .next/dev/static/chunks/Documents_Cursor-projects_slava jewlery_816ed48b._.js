@@ -1233,11 +1233,11 @@ function HomePage() {
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "fixed inset-0 z-0",
                     style: {
-                        backgroundImage: `url('/manhattan-skyline.svg')`,
+                        backgroundImage: `url('/manhattan-skyline-bw.svg')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center bottom',
                         backgroundRepeat: 'no-repeat',
-                        filter: 'grayscale(100%) contrast(1.2) brightness(0.6) opacity(0.8)'
+                        filter: 'brightness(1.5) contrast(0.8) opacity(0.4) sepia(20%) saturate(0.8)'
                     }
                 }, void 0, false, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
@@ -1247,7 +1247,7 @@ function HomePage() {
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "fixed inset-0 z-1 pointer-events-none",
                     style: {
-                        background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.5) 0%, rgba(15, 23, 42, 0.7) 40%, rgba(30, 41, 59, 0.8) 70%, rgba(2, 6, 23, 0.9) 100%)'
+                        background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.3) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(30, 41, 59, 0.7) 70%, rgba(2, 6, 23, 0.85) 100%)'
                     }
                 }, void 0, false, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
