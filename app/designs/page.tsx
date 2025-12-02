@@ -393,6 +393,8 @@ export default function DesignsPage() {
               </Link>
             </div>
           </div>
+          </div>
+          </div>
         </div>
       </div>
     </AuthProvider>

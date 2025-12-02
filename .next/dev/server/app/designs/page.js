@@ -1,6 +1,6 @@
 var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/designs/page.js")
 R.c("server/chunks/ssr/89751_next_dist_84c8e8b0._.js")
-R.c("server/chunks/ssr/[root-of-the-server]__3307deb6._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__38c2c65d._.js")
 R.c("server/chunks/ssr/89751_d30517ec._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__e8a2741f._.js")
 R.c("server/chunks/ssr/Documents_Cursor-projects_slava jewlery_app_5c754987._.js")
