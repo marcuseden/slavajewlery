@@ -226,33 +226,22 @@ export function SimpleDesignForm() {
     <div className="min-h-screen relative bg-slate-950">
       <Header />
       
-      {/* Manhattan Skyline Background */}
+      {/* Times Square NYC Background */}
       <div 
         className="fixed inset-0 z-0"
         style={{
-          backgroundImage: `url('/manhattan-skyline-photo.jpg')`,
+          backgroundImage: `url('/times-square-backdrop.jpg')`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center bottom',
+          backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
-          filter: 'brightness(0.7) contrast(1.2) opacity(0.6) grayscale(100%)',
         }}
       />
       
-      {/* Overlay gradient */}
+      {/* Black overlay with 20% opacity */}
       <div 
-        className="fixed inset-0 z-1 pointer-events-none"
+        className="fixed inset-0 z-1 pointer-events-none bg-black"
         style={{
-          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.8) 100%)'
-        }}
-      />
-      
-      {/* Subtle city lights effect */}
-      <div 
-        className="fixed inset-0 z-2 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse at 25% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-                       radial-gradient(ellipse at 50% 85%, rgba(255, 255, 255, 0.015) 0%, transparent 40%),
-                       radial-gradient(ellipse at 75% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 45%)`
+          opacity: 0.2
         }}
       />
 
@@ -519,7 +508,26 @@ export function SimpleDesignForm() {
                   </div>
                 )}
                 
-                <Button className="w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg">
+                <Button 
+                  onClick={() => {
+                    if (currentExample && pricingBreakdown) {
+                      // Store checkout data
+                      localStorage.setItem('checkoutData', JSON.stringify({
+                        designId: currentExample.title.toLowerCase().replace(/\s+/g, '-'),
+                        customPrompt: vision,
+                        pricingBreakdown: {
+                          subtotal: pricingBreakdown.finalPrice,
+                          discount: 0,
+                          commission: 0,
+                          total: pricingBreakdown.finalPrice
+                        },
+                        images: [{ url: currentExample.image }]
+                      }));
+                      window.location.href = '/checkout';
+                    }
+                  }}
+                  className="w-full bg-black hover:bg-gray-900 text-white font-semibold h-12 text-lg"
+                >
                   Order This Design (${pricingBreakdown?.finalPrice.toLocaleString() || '2,500+'})
                 </Button>
               </div>

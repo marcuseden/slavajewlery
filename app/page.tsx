@@ -65,33 +65,22 @@ export default function HomePage() {
       <div className="min-h-screen relative bg-slate-950">
         <Header />
         
-        {/* Manhattan Skyline Background */}
+        {/* Times Square NYC Background */}
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: `url('/manhattan-skyline-photo.jpg')`,
+            backgroundImage: `url('/times-square-backdrop.jpg')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center bottom',
+            backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            filter: 'brightness(0.7) contrast(1.2) opacity(0.6) grayscale(100%)',
           }}
         />
         
-        {/* Overlay gradient */}
+        {/* Black overlay with 20% opacity */}
         <div 
-          className="fixed inset-0 z-1 pointer-events-none"
+          className="fixed inset-0 z-1 pointer-events-none bg-black"
           style={{
-            background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.8) 100%)'
-          }}
-        />
-        
-        {/* Subtle city lights effect */}
-        <div 
-          className="fixed inset-0 z-2 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse at 25% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-                         radial-gradient(ellipse at 50% 85%, rgba(255, 255, 255, 0.015) 0%, transparent 40%),
-                         radial-gradient(ellipse at 75% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 45%)`
+            opacity: 0.2
           }}
         />
       
@@ -240,7 +229,7 @@ export default function HomePage() {
             <div className="flex items-center space-x-2">
               <div className="flex">
                 {[1,2,3,4,5].map(i => (
-                  <Star key={i} className="w-5 h-5 fill-blue-400 text-gray-300" />
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
               <span className="text-stone-300 ml-2">"Absolutely stunning results" - Sarah M.</span>
@@ -513,7 +502,7 @@ export default function HomePage() {
               </p>
               <div className="flex space-x-2">
                 {[1,2,3,4,5].map(i => (
-              <Star key={i} className="w-4 h-4 fill-blue-400 text-gray-300" />
+              <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
                 <span className="text-stone-400 text-sm ml-2">4.9/5 from 500+ reviews</span>
               </div>

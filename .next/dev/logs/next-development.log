@@ -4078,3 +4078,17 @@ Debug info:
 [01:14:24.741] Server  LOG      ✓ Compiled in 275ms
 [01:14:40.406] Server  LOG      ✓ Compiled in 186ms
 [01:15:01.409] Server  LOG      ✓ Compiled in 262ms
+[01:17:34.676] Server  LOG     Generating jewelry design for: "I want a bootsy collins neckless for a man in gold with the name Marcus make it funky like in the 70..."
+[01:17:34.677] Server  LOG     Generating packshot_front of the same design...
+[01:17:34.678] Server  LOG     Generating hero_angle of the same design...
+[01:17:34.678] Server  LOG     Generating on_model_worn of the same design...
+[01:17:34.678] Server  LOG     Generating macro_detail of the same design...
+[01:17:52.263] Server  LOG     Generated 4/4 images successfully
+[01:48:13.989] Server  LOG      ✓ Compiled in 0ms
+[01:48:57.143] Server  LOG      ✓ Compiled in 217ms
+[01:49:09.724] Server  LOG      ✓ Compiled in 59ms
+[01:51:31.704] Server  LOG      ✓ Compiled in 94ms
+[01:52:29.569] Server  LOG      ✓ Compiled in 74ms
+[01:53:42.784] Server  LOG      ✓ Compiled in 86ms
+[01:53:52.123] Server  LOG      ✓ Compiled in 90ms
+[01:54:06.844] Server  LOG      ✓ Compiled in 151ms
