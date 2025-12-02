@@ -1,5 +1,6 @@
 {
   "/checkout/page": "app/checkout/page.js",
   "/design/page": "app/design/page.js",
+  "/designs/page": "app/designs/page.js",
   "/page": "app/page.js"
 }

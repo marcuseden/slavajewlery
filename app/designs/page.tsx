@@ -197,7 +197,7 @@ export default function DesignsPage() {
           </div>
 
           {/* Search and Filters */}
-          <div className="bg-gray-900 rounded-lg p-6 mb-8">
+          <div className="bg-black/30 backdrop-blur-md rounded-lg p-6 mb-8 border border-gray-700/50">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               {/* Search */}
               <div className="relative flex-1">
@@ -252,7 +252,7 @@ export default function DesignsPage() {
           {/* Design Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredDesigns.map((design) => (
-              <div key={design.id} className="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-gray-600 transition-all group">
+              <div key={design.id} className="bg-black/40 backdrop-blur-md rounded-lg overflow-hidden border border-gray-700/50 hover:border-gray-500 transition-all group">
                 {/* Image */}
                 <div className="aspect-square relative">
                   <img

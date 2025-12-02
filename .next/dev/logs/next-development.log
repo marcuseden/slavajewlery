@@ -99,3 +99,872 @@ Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
 [00:14:19.267] Server  LOG      ✓ Compiled in 41ms
 [00:14:31.658] Server  LOG      ✓ Compiled in 36ms
 [00:23:09.955] Server  LOG        Reload env: .env.local
+[00:47:36.606] Server  ERROR    ⨯ ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+
+[00:47:36.777] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:47:36.777] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:47:36.861] Browser ERROR   uncaughtError: Error: ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+
+[00:47:37.001] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:47:37.001] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:48:16.201] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:48:17.164] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:48:17.309] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:48:17.309] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark" suppressHydrationWarning={true}>
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           style={{overflow-x:"hidden",overflow-y:"hidden"}}
+                          >
+                  ...
+
+[00:48:22.798] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:48:23.076] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:48:23.076] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+[00:49:03.161] Server  LOG      ✓ Compiled in 220ms
+[00:49:48.659] Server  LOG      ✓ Compiled in 54ms
+[00:50:01.960] Server  LOG      ✓ Compiled in 72ms
+[00:50:15.389] Server  LOG      ✓ Compiled in 81ms
+[00:51:18.841] Server  LOG      ✓ Compiled in 116ms
+[00:51:31.213] Server  LOG      ✓ Compiled in 46ms
+[00:51:35.999] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:35.999] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:35.999] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:35.999] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:35.999] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:35.999] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:40.480] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:40.480] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:41.650] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:41.650] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:41.650] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:41.650] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:48.508] Server  LOG      ✓ Compiled in 59ms
+[00:51:48.680] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:51:48.680] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:00.144] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:00.144] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:00.474] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:00.474] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:00.474] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:00.474] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.731] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.731] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.942] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.942] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.943] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.943] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.943] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:06.943] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.033] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.033] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.292] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.293] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.293] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:5
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |     ^
+  401 |   );
+  402 | }
+  403 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.293] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:6
+Parsing ecmascript source code failed
+  398 |         </div>
+  399 |       </div>
+> 400 |     </AuthProvider>
+      |      ^^^^^^^^^^^^^^
+  401 |   );
+  402 | }
+  403 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:52:08.293] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Documents...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="dark" suppressHydrationWarning={true}>
+                          <body
+                            className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__var..."
+-                           style={{overflow-x:"hidden",overflow-y:"hidden"}}
+                          >
+                  ...
+

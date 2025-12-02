@@ -258,7 +258,7 @@ export function SimpleDesignForm() {
 
         {/* Simplified Tag Clouds */}
         {showTips && (
-          <div className="bg-stone-900 border border-stone-700 rounded-lg p-6 mb-6">
+          <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 mb-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold text-stone-100">
                 Quick Tags
@@ -395,7 +395,7 @@ export function SimpleDesignForm() {
         )}
 
         {/* Input Form */}
-        <div className="bg-stone-900 border border-stone-700 rounded-lg p-8 mb-8">
+        <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-8 mb-8">
           <div className="space-y-6">
             <div>
               <label htmlFor="vision" className="block text-lg font-medium text-stone-200 mb-4">
@@ -571,7 +571,7 @@ export function SimpleDesignForm() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {generatedImages.map((image, index) => (
-                <div key={index} className="bg-stone-900 border border-stone-700 rounded-lg overflow-hidden">
+                <div key={index} className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg overflow-hidden">
                   <div className="aspect-square relative">
                     <img
                       src={image.url}
@@ -592,7 +592,7 @@ export function SimpleDesignForm() {
             </div>
 
             <div className="text-center pt-8">
-              <div className="bg-stone-900 border border-stone-700 rounded-lg p-6 max-w-2xl mx-auto">
+              <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 max-w-2xl mx-auto">
                 <h3 className="text-lg font-medium text-stone-200 mb-4">
                   Love this design?
                 </h3>
@@ -623,7 +623,7 @@ export function SimpleDesignForm() {
         {/* Prompt Tips Modal */}
         {showPromptTips && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-stone-900 border border-stone-700 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
+            <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
               <div className="flex items-center justify-between p-6 border-b border-stone-700">
                 <h3 className="text-xl font-semibold text-stone-100">
                   Improve Your Prompt (Quality: {promptQuality}/5)
