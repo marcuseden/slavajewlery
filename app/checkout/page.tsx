@@ -165,7 +165,7 @@ export default function CheckoutPage() {
             {/* Left Column - Forms */}
             <div>
               {step === 1 && (
-                <div className="bg-gray-900 rounded-lg p-6">
+                <div className="bg-black/30 backdrop-blur-md rounded-lg p-6">
                   <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <User className="w-6 h-6" />
                     Shipping Information
@@ -253,7 +253,7 @@ export default function CheckoutPage() {
               )}
 
               {step === 2 && (
-                <div className="bg-gray-900 rounded-lg p-6">
+                <div className="bg-black/30 backdrop-blur-md rounded-lg p-6">
                   <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <CreditCard className="w-6 h-6" />
                     Payment Method
@@ -355,7 +355,7 @@ export default function CheckoutPage() {
               )}
 
               {step === 3 && (
-                <div className="bg-gray-900 rounded-lg p-6 text-center">
+                <div className="bg-black/30 backdrop-blur-md rounded-lg p-6 text-center">
                   <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Check className="w-8 h-8 text-white" />
                   </div>
@@ -398,7 +398,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Right Column - Order Summary */}
-            <div className="bg-gray-900 rounded-lg p-6 h-fit">
+            <div className="bg-black/30 backdrop-blur-md rounded-lg p-6 h-fit">
               <h3 className="text-xl font-bold text-white mb-4">Order Summary</h3>
               
               {checkoutData.images && checkoutData.images.length > 0 && (

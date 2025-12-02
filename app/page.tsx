@@ -164,7 +164,7 @@ export default function HomePage() {
       </section>
 
       {/* Social Proof */}
-      <section className="px-6 py-12 bg-stone-900/30">
+      <section className="px-6 py-12 bg-black/30 backdrop-blur-md/30">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
             <div className="flex items-center space-x-8 text-stone-400">
@@ -207,7 +207,7 @@ export default function HomePage() {
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Grace Kelly Example */}
-            <div className="bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group">
+            <div className="bg-black/30 backdrop-blur-md/50 border border-stone-700 rounded-2xl overflow-hidden group">
               <div className="aspect-square relative overflow-hidden">
                 <img
                   src="/designs/grace-kelly-ring-hero_angle.png"
@@ -236,7 +236,7 @@ export default function HomePage() {
             </div>
 
             {/* Madonna Punk Example */}
-            <div className="bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group">
+            <div className="bg-black/30 backdrop-blur-md/50 border border-stone-700 rounded-2xl overflow-hidden group">
               <div className="aspect-square relative overflow-hidden">
                 <img
                   src="/designs/madonna-punk-ring-hero_angle.png"
@@ -265,7 +265,7 @@ export default function HomePage() {
             </div>
 
             {/* Audrey Hepburn Example */}
-            <div className="bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group">
+            <div className="bg-black/30 backdrop-blur-md/50 border border-stone-700 rounded-2xl overflow-hidden group">
               <div className="aspect-square relative overflow-hidden">
                 <img
                   src="/designs/audrey-pearl-necklace-hero_angle.png"
@@ -315,7 +315,7 @@ export default function HomePage() {
       </section>
 
       {/* Examples Showcase */}
-      <section id="examples" className="px-6 py-20 bg-stone-900/30">
+      <section id="examples" className="px-6 py-20 bg-black/30 backdrop-blur-md/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-4">
@@ -332,7 +332,7 @@ export default function HomePage() {
               <Link 
                 key={index}
                 href={`/design?prompt=${encodeURIComponent(design.prompt || '')}`}
-                className="bg-stone-900 rounded-2xl overflow-hidden border border-stone-700 group hover:border-cyan-500 transition-all hover:transform hover:scale-105 cursor-pointer"
+                className="bg-black/30 backdrop-blur-md rounded-2xl overflow-hidden border border-stone-700 group hover:border-cyan-500 transition-all hover:transform hover:scale-105 cursor-pointer"
               >
                 <div className="aspect-square relative">
                   {design.image_url ? (
@@ -370,7 +370,7 @@ export default function HomePage() {
             </div>
 
           <div className="text-center">
-            <Button asChild className="bg-black hover:bg-gray-900 text-white font-semibold px-8 py-6 text-lg group">
+            <Button asChild className="bg-black hover:bg-black/30 backdrop-blur-md text-white font-semibold px-8 py-6 text-lg group">
               <Link href="/design">
                 Create Your Own Design
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -394,24 +394,24 @@ export default function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
+            <div className="text-center bg-black/30 backdrop-blur-md/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
               <Clock className="w-16 h-16 mx-auto mb-4 text-gray-300" />
               <h3 className="font-semibold text-stone-100 mb-3 text-xl">5-Day Delivery</h3>
               <p className="text-stone-400">Guaranteed delivery in 5 business days or your money back. No exceptions.</p>
             </div>
-            <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
+            <div className="text-center bg-black/30 backdrop-blur-md/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
               <Award className="w-16 h-16 mx-auto mb-4 text-gray-300" />
               <h3 className="font-semibold text-stone-100 mb-3 text-xl">Master Craftsmanship</h3>
               <p className="text-stone-400">Every piece crafted by NYC's finest jewelers with decades of experience.</p>
             </div>
-            <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
+            <div className="text-center bg-black/30 backdrop-blur-md/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
               <Shield className="w-16 h-16 mx-auto mb-4 text-green-400" />
               <h3 className="font-semibold text-stone-100 mb-3 text-xl">Lifetime Warranty</h3>
               <p className="text-stone-400">Free repairs, resizing, and polishing for the lifetime of your piece.</p>
             </div>
               </div>
 
-          <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
+          <div className="text-center bg-black/30 backdrop-blur-md/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
             <p className="text-2xl font-bold text-stone-100 mb-2">100% Satisfaction Guarantee</p>
             <p className="text-stone-300">Not completely in love with your piece? We'll remake it until you are, or provide a full refund.</p>
           </div>
@@ -429,7 +429,7 @@ export default function HomePage() {
             Your perfect piece is just one description away.
           </p>
           <div className="space-y-4">
-            <Button asChild className="bg-black hover:bg-gray-900 text-white font-bold px-12 py-8 text-xl group">
+            <Button asChild className="bg-black hover:bg-black/30 backdrop-blur-md text-white font-bold px-12 py-8 text-xl group">
             <Link href="/design">
                 <Sparkles className="w-6 h-6 mr-3" />
               Start Designing Now

@@ -968,3 +968,77 @@ It can also happen if the client has a browser extension installed which messes 
                           >
                   ...
 
+[00:53:27.767] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:53:27.769] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:53:37.239] Server  LOG      ✓ Compiled in 81ms
+[00:53:37.322] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+[00:53:48.326] Server  LOG      ✓ Compiled in 94ms
+[00:53:48.677] Browser ERROR   ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx:400:1
+Parsing ecmascript source code failed
+  398 |     </AuthProvider>
+  399 |   );
+> 400 | }
+      | ^
+  401 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component Browser]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Client Component SSR]
+    ./Documents/Cursor-projects/slava jewlery/app/designs/page.tsx [Server Component]
