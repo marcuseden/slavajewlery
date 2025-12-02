@@ -6,17 +6,28 @@ import { useState, useEffect } from "react";
 import { Sparkles, Clock, Award, Shield, ArrowRight, Star, CheckCircle } from "lucide-react";
 import { AuthProvider } from '@/components/AuthProvider';
 import { Header } from '@/components/Header';
+import { JewelryViewer } from '@/components/JewelryViewer';
+
+interface JewelryImage {
+  type: string;
+  url?: string;
+  local_url?: string;
+  prompt: string;
+}
 
 interface ExampleDesign {
   id: string;
   title: string;
   prompt: string;
-  tags: string[];
+  tags?: string[];
   image_url?: string;
+  images?: JewelryImage[];
 }
 
 export default function HomePage() {
   const [exampleDesigns, setExampleDesigns] = useState<ExampleDesign[]>([]);
+  const [selectedDesign, setSelectedDesign] = useState<ExampleDesign | null>(null);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   useEffect(() => {
     // Load our consistent design examples
@@ -55,34 +66,34 @@ export default function HomePage() {
         <Header />
         
         {/* Manhattan Skyline Background */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: `url('/manhattan-skyline.svg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center bottom',
-          backgroundRepeat: 'no-repeat',
-          filter: 'grayscale(100%) contrast(0.8) brightness(0.4) opacity(0.7) blur(0.5px)',
-        }}
-      />
-      
-      {/* Overlay gradient */}
-      <div 
-        className="fixed inset-0 z-1 pointer-events-none"
-        style={{
-          background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.7) 0%, rgba(15, 23, 42, 0.85) 40%, rgba(30, 41, 59, 0.9) 70%, rgba(2, 6, 23, 0.95) 100%)'
-        }}
-      />
-      
-      {/* Subtle city lights effect */}
-      <div 
-        className="fixed inset-0 z-1 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                       radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.03) 0%, transparent 40%),
-                       radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 45%)`
-        }}
-      />
+        <div 
+          className="fixed inset-0 z-0"
+          style={{
+            backgroundImage: `url('/manhattan-skyline.svg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
+            backgroundRepeat: 'no-repeat',
+            filter: 'grayscale(100%) contrast(1.2) brightness(0.6) opacity(0.8)',
+          }}
+        />
+        
+        {/* Overlay gradient */}
+        <div 
+          className="fixed inset-0 z-1 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.5) 0%, rgba(15, 23, 42, 0.7) 40%, rgba(30, 41, 59, 0.8) 70%, rgba(2, 6, 23, 0.9) 100%)'
+          }}
+        />
+        
+        {/* Subtle city lights effect */}
+        <div 
+          className="fixed inset-0 z-2 pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                         radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.05) 0%, transparent 40%),
+                         radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 45%)`
+          }}
+        />
       
       {/* Content */}
       <div className="relative z-10">
@@ -229,7 +240,7 @@ export default function HomePage() {
             <div className="flex items-center space-x-2">
               <div className="flex">
                 {[1,2,3,4,5].map(i => (
-                  <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  <Star key={i} className="w-5 h-5 fill-blue-400 text-blue-400" />
                 ))}
               </div>
               <span className="text-stone-300 ml-2">"Absolutely stunning results" - Sarah M.</span>
@@ -238,50 +249,122 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* How It Works - Prompt to Product */}
       <section id="how-it-works" className="px-6 py-20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-4">
-              From Idea to Reality in 3 Steps
-          </h2>
+              From Words to Wearable Art
+            </h2>
             <p className="text-xl text-stone-400 max-w-2xl mx-auto">
-              Our revolutionary AI-powered process makes custom jewelry accessible to everyone
+              See how simple descriptions become stunning jewelry in seconds
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-2xl font-bold text-black">
-                1
+            {/* Grace Kelly Example */}
+            <div className="bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group">
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/designs/grace-kelly-ring-hero_angle.png"
+                  alt="Grace Kelly Engagement Ring"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="text-cyan-400 text-sm font-medium mb-1">
+                    → Grace Kelly Elegance
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-stone-100">Describe Your Dream</h3>
-              <p className="text-stone-400 leading-relaxed">
-                Tell us what you envision. "A vintage art deco engagement ring inspired by Grace Kelly's elegance..." 
-                Our AI understands natural language and style preferences.
-              </p>
+              <div className="p-6">
+                <div className="bg-stone-800 border border-stone-600 rounded-lg p-4 mb-4">
+                  <p className="text-stone-300 text-sm italic">
+                    "A classic solitaire engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond"
+                  </p>
+                </div>
+                <Link href={`/design?prompt=${encodeURIComponent('A classic solitaire engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond center stone, elegant cathedral setting, 1950s Hollywood glamour style')}`}>
+                  <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold">
+                    Make This Design
+                  </Button>
+                </Link>
+              </div>
             </div>
 
-            <div className="text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
-                2
+            {/* Madonna Punk Example */}
+            <div className="bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group">
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/designs/madonna-punk-ring-hero_angle.png"
+                  alt="Madonna Punk Ring"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="text-cyan-400 text-sm font-medium mb-1">
+                    → Madonna Rebellion
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-stone-100">AI Creates Your Design</h3>
-              <p className="text-stone-400 leading-relaxed">
-                In under 30 seconds, our AI generates photorealistic images and detailed manufacturing 
-                specifications. See exactly how your piece will look from every angle.
-              </p>
+              <div className="p-6">
+                <div className="bg-stone-800 border border-stone-600 rounded-lg p-4 mb-4">
+                  <p className="text-stone-300 text-sm italic">
+                    "A bold punk rock cocktail ring inspired by Madonna, chunky black metal with silver spikes"
+                  </p>
+                </div>
+                <Link href={`/design?prompt=${encodeURIComponent('A bold punk rock cocktail ring inspired by Madonna, chunky black metal band with silver spikes and dark onyx center stone, edgy 1980s rebellion style')}`}>
+                  <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold">
+                    Make This Design
+                  </Button>
+                </Link>
+              </div>
             </div>
 
-            <div className="text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-400 to-teal-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
-                3
+            {/* Audrey Hepburn Example */}
+            <div className="bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group">
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/designs/audrey-pearl-necklace-hero_angle.png"
+                  alt="Audrey Hepburn Necklace"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="text-cyan-400 text-sm font-medium mb-1">
+                    → Audrey Sophistication
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-stone-100">Handcrafted & Delivered</h3>
-              <p className="text-stone-400 leading-relaxed">
-                Master jewelers in NYC review, approve, and handcraft your piece with meticulous attention to detail. 
-                Delivered to your door in just 5 business days.
+              <div className="p-6">
+                <div className="bg-stone-800 border border-stone-600 rounded-lg p-4 mb-4">
+                  <p className="text-stone-300 text-sm italic">
+                    "An elegant multi-strand pearl necklace inspired by Audrey Hepburn, classic 1960s sophistication"
+                  </p>
+                </div>
+                <Link href={`/design?prompt=${encodeURIComponent('An elegant multi-strand pearl necklace inspired by Audrey Hepburn, graduated white pearls with diamond clasp, classic 1960s sophistication and timeless grace')}`}>
+                  <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold">
+                    Make This Design
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-16">
+            <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-2xl p-8 max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Ready to Create Your Own?
+              </h3>
+              <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
+                Describe any jewelry piece you can imagine - from vintage Victorian rings to modern minimalist necklaces. 
+                Our AI understands style, materials, and celebrity inspiration.
               </p>
+              <Link href="/design">
+                <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold px-8 py-4 text-lg">
+                  Start Designing Now →
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -346,7 +429,7 @@ export default function HomePage() {
             </div>
 
           <div className="text-center">
-            <Button asChild className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-8 py-6 text-lg group">
+            <Button asChild className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-6 text-lg group">
               <Link href="/design">
                 Create Your Own Design
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -357,7 +440,7 @@ export default function HomePage() {
       </section>
 
       {/* Guarantee Section */}
-      <section id="guarantee" className="px-6 py-20 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+      <section id="guarantee" className="px-6 py-20 bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-6">
@@ -371,7 +454,7 @@ export default function HomePage() {
           
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <div className="text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700">
-              <Clock className="w-16 h-16 mx-auto mb-4 text-amber-400" />
+              <Clock className="w-16 h-16 mx-auto mb-4 text-blue-400" />
               <h3 className="font-semibold text-stone-100 mb-3 text-xl">5-Day Delivery</h3>
               <p className="text-stone-400">Guaranteed delivery in 5 business days or your money back. No exceptions.</p>
             </div>
@@ -405,7 +488,7 @@ export default function HomePage() {
             Your perfect piece is just one description away.
           </p>
           <div className="space-y-4">
-            <Button asChild className="bg-amber-500 hover:bg-amber-600 text-black font-bold px-12 py-8 text-xl group">
+            <Button asChild className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-12 py-8 text-xl group">
             <Link href="/design">
                 <Sparkles className="w-6 h-6 mr-3" />
               Start Designing Now
@@ -424,13 +507,13 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-xl mb-4 text-stone-100">SLAVA</h3>
+              <h3 className="font-bold text-xl mb-4 text-stone-100">Make It</h3>
               <p className="text-stone-400 mb-4">
                 AI-powered custom jewelry, handcrafted in NYC. Where technology meets artistry.
               </p>
               <div className="flex space-x-2">
                 {[1,2,3,4,5].map(i => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <Star key={i} className="w-4 h-4 fill-blue-400 text-blue-400" />
                 ))}
                 <span className="text-stone-400 text-sm ml-2">4.9/5 from 500+ reviews</span>
               </div>
@@ -463,7 +546,7 @@ export default function HomePage() {
           </div>
           <div className="pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-stone-500 text-sm mb-4 md:mb-0">
-              © 2024 Slava Jewelry Studio. Handcrafted with AI and love in NYC.
+              © 2024 Make It Jewelry Studio. Handcrafted with AI and love in NYC.
             </p>
             <div className="flex items-center space-x-4 text-stone-400 text-sm">
               <span>🇺🇸 Made in NYC</span>

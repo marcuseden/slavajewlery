@@ -72,8 +72,8 @@ var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$g
 ;
 ;
 const metadata = {
-    title: "Slava Jewelry Studio - Custom One-of-One Jewelry",
-    description: "Design your own custom jewelry piece, handcrafted in NYC. From $1,000 to $4,000."
+    title: "Make It - Custom AI Jewelry Design Studio",
+    description: "Design your dream jewelry with AI. Custom pieces handcrafted by NYC master jewelers and delivered in 5 days."
 };
 function RootLayout({ children }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("html", {

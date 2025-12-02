@@ -816,7 +816,7 @@ function Header() {
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/",
                                     className: "text-2xl font-bold text-white tracking-tight hover:text-slate-200 transition-colors",
-                                    children: "SLAVA"
+                                    children: "Make It"
                                 }, void 0, false, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/components/Header.tsx",
                                     lineNumber: 35,
@@ -1175,6 +1175,8 @@ var _s = __turbopack_context__.k.signature();
 function HomePage() {
     _s();
     const [exampleDesigns, setExampleDesigns] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [selectedDesign, setSelectedDesign] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isViewerOpen, setIsViewerOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "HomePage.useEffect": ()=>{
             // Load our consistent design examples
@@ -1225,7 +1227,7 @@ function HomePage() {
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Header"], {}, void 0, false, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                    lineNumber: 55,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1235,34 +1237,34 @@ function HomePage() {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center bottom',
                         backgroundRepeat: 'no-repeat',
-                        filter: 'grayscale(100%) contrast(0.8) brightness(0.4) opacity(0.7) blur(0.5px)'
+                        filter: 'grayscale(100%) contrast(1.2) brightness(0.6) opacity(0.8)'
                     }
                 }, void 0, false, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                    lineNumber: 58,
-                    columnNumber: 7
+                    lineNumber: 69,
+                    columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "fixed inset-0 z-1 pointer-events-none",
                     style: {
-                        background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.7) 0%, rgba(15, 23, 42, 0.85) 40%, rgba(30, 41, 59, 0.9) 70%, rgba(2, 6, 23, 0.95) 100%)'
+                        background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.5) 0%, rgba(15, 23, 42, 0.7) 40%, rgba(30, 41, 59, 0.8) 70%, rgba(2, 6, 23, 0.9) 100%)'
                     }
                 }, void 0, false, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                    lineNumber: 70,
-                    columnNumber: 7
+                    lineNumber: 81,
+                    columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "fixed inset-0 z-1 pointer-events-none",
+                    className: "fixed inset-0 z-2 pointer-events-none",
                     style: {
-                        background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                       radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.03) 0%, transparent 40%),
-                       radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 45%)`
+                        background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                         radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.05) 0%, transparent 40%),
+                         radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.06) 0%, transparent 45%)`
                     }
                 }, void 0, false, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                    lineNumber: 78,
-                    columnNumber: 7
+                    lineNumber: 89,
+                    columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "relative z-10",
@@ -1284,7 +1286,7 @@ function HomePage() {
                                                             className: "w-4 h-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 97,
+                                                            lineNumber: 108,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1292,7 +1294,7 @@ function HomePage() {
                                                             children: "Delivered in 5 Business Days"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 98,
+                                                            lineNumber: 109,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1300,13 +1302,13 @@ function HomePage() {
                                                             children: "5-Day Delivery"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 99,
+                                                            lineNumber: 110,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 96,
+                                                    lineNumber: 107,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -1319,13 +1321,13 @@ function HomePage() {
                                                             children: "AI Magic"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 104,
+                                                            lineNumber: 115,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 102,
+                                                    lineNumber: 113,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1338,14 +1340,14 @@ function HomePage() {
                                                             children: "5 business days"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 113,
+                                                            lineNumber: 124,
                                                             columnNumber: 17
                                                         }, this),
                                                         "."
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 109,
+                                                    lineNumber: 120,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1361,7 +1363,7 @@ function HomePage() {
                                                                         className: "w-4 sm:w-5 h-4 sm:h-5 mr-2"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 119,
+                                                                        lineNumber: 130,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1369,7 +1371,7 @@ function HomePage() {
                                                                         children: "Start Designing Now"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 120,
+                                                                        lineNumber: 131,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1377,25 +1379,25 @@ function HomePage() {
                                                                         children: "Design Now"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 121,
+                                                                        lineNumber: 132,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
                                                                         className: "w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 122,
+                                                                        lineNumber: 133,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 118,
+                                                                lineNumber: 129,
                                                                 columnNumber: 15
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 117,
+                                                            lineNumber: 128,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1407,18 +1409,18 @@ function HomePage() {
                                                                 children: "See Examples"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 126,
+                                                                lineNumber: 137,
                                                                 columnNumber: 19
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 125,
+                                                            lineNumber: 136,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 116,
+                                                    lineNumber: 127,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1433,12 +1435,12 @@ function HomePage() {
                                                                         className: "w-5 h-5 text-blue-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 134,
+                                                                        lineNumber: 145,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 133,
+                                                                    lineNumber: 144,
                                                                     columnNumber: 19
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1448,7 +1450,7 @@ function HomePage() {
                                                                             children: "AI-Powered"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 137,
+                                                                            lineNumber: 148,
                                                                             columnNumber: 21
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1456,19 +1458,19 @@ function HomePage() {
                                                                             children: "Instant designs"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 138,
+                                                                            lineNumber: 149,
                                                                             columnNumber: 21
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 136,
+                                                                    lineNumber: 147,
                                                                     columnNumber: 19
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 132,
+                                                            lineNumber: 143,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1480,12 +1482,12 @@ function HomePage() {
                                                                         className: "w-5 h-5 text-cyan-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 143,
+                                                                        lineNumber: 154,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 142,
+                                                                    lineNumber: 153,
                                                                     columnNumber: 19
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1495,7 +1497,7 @@ function HomePage() {
                                                                             children: "5-Day Delivery"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 146,
+                                                                            lineNumber: 157,
                                                                             columnNumber: 21
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1503,19 +1505,19 @@ function HomePage() {
                                                                             children: "Guaranteed"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 147,
+                                                                            lineNumber: 158,
                                                                             columnNumber: 21
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 145,
+                                                                    lineNumber: 156,
                                                                     columnNumber: 19
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 141,
+                                                            lineNumber: 152,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1527,12 +1529,12 @@ function HomePage() {
                                                                         className: "w-5 h-5 text-teal-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 152,
+                                                                        lineNumber: 163,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 151,
+                                                                    lineNumber: 162,
                                                                     columnNumber: 19
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1542,7 +1544,7 @@ function HomePage() {
                                                                             children: "NYC Crafted"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 155,
+                                                                            lineNumber: 166,
                                                                             columnNumber: 21
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1550,31 +1552,31 @@ function HomePage() {
                                                                             children: "Master jewelers"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 156,
+                                                                            lineNumber: 167,
                                                                             columnNumber: 21
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 154,
+                                                                    lineNumber: 165,
                                                                     columnNumber: 19
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 150,
+                                                            lineNumber: 161,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 131,
+                                                    lineNumber: 142,
                                                     columnNumber: 15
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                            lineNumber: 94,
+                                            lineNumber: 105,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1594,7 +1596,7 @@ function HomePage() {
                                                                         className: "w-full h-full object-cover transition-transform group-hover:scale-105"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 173,
+                                                                        lineNumber: 184,
                                                                         columnNumber: 25
                                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "w-full h-full flex items-center justify-center text-slate-500",
@@ -1602,17 +1604,17 @@ function HomePage() {
                                                                             className: "w-6 sm:w-8 h-6 sm:h-8"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                            lineNumber: 180,
+                                                                            lineNumber: 191,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 179,
+                                                                        lineNumber: 190,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 171,
+                                                                    lineNumber: 182,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 design.title && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1625,7 +1627,7 @@ function HomePage() {
                                                                                 children: design.title
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                                lineNumber: 187,
+                                                                                lineNumber: 198,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1635,12 +1637,12 @@ function HomePage() {
                                                                                         children: tag
                                                                                     }, i, false, {
                                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                                        lineNumber: 190,
+                                                                                        lineNumber: 201,
                                                                                         columnNumber: 31
                                                                                     }, this))
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                                lineNumber: 188,
+                                                                                lineNumber: 199,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1648,65 +1650,65 @@ function HomePage() {
                                                                                 children: "Click to edit and design →"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                                lineNumber: 195,
+                                                                                lineNumber: 206,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 186,
+                                                                        lineNumber: 197,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 185,
+                                                                    lineNumber: 196,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, index, true, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 166,
+                                                            lineNumber: 177,
                                                             columnNumber: 19
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 164,
+                                                    lineNumber: 175,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "absolute -top-4 -right-4 w-16 sm:w-24 h-16 sm:h-24 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full blur-xl opacity-20 animate-pulse"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 204,
+                                                    lineNumber: 215,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "absolute -bottom-4 -left-4 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-full blur-xl opacity-20 animate-pulse delay-1000"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 205,
+                                                    lineNumber: 216,
                                                     columnNumber: 15
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                            lineNumber: 163,
+                                            lineNumber: 174,
                                             columnNumber: 13
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                    lineNumber: 93,
+                                    lineNumber: 104,
                                     columnNumber: 11
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 92,
+                                lineNumber: 103,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 91,
+                            lineNumber: 102,
                             columnNumber: 9
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1727,7 +1729,7 @@ function HomePage() {
                                                             children: "1000+"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 217,
+                                                            lineNumber: 228,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1735,13 +1737,13 @@ function HomePage() {
                                                             children: "Designs Created"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 218,
+                                                            lineNumber: 229,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 216,
+                                                    lineNumber: 227,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1752,7 +1754,7 @@ function HomePage() {
                                                             children: "5 Days"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 221,
+                                                            lineNumber: 232,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1760,13 +1762,13 @@ function HomePage() {
                                                             children: "Average Delivery"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 222,
+                                                            lineNumber: 233,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 220,
+                                                    lineNumber: 231,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1777,7 +1779,7 @@ function HomePage() {
                                                             children: "4.9★"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 225,
+                                                            lineNumber: 236,
                                                             columnNumber: 17
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1785,19 +1787,19 @@ function HomePage() {
                                                             children: "Customer Rating"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 226,
+                                                            lineNumber: 237,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 224,
+                                                    lineNumber: 235,
                                                     columnNumber: 15
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                            lineNumber: 215,
+                                            lineNumber: 226,
                                             columnNumber: 13
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1812,15 +1814,15 @@ function HomePage() {
                                                         4,
                                                         5
                                                     ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"], {
-                                                            className: "w-5 h-5 fill-amber-400 text-amber-400"
+                                                            className: "w-5 h-5 fill-blue-400 text-blue-400"
                                                         }, i, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 232,
+                                                            lineNumber: 243,
                                                             columnNumber: 19
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 230,
+                                                    lineNumber: 241,
                                                     columnNumber: 15
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1828,29 +1830,29 @@ function HomePage() {
                                                     children: '"Absolutely stunning results" - Sarah M.'
                                                 }, void 0, false, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 235,
+                                                    lineNumber: 246,
                                                     columnNumber: 15
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                            lineNumber: 229,
+                                            lineNumber: 240,
                                             columnNumber: 13
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                    lineNumber: 214,
+                                    lineNumber: 225,
                                     columnNumber: 11
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 213,
+                                lineNumber: 224,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 212,
+                            lineNumber: 223,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1864,143 +1866,355 @@ function HomePage() {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                                 className: "text-3xl md:text-4xl font-bold text-stone-100 mb-4",
-                                                children: "From Idea to Reality in 3 Steps"
+                                                children: "From Words to Wearable Art"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 256,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-xl text-stone-400 max-w-2xl mx-auto",
-                                                children: "Our revolutionary AI-powered process makes custom jewelry accessible to everyone"
+                                                children: "See how simple descriptions become stunning jewelry in seconds"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 248,
+                                                lineNumber: 259,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 244,
+                                        lineNumber: 255,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "grid md:grid-cols-3 gap-8",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "text-center space-y-6",
+                                                className: "bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-20 h-20 mx-auto bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-2xl font-bold text-black",
-                                                        children: "1"
-                                                    }, void 0, false, {
+                                                        className: "aspect-square relative overflow-hidden",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                src: "/designs/grace-kelly-ring-hero_angle.png",
+                                                                alt: "Grace Kelly Engagement Ring",
+                                                                className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 268,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 273,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "absolute bottom-4 left-4 right-4",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "text-cyan-400 text-sm font-medium mb-1",
+                                                                    children: "→ Grace Kelly Elegance"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 275,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 274,
+                                                                columnNumber: 17
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 255,
+                                                        lineNumber: 267,
                                                         columnNumber: 15
                                                     }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                        className: "text-xl font-semibold text-stone-100",
-                                                        children: "Describe Your Dream"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 258,
-                                                        columnNumber: 15
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-stone-400 leading-relaxed",
-                                                        children: 'Tell us what you envision. "A vintage art deco engagement ring inspired by Grace Kelly\'s elegance..." Our AI understands natural language and style preferences.'
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 259,
-                                                        columnNumber: 15
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 254,
-                                                columnNumber: 13
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "text-center space-y-6",
-                                                children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-20 h-20 mx-auto bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-2xl font-bold text-white",
-                                                        children: "2"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 266,
-                                                        columnNumber: 15
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                        className: "text-xl font-semibold text-stone-100",
-                                                        children: "AI Creates Your Design"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 269,
-                                                        columnNumber: 15
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-stone-400 leading-relaxed",
-                                                        children: "In under 30 seconds, our AI generates photorealistic images and detailed manufacturing specifications. See exactly how your piece will look from every angle."
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 270,
-                                                        columnNumber: 15
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 265,
-                                                columnNumber: 13
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "text-center space-y-6",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-20 h-20 mx-auto bg-gradient-to-br from-green-400 to-teal-500 rounded-full flex items-center justify-center text-2xl font-bold text-white",
-                                                        children: "3"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 277,
-                                                        columnNumber: 15
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                        className: "text-xl font-semibold text-stone-100",
-                                                        children: "Handcrafted & Delivered"
-                                                    }, void 0, false, {
+                                                        className: "p-6",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "bg-stone-800 border border-stone-600 rounded-lg p-4 mb-4",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-stone-300 text-sm italic",
+                                                                    children: '"A classic solitaire engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond"'
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 282,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 281,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                                                href: `/design?prompt=${encodeURIComponent('A classic solitaire engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond center stone, elegant cathedral setting, 1950s Hollywood glamour style')}`,
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    className: "w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold",
+                                                                    children: "Make This Design"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 287,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 286,
+                                                                columnNumber: 17
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
                                                         lineNumber: 280,
                                                         columnNumber: 15
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-stone-400 leading-relaxed",
-                                                        children: "Master jewelers in NYC review, approve, and handcraft your piece with meticulous attention to detail. Delivered to your door in just 5 business days."
-                                                    }, void 0, false, {
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                lineNumber: 266,
+                                                columnNumber: 13
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "aspect-square relative overflow-hidden",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                src: "/designs/madonna-punk-ring-hero_angle.png",
+                                                                alt: "Madonna Punk Ring",
+                                                                className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 297,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 302,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "absolute bottom-4 left-4 right-4",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "text-cyan-400 text-sm font-medium mb-1",
+                                                                    children: "→ Madonna Rebellion"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 304,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 303,
+                                                                columnNumber: 17
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 281,
+                                                        lineNumber: 296,
+                                                        columnNumber: 15
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "p-6",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "bg-stone-800 border border-stone-600 rounded-lg p-4 mb-4",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-stone-300 text-sm italic",
+                                                                    children: '"A bold punk rock cocktail ring inspired by Madonna, chunky black metal with silver spikes"'
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 311,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 310,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                                                href: `/design?prompt=${encodeURIComponent('A bold punk rock cocktail ring inspired by Madonna, chunky black metal band with silver spikes and dark onyx center stone, edgy 1980s rebellion style')}`,
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    className: "w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold",
+                                                                    children: "Make This Design"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 316,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 315,
+                                                                columnNumber: 17
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                        lineNumber: 309,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 276,
+                                                lineNumber: 295,
+                                                columnNumber: 13
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "bg-stone-900/50 border border-stone-700 rounded-2xl overflow-hidden group",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "aspect-square relative overflow-hidden",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                src: "/designs/audrey-pearl-necklace-hero_angle.png",
+                                                                alt: "Audrey Hepburn Necklace",
+                                                                className: "w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 326,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 331,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "absolute bottom-4 left-4 right-4",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "text-cyan-400 text-sm font-medium mb-1",
+                                                                    children: "→ Audrey Sophistication"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 333,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 332,
+                                                                columnNumber: 17
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                        lineNumber: 325,
+                                                        columnNumber: 15
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "p-6",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "bg-stone-800 border border-stone-600 rounded-lg p-4 mb-4",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-stone-300 text-sm italic",
+                                                                    children: '"An elegant multi-strand pearl necklace inspired by Audrey Hepburn, classic 1960s sophistication"'
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 340,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 339,
+                                                                columnNumber: 17
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                                                href: `/design?prompt=${encodeURIComponent('An elegant multi-strand pearl necklace inspired by Audrey Hepburn, graduated white pearls with diamond clasp, classic 1960s sophistication and timeless grace')}`,
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    className: "w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold",
+                                                                    children: "Make This Design"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                    lineNumber: 345,
+                                                                    columnNumber: 19
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                                lineNumber: 344,
+                                                                columnNumber: 17
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                        lineNumber: 338,
+                                                        columnNumber: 15
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                lineNumber: 324,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 253,
+                                        lineNumber: 264,
+                                        columnNumber: 11
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-center mt-16",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-2xl p-8 max-w-4xl mx-auto",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                    className: "text-2xl font-bold text-white mb-4",
+                                                    children: "Ready to Create Your Own?"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                    lineNumber: 356,
+                                                    columnNumber: 15
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-slate-300 mb-6 max-w-2xl mx-auto",
+                                                    children: "Describe any jewelry piece you can imagine - from vintage Victorian rings to modern minimalist necklaces. Our AI understands style, materials, and celebrity inspiration."
+                                                }, void 0, false, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                    lineNumber: 359,
+                                                    columnNumber: 15
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                                    href: "/design",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                        className: "bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold px-8 py-4 text-lg",
+                                                        children: "Start Designing Now →"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                        lineNumber: 364,
+                                                        columnNumber: 17
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                                    lineNumber: 363,
+                                                    columnNumber: 15
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                            lineNumber: 355,
+                                            columnNumber: 13
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
+                                        lineNumber: 354,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 243,
+                                lineNumber: 254,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 242,
+                            lineNumber: 253,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2017,7 +2231,7 @@ function HomePage() {
                                                 children: "Real AI-Generated Designs"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 294,
+                                                lineNumber: 377,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2025,13 +2239,13 @@ function HomePage() {
                                                 children: "These stunning pieces were created from simple text descriptions using our AI. Each design is unique and ready to become reality in just 5 days."
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 297,
+                                                lineNumber: 380,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 293,
+                                        lineNumber: 376,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2049,7 +2263,7 @@ function HomePage() {
                                                                 className: "w-full h-full object-cover"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 312,
+                                                                lineNumber: 395,
                                                                 columnNumber: 21
                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "w-full h-full bg-stone-800 flex items-center justify-center",
@@ -2057,12 +2271,12 @@ function HomePage() {
                                                                     className: "w-12 h-12 text-stone-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 319,
+                                                                    lineNumber: 402,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 318,
+                                                                lineNumber: 401,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2070,7 +2284,7 @@ function HomePage() {
                                                                 children: "AI Generated"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 322,
+                                                                lineNumber: 405,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2080,18 +2294,18 @@ function HomePage() {
                                                                     children: "Click to edit prompt →"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 326,
+                                                                    lineNumber: 409,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 325,
+                                                                lineNumber: 408,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 310,
+                                                        lineNumber: 393,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2102,7 +2316,7 @@ function HomePage() {
                                                                 children: design.title || 'Custom Design'
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 332,
+                                                                lineNumber: 415,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2113,7 +2327,7 @@ function HomePage() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 333,
+                                                                lineNumber: 416,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2123,36 +2337,36 @@ function HomePage() {
                                                                         children: tag
                                                                     }, i, false, {
                                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                        lineNumber: 338,
+                                                                        lineNumber: 421,
                                                                         columnNumber: 23
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 336,
+                                                                lineNumber: 419,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 331,
+                                                        lineNumber: 414,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, index, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 305,
+                                                lineNumber: 388,
                                                 columnNumber: 15
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 303,
+                                        lineNumber: 386,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "text-center",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                             asChild: true,
-                                            className: "bg-amber-500 hover:bg-amber-600 text-black font-semibold px-8 py-6 text-lg group",
+                                            className: "bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-6 text-lg group",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/design",
                                                 children: [
@@ -2161,39 +2375,39 @@ function HomePage() {
                                                         className: "w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 352,
+                                                        lineNumber: 435,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 350,
+                                                lineNumber: 433,
                                                 columnNumber: 15
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                            lineNumber: 349,
+                                            lineNumber: 432,
                                             columnNumber: 13
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 348,
+                                        lineNumber: 431,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 292,
+                                lineNumber: 375,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 291,
+                            lineNumber: 374,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                             id: "guarantee",
-                            className: "px-6 py-20 bg-gradient-to-r from-amber-500/10 to-orange-500/10",
+                            className: "px-6 py-20 bg-gradient-to-r from-blue-500/10 to-cyan-500/10",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "max-w-6xl mx-auto",
                                 children: [
@@ -2205,7 +2419,7 @@ function HomePage() {
                                                 children: "Our Unbeatable Guarantee"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 363,
+                                                lineNumber: 446,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2213,13 +2427,13 @@ function HomePage() {
                                                 children: "We're so confident in our process that we offer industry-leading guarantees. Your satisfaction is our obsession."
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 366,
+                                                lineNumber: 449,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 362,
+                                        lineNumber: 445,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2229,10 +2443,10 @@ function HomePage() {
                                                 className: "text-center bg-stone-900/50 backdrop-blur-sm rounded-2xl p-8 border border-stone-700",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
-                                                        className: "w-16 h-16 mx-auto mb-4 text-amber-400"
+                                                        className: "w-16 h-16 mx-auto mb-4 text-blue-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 374,
+                                                        lineNumber: 457,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2240,7 +2454,7 @@ function HomePage() {
                                                         children: "5-Day Delivery"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 375,
+                                                        lineNumber: 458,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2248,13 +2462,13 @@ function HomePage() {
                                                         children: "Guaranteed delivery in 5 business days or your money back. No exceptions."
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 376,
+                                                        lineNumber: 459,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 373,
+                                                lineNumber: 456,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2264,7 +2478,7 @@ function HomePage() {
                                                         className: "w-16 h-16 mx-auto mb-4 text-blue-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 379,
+                                                        lineNumber: 462,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2272,7 +2486,7 @@ function HomePage() {
                                                         children: "Master Craftsmanship"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 380,
+                                                        lineNumber: 463,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2280,13 +2494,13 @@ function HomePage() {
                                                         children: "Every piece crafted by NYC's finest jewelers with decades of experience."
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 381,
+                                                        lineNumber: 464,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 378,
+                                                lineNumber: 461,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2296,7 +2510,7 @@ function HomePage() {
                                                         className: "w-16 h-16 mx-auto mb-4 text-green-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 384,
+                                                        lineNumber: 467,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -2304,7 +2518,7 @@ function HomePage() {
                                                         children: "Lifetime Warranty"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 385,
+                                                        lineNumber: 468,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2312,19 +2526,19 @@ function HomePage() {
                                                         children: "Free repairs, resizing, and polishing for the lifetime of your piece."
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 386,
+                                                        lineNumber: 469,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 383,
+                                                lineNumber: 466,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 372,
+                                        lineNumber: 455,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2335,7 +2549,7 @@ function HomePage() {
                                                 children: "100% Satisfaction Guarantee"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 391,
+                                                lineNumber: 474,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2343,24 +2557,24 @@ function HomePage() {
                                                 children: "Not completely in love with your piece? We'll remake it until you are, or provide a full refund."
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 392,
+                                                lineNumber: 475,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 390,
+                                        lineNumber: 473,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 361,
+                                lineNumber: 444,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 360,
+                            lineNumber: 443,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2373,7 +2587,7 @@ function HomePage() {
                                         children: "Ready to Create Your Dream Piece?"
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 400,
+                                        lineNumber: 483,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2381,7 +2595,7 @@ function HomePage() {
                                         children: "Join thousands of customers who've brought their jewelry visions to life with AI. Your perfect piece is just one description away."
                                     }, void 0, false, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 403,
+                                        lineNumber: 486,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2389,7 +2603,7 @@ function HomePage() {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                 asChild: true,
-                                                className: "bg-amber-500 hover:bg-amber-600 text-black font-bold px-12 py-8 text-xl group",
+                                                className: "bg-blue-500 hover:bg-blue-600 text-white font-bold px-12 py-8 text-xl group",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                     href: "/design",
                                                     children: [
@@ -2397,7 +2611,7 @@ function HomePage() {
                                                             className: "w-6 h-6 mr-3"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 410,
+                                                            lineNumber: 493,
                                                             columnNumber: 17
                                                         }, this),
                                                         "Start Designing Now",
@@ -2405,18 +2619,18 @@ function HomePage() {
                                                             className: "w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                            lineNumber: 412,
+                                                            lineNumber: 495,
                                                             columnNumber: 17
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                    lineNumber: 409,
+                                                    lineNumber: 492,
                                                     columnNumber: 13
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 408,
+                                                lineNumber: 491,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2424,24 +2638,24 @@ function HomePage() {
                                                 children: "Free AI design generation • No commitment until you love it • 5-day delivery guaranteed"
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 415,
+                                                lineNumber: 498,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 407,
+                                        lineNumber: 490,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 399,
+                                lineNumber: 482,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 398,
+                            lineNumber: 481,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -2456,10 +2670,10 @@ function HomePage() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                                         className: "font-bold text-xl mb-4 text-stone-100",
-                                                        children: "SLAVA"
+                                                        children: "Make It"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 427,
+                                                        lineNumber: 510,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2467,7 +2681,7 @@ function HomePage() {
                                                         children: "AI-powered custom jewelry, handcrafted in NYC. Where technology meets artistry."
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 428,
+                                                        lineNumber: 511,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2480,30 +2694,30 @@ function HomePage() {
                                                                 4,
                                                                 5
                                                             ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"], {
-                                                                    className: "w-4 h-4 fill-amber-400 text-amber-400"
+                                                                    className: "w-4 h-4 fill-blue-400 text-blue-400"
                                                                 }, i, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 433,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 516,
+                                                                    columnNumber: 15
                                                                 }, this)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-stone-400 text-sm ml-2",
                                                                 children: "4.9/5 from 500+ reviews"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 435,
+                                                                lineNumber: 518,
                                                                 columnNumber: 17
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 431,
+                                                        lineNumber: 514,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 426,
+                                                lineNumber: 509,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2513,7 +2727,7 @@ function HomePage() {
                                                         children: "Product"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 439,
+                                                        lineNumber: 522,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2526,12 +2740,12 @@ function HomePage() {
                                                                     children: "AI Design Tool"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 441,
+                                                                    lineNumber: 524,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 441,
+                                                                lineNumber: 524,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2541,12 +2755,12 @@ function HomePage() {
                                                                     children: "Design Examples"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 442,
+                                                                    lineNumber: 525,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 442,
+                                                                lineNumber: 525,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2556,24 +2770,24 @@ function HomePage() {
                                                                     children: "Guarantees"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 443,
+                                                                    lineNumber: 526,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 443,
+                                                                lineNumber: 526,
                                                                 columnNumber: 17
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 440,
+                                                        lineNumber: 523,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 438,
+                                                lineNumber: 521,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2583,7 +2797,7 @@ function HomePage() {
                                                         children: "Company"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 447,
+                                                        lineNumber: 530,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2596,12 +2810,12 @@ function HomePage() {
                                                                     children: "About Us"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 449,
+                                                                    lineNumber: 532,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 449,
+                                                                lineNumber: 532,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2611,12 +2825,12 @@ function HomePage() {
                                                                     children: "Master Jewelers"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 450,
+                                                                    lineNumber: 533,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 450,
+                                                                lineNumber: 533,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2626,12 +2840,12 @@ function HomePage() {
                                                                     children: "Contact"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 451,
+                                                                    lineNumber: 534,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 451,
+                                                                lineNumber: 534,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2641,24 +2855,24 @@ function HomePage() {
                                                                     children: "FAQ"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 452,
+                                                                    lineNumber: 535,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 452,
+                                                                lineNumber: 535,
                                                                 columnNumber: 17
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 448,
+                                                        lineNumber: 531,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 446,
+                                                lineNumber: 529,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2668,7 +2882,7 @@ function HomePage() {
                                                         children: "Legal"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 456,
+                                                        lineNumber: 539,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2681,12 +2895,12 @@ function HomePage() {
                                                                     children: "Privacy Policy"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 458,
+                                                                    lineNumber: 541,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 458,
+                                                                lineNumber: 541,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2696,12 +2910,12 @@ function HomePage() {
                                                                     children: "Terms of Service"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 459,
+                                                                    lineNumber: 542,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 459,
+                                                                lineNumber: 542,
                                                                 columnNumber: 17
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -2711,30 +2925,30 @@ function HomePage() {
                                                                     children: "Warranty"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                    lineNumber: 460,
+                                                                    lineNumber: 543,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                                lineNumber: 460,
+                                                                lineNumber: 543,
                                                                 columnNumber: 17
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 457,
+                                                        lineNumber: 540,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 455,
+                                                lineNumber: 538,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 425,
+                                        lineNumber: 508,
                                         columnNumber: 11
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2742,10 +2956,10 @@ function HomePage() {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-stone-500 text-sm mb-4 md:mb-0",
-                                                children: "© 2024 Slava Jewelry Studio. Handcrafted with AI and love in NYC."
+                                                children: "© 2024 Make It Jewelry Studio. Handcrafted with AI and love in NYC."
                                             }, void 0, false, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 465,
+                                                lineNumber: 548,
                                                 columnNumber: 13
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2755,65 +2969,65 @@ function HomePage() {
                                                         children: "🇺🇸 Made in NYC"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 469,
+                                                        lineNumber: 552,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "⚡ 5-Day Delivery"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 470,
+                                                        lineNumber: 553,
                                                         columnNumber: 15
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Documents$2f$Cursor$2d$projects$2f$slava__jewlery$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "💎 Lifetime Warranty"
                                                     }, void 0, false, {
                                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                        lineNumber: 471,
+                                                        lineNumber: 554,
                                                         columnNumber: 15
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                                lineNumber: 468,
+                                                lineNumber: 551,
                                                 columnNumber: 13
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                        lineNumber: 464,
+                                        lineNumber: 547,
                                         columnNumber: 11
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                                lineNumber: 424,
+                                lineNumber: 507,
                                 columnNumber: 9
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                            lineNumber: 423,
+                            lineNumber: 506,
                             columnNumber: 7
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-                    lineNumber: 88,
+                    lineNumber: 99,
                     columnNumber: 7
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-            lineNumber: 54,
+            lineNumber: 65,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/Documents/Cursor-projects/slava jewlery/app/page.tsx",
-        lineNumber: 53,
+        lineNumber: 64,
         columnNumber: 5
     }, this);
 }
-_s(HomePage, "irW8x0Vev2ElHqanN8eUEsPk6M8=");
+_s(HomePage, "p8CZKw7m/K+vuYUqwfENkk6yD7s=");
 _c = HomePage;
 var _c;
 __turbopack_context__.k.register(_c, "HomePage");

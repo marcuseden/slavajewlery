@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Slava Jewelry Studio - Custom One-of-One Jewelry",
-  description: "Design your own custom jewelry piece, handcrafted in NYC. From $1,000 to $4,000.",
+  title: "Make It - Custom AI Jewelry Design Studio",
+  description: "Design your dream jewelry with AI. Custom pieces handcrafted by NYC master jewelers and delivered in 5 days.",
 };
 
 export default function RootLayout({
