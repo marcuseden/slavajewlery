@@ -5,23 +5,23 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Image types for jewelry photography
+// Image types for jewelry photography - SAME design, different views
 const IMAGE_TYPES = [
   {
     type: 'packshot_front',
-    description: 'Professional packshot with clean white background, front view'
+    description: 'clean white background, front view, product photography'
   },
   {
     type: 'hero_angle', 
-    description: 'Dramatic 3/4 angle with professional lighting and shadows'
+    description: '3/4 angle view with dramatic studio lighting and shadows'
+  },
+  {
+    type: 'on_model_worn',
+    description: 'worn on elegant hand/neck/ear, natural skin tone, lifestyle photography'
   },
   {
     type: 'macro_detail',
-    description: 'Extreme close-up showing intricate details and craftsmanship'
-  },
-  {
-    type: 'lifestyle_shot',
-    description: 'Elegant lifestyle context, worn or displayed naturally'
+    description: 'extreme close-up showing intricate details and craftsmanship, macro lens'
   }
 ];
 
@@ -46,16 +46,18 @@ export async function POST(request: NextRequest) {
 
     console.log('Generating jewelry design for:', user_vision.slice(0, 100) + '...');
 
-    // Generate multiple images in parallel
+    // Generate multiple views of the SAME design
+    const baseDesignPrompt = `Professional jewelry photography of this exact piece: ${user_vision}`;
+    
     const imagePromises = IMAGE_TYPES.map(async (imageType) => {
-      const prompt = `Professional jewelry photography: ${user_vision}. ${imageType.description}. Studio lighting, high detail, luxury jewelry photography, 4k resolution, professional product photography`;
+      const fullPrompt = `${baseDesignPrompt}, ${imageType.description}, high detail luxury jewelry photography, 4k resolution, professional lighting`;
 
-      console.log(`Generating ${imageType.type}...`);
+      console.log(`Generating ${imageType.type} of the same design...`);
       
       try {
         const imageResponse = await openai.images.generate({
           model: "dall-e-3",
-          prompt: prompt,
+          prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
           quality: "hd",
@@ -65,7 +67,7 @@ export async function POST(request: NextRequest) {
         return {
           type: imageType.type,
           url: imageResponse.data?.[0]?.url || null,
-          prompt: prompt,
+          prompt: fullPrompt,
           revised_prompt: imageResponse.data?.[0]?.revised_prompt || null
         };
       } catch (imageError) {

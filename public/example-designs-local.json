@@ -1,0 +1,192 @@
+[
+  {
+    "id": "madonna-punk",
+    "title": "Madonna Punk Ring",
+    "prompt": "A bold punk rock cocktail ring inspired by Madonna, chunky black metal band with silver spikes and dark gemstone, edgy 1980s rebellion style, professional jewelry photography, studio lighting",
+    "tags": [
+      "ring",
+      "punk",
+      "silver",
+      "Madonna",
+      "1980s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-PcmXz8FcHcxSNiNjlRViAM1C.png?st=2025-12-02T18%3A38%3A03Z&se=2025-12-02T20%3A38%3A03Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T18%3A52%3A06Z&ske=2025-12-03T18%3A52%3A06Z&sks=b&skv=2024-08-04&sig=Tm79tow5zIAX5LCxONB5QmPzkNfFvt1P0RsY/U1PIz4%3D",
+    "revised_prompt": "Create an image of a bold punk rock cocktail ring inspired by a famous female musician from the 80s. This chunky piece of jewellery features a black metal band adorned with silver spikes and a dark gemstone, capturing the spirit of edgy 1980s rebellion style. It should be presented as though taken by a professional jewelry photographer, under studio lighting.",
+    "generated_at": "2025-12-02T19:38:09.422Z",
+    "local_image_url": "/examples/madonna-punk.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-PcmXz8FcHcxSNiNjlRViAM1C.png?st=2025-12-02T18%3A38%3A03Z&se=2025-12-02T20%3A38%3A03Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T18%3A52%3A06Z&ske=2025-12-03T18%3A52%3A06Z&sks=b&skv=2024-08-04&sig=Tm79tow5zIAX5LCxONB5QmPzkNfFvt1P0RsY/U1PIz4%3D",
+    "saved_locally": true,
+    "file_size": 1129679
+  },
+  {
+    "id": "audrey-minimalist",
+    "title": "Audrey Minimalist Necklace",
+    "prompt": "An elegant minimalist necklace inspired by Audrey Hepburn, delicate platinum chain with simple geometric pendant, 1960s sophistication, timeless grace, professional jewelry photography, white background",
+    "tags": [
+      "necklace",
+      "minimalist",
+      "platinum",
+      "Audrey Hepburn",
+      "1960s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-eZ5qTsDtXcLvhUVHenAUhCc1.png?st=2025-12-02T18%3A38%3A19Z&se=2025-12-02T20%3A38%3A19Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A38%3A19Z&ske=2025-12-03T19%3A38%3A19Z&sks=b&skv=2024-08-04&sig=IqNnxhylntwbBPkqXwcO1rgV/LlrGQfuyxjYuXgPTFg%3D",
+    "revised_prompt": "Create an image of an elegant minimalist necklace reminiscent of a well-known actress from the 1960s, signifying timeless grace. This necklace features a delicate platinum chain with a simple geometric pendant. The style should ooze 1960s sophistication. The imagery should be akin to professional jewelry photography, and the necklace lies on a pure white background.",
+    "generated_at": "2025-12-02T19:38:25.594Z",
+    "local_image_url": "/examples/audrey-minimalist.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-eZ5qTsDtXcLvhUVHenAUhCc1.png?st=2025-12-02T18%3A38%3A19Z&se=2025-12-02T20%3A38%3A19Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A38%3A19Z&ske=2025-12-03T19%3A38%3A19Z&sks=b&skv=2024-08-04&sig=IqNnxhylntwbBPkqXwcO1rgV/LlrGQfuyxjYuXgPTFg%3D",
+    "saved_locally": true,
+    "file_size": 369686
+  },
+  {
+    "id": "bowie-artdeco",
+    "title": "Bowie Art Deco Earrings",
+    "prompt": "Statement art deco earrings inspired by David Bowie, geometric gold design with angular patterns, 1920s glamour meets rock star attitude, dramatic lighting, luxury jewelry photography",
+    "tags": [
+      "earrings",
+      "art deco",
+      "gold",
+      "David Bowie",
+      "1920s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-72n4tszN9gW86QsmQMYJfAjb.png?st=2025-12-02T18%3A38%3A35Z&se=2025-12-02T20%3A38%3A35Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A38%3A35Z&ske=2025-12-03T19%3A38%3A35Z&sks=b&skv=2024-08-04&sig=GGr4c5z/9rNoSw8zLGM4wc1L5LjtdnK5rWNi11ZK1KY%3D",
+    "revised_prompt": "Art Deco style earrings inspired by a legendary rock star, designed with a geometric pattern in gold. These earrings showcase the glamour of the 1920s mingling with the aura of cutting-edge rock star energy. The scene displays the earrings in dramatic lighting, accentuating the angular, luxurious designs; an exemplar of high-end jewelry photography.",
+    "generated_at": "2025-12-02T19:38:41.830Z",
+    "local_image_url": "/examples/bowie-artdeco.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-72n4tszN9gW86QsmQMYJfAjb.png?st=2025-12-02T18%3A38%3A35Z&se=2025-12-02T20%3A38%3A35Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A38%3A35Z&ske=2025-12-03T19%3A38%3A35Z&sks=b&skv=2024-08-04&sig=GGr4c5z/9rNoSw8zLGM4wc1L5LjtdnK5rWNi11ZK1KY%3D",
+    "saved_locally": true,
+    "file_size": 1004596
+  },
+  {
+    "id": "frida-bohemian",
+    "title": "Frida Bohemian Bracelet",
+    "prompt": "A bohemian charm bracelet inspired by Frida Kahlo, rose gold with colorful gemstones and artistic charms, Mexican folk art influence, organic flowing design, artistic jewelry photography",
+    "tags": [
+      "bracelet",
+      "bohemian",
+      "rose gold",
+      "Frida Kahlo",
+      "folk art"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-rUeivYPk9Y8xoVMEuksDIrn2.png?st=2025-12-02T18%3A38%3A51Z&se=2025-12-02T20%3A38%3A51Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A38%3A51Z&ske=2025-12-03T19%3A38%3A51Z&sks=b&skv=2024-08-04&sig=DgW2rqOuM2lNwuuX1gqt1c6ol0mbnwLaNZuU3RrjlcU%3D",
+    "revised_prompt": "A bohemian charm bracelet embracing the essence of rich Mexican folk art. The bracelet is crafted from rose gold, accentuated with a melange of vibrant coloured gemstones. It possesses an inherently organic and fluid design, resembling the artistic influences well before 1912, reflecting the vivacity and energy of traditional cultural jewelry. The imaginative detailing forms a compelling attraction. Please ensure an artistic jewelry photography setting for the illustration.",
+    "generated_at": "2025-12-02T19:38:57.911Z",
+    "local_image_url": "/examples/frida-bohemian.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-rUeivYPk9Y8xoVMEuksDIrn2.png?st=2025-12-02T18%3A38%3A51Z&se=2025-12-02T20%3A38%3A51Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A38%3A51Z&ske=2025-12-03T19%3A38%3A51Z&sks=b&skv=2024-08-04&sig=DgW2rqOuM2lNwuuX1gqt1c6ol0mbnwLaNZuU3RrjlcU%3D",
+    "saved_locally": true,
+    "file_size": 832054
+  },
+  {
+    "id": "grace-classic",
+    "title": "Grace Kelly Classic",
+    "prompt": "A classic engagement ring inspired by Grace Kelly, platinum setting with brilliant round diamond, timeless elegant design, 1950s Hollywood glamour, professional bridal photography, white background",
+    "tags": [
+      "ring",
+      "classic",
+      "platinum",
+      "Grace Kelly",
+      "1950s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-IOoOgKhtCPNtRWCo4hY6Yjsq.png?st=2025-12-02T18%3A39%3A09Z&se=2025-12-02T20%3A39%3A09Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A39%3A09Z&ske=2025-12-03T19%3A39%3A09Z&sks=b&skv=2024-08-04&sig=y0IPT4u/rK4SxMqbIoGz5QwzomOXIO5D2YZtXbz%2BxJo%3D",
+    "revised_prompt": "A traditional engagement ring reminiscent of timeless elegance from the 1950s Hollywood glamour era. Showcasing a platinum setting with a brilliant round diamond. Capture this scene in a professional bridal photographic style, set against a pristine white background.",
+    "generated_at": "2025-12-02T19:39:15.364Z",
+    "local_image_url": "/examples/grace-classic.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-IOoOgKhtCPNtRWCo4hY6Yjsq.png?st=2025-12-02T18%3A39%3A09Z&se=2025-12-02T20%3A39%3A09Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A39%3A09Z&ske=2025-12-03T19%3A39%3A09Z&sks=b&skv=2024-08-04&sig=y0IPT4u/rK4SxMqbIoGz5QwzomOXIO5D2YZtXbz%2BxJo%3D",
+    "saved_locally": true,
+    "file_size": 588024
+  },
+  {
+    "id": "basquiat-contemporary",
+    "title": "Basquiat Contemporary Pendant",
+    "prompt": "A contemporary geometric pendant inspired by Jean-Michel Basquiat, abstract angular design in yellow gold, modern street art aesthetic, urban artistic expression, museum-quality jewelry",
+    "tags": [
+      "pendant",
+      "contemporary",
+      "yellow gold",
+      "Basquiat",
+      "street art"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-y7orQMlnEJAi5roRXFb1GVmJ.png?st=2025-12-02T18%3A39%3A28Z&se=2025-12-02T20%3A39%3A28Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A32%3A10Z&ske=2025-12-03T19%3A32%3A10Z&sks=b&skv=2024-08-04&sig=ZCRwugOdjZjo3BMKcYwdpQ4yc%2BGKgA3Ui7r9mLDESe0%3D",
+    "revised_prompt": "A contemporary geometric pendant showcasing an abstract angular design in yellow gold. This piece embodies the modern, urban asthetic of street art. Although it is inspired by no specific artist, it is reminiscent of gritty and edgy art styles prevalent in the late 20th century. Imagine this as museum-quality jewelry, an elegant and bold artistic expression.",
+    "generated_at": "2025-12-02T19:39:34.236Z",
+    "local_image_url": "/examples/basquiat-contemporary.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-y7orQMlnEJAi5roRXFb1GVmJ.png?st=2025-12-02T18%3A39%3A28Z&se=2025-12-02T20%3A39%3A28Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A32%3A10Z&ske=2025-12-03T19%3A32%3A10Z&sks=b&skv=2024-08-04&sig=ZCRwugOdjZjo3BMKcYwdpQ4yc%2BGKgA3Ui7r9mLDESe0%3D",
+    "saved_locally": true,
+    "file_size": 1201618
+  },
+  {
+    "id": "cher-disco",
+    "title": "Cher Disco Statement",
+    "prompt": "Bold disco-era statement earrings inspired by Cher, large geometric hoops in white gold with sparkling crystals, 1970s glamour and drama, studio lighting, luxury fashion photography",
+    "tags": [
+      "earrings",
+      "disco",
+      "white gold",
+      "Cher",
+      "1970s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-rlKv419yT8m9qLOSFWYduoh2.png?st=2025-12-02T18%3A39%3A44Z&se=2025-12-02T20%3A39%3A44Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T18%3A59%3A30Z&ske=2025-12-03T18%3A59%3A30Z&sks=b&skv=2024-08-04&sig=UE3XsH0RRY5Y7zkmIF3PHqslpi7%2BxLC/KX/Cx2ydPdQ%3D",
+    "revised_prompt": "Bold disco-era statement earrings inspired by a popular fashion icon of the 70s, large geometric hoops in white gold with sparkling crystals. The scene captures the 1970s glamour and drama. These earrings are delicately placed under studio lighting that highlights their luxury. The entire setup takes you back to the era of prime fashion photography. The reference to the 70s fashion icon is meant to portray the style and not the individual.",
+    "generated_at": "2025-12-02T19:39:50.924Z",
+    "local_image_url": "/examples/cher-disco.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-rlKv419yT8m9qLOSFWYduoh2.png?st=2025-12-02T18%3A39%3A44Z&se=2025-12-02T20%3A39%3A44Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T18%3A59%3A30Z&ske=2025-12-03T18%3A59%3A30Z&sks=b&skv=2024-08-04&sig=UE3XsH0RRY5Y7zkmIF3PHqslpi7%2BxLC/KX/Cx2ydPdQ%3D",
+    "saved_locally": true,
+    "file_size": 2092982
+  },
+  {
+    "id": "twiggy-mod",
+    "title": "Twiggy Mod Ring",
+    "prompt": "A mod geometric ring inspired by Twiggy, clean lines and bold shapes in brushed silver, 1960s London fashion, minimalist yet striking, professional product photography",
+    "tags": [
+      "ring",
+      "mod",
+      "silver",
+      "Twiggy",
+      "1960s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-opZTyKZdghOgIMwylFAncLS9.png?st=2025-12-02T18%3A40%3A01Z&se=2025-12-02T20%3A40%3A01Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A40%3A01Z&ske=2025-12-03T19%3A40%3A01Z&sks=b&skv=2024-08-04&sig=0gSlbG2Lc8JV4GeZvths4vfIOQ4bzKZr9qmqIvkbyz8%3D",
+    "revised_prompt": "A geometrically modern ring inspired by the fashion icon of the 1960s in London. It showcases simplicity with powerful clean lines and bold shapes, entirely composed of brushed silver. The overall style should be minimalistic yet striking. This design emulates the high-spirited fashion sense of 1960s London. The photo of this item should reflect the quality and style of professional product photography.",
+    "generated_at": "2025-12-02T19:40:08.233Z",
+    "local_image_url": "/examples/twiggy-mod.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-opZTyKZdghOgIMwylFAncLS9.png?st=2025-12-02T18%3A40%3A01Z&se=2025-12-02T20%3A40%3A01Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T19%3A40%3A01Z&ske=2025-12-03T19%3A40%3A01Z&sks=b&skv=2024-08-04&sig=0gSlbG2Lc8JV4GeZvths4vfIOQ4bzKZr9qmqIvkbyz8%3D",
+    "saved_locally": true,
+    "file_size": 1004102
+  },
+  {
+    "id": "nina-jazz",
+    "title": "Nina Simone Jazz Necklace",
+    "prompt": "An elegant jazz-era necklace inspired by Nina Simone, flowing curves in rose gold with pearl accents, sophisticated 1950s style, musical elegance, luxury jewelry photography",
+    "tags": [
+      "necklace",
+      "jazz",
+      "rose gold",
+      "Nina Simone",
+      "1950s"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-8ENxFreCeR1gR5fkP7fFP9pQ.png?st=2025-12-02T18%3A40%3A34Z&se=2025-12-02T20%3A40%3A34Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T15%3A33%3A59Z&ske=2025-12-03T15%3A33%3A59Z&sks=b&skv=2024-08-04&sig=RVtnK6QwrDzy0BrIvs3w7cNri%2BPlxf6hXyKDwTsSGCQ%3D",
+    "revised_prompt": "An elegant necklace reminiscent of the jazz era, featuring flowing curves made of rose gold complemented by pearl accents. This sophisticated piece of jewelry exemplifies the style of the 1950s, reflecting musical elegance. It's captured in a luxurious photography environment with focus on detailing and quality.",
+    "generated_at": "2025-12-02T19:40:40.532Z",
+    "local_image_url": "/examples/nina-jazz.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-8ENxFreCeR1gR5fkP7fFP9pQ.png?st=2025-12-02T18%3A40%3A34Z&se=2025-12-02T20%3A40%3A34Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T15%3A33%3A59Z&ske=2025-12-03T15%3A33%3A59Z&sks=b&skv=2024-08-04&sig=RVtnK6QwrDzy0BrIvs3w7cNri%2BPlxf6hXyKDwTsSGCQ%3D",
+    "saved_locally": true,
+    "file_size": 1385045
+  },
+  {
+    "id": "banksy-punk",
+    "title": "Banksy Punk Cuff",
+    "prompt": "A punk rock cuff bracelet inspired by Banksy street art, industrial brushed steel with subtle engraved details, underground rebellion aesthetic, urban contemporary jewelry, artistic photography",
+    "tags": [
+      "bracelet",
+      "punk",
+      "steel",
+      "Banksy",
+      "street art"
+    ],
+    "image_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-MLT1ysW21tLqLlmAS8vGbEuu.png?st=2025-12-02T18%3A40%3A52Z&se=2025-12-02T20%3A40%3A52Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T18%3A53%3A31Z&ske=2025-12-03T18%3A53%3A31Z&sks=b&skv=2024-08-04&sig=M073o1qBF9hJRUVGmL57wST5oztBLBF80fI9vU8SyYo%3D",
+    "revised_prompt": "Craft an image of a punk rock-inspired cuff bracelet. Let it be designed reflected by the anonymous, graffiti-like visuals found in pre-1912 street art, possessing an underground rebellion aesthetic. The bracelet should bear resemblance to industrial brushed steel with subtle engraved details. It must represent urban contemporary jewelry. The scene should be presented as if viewing through the lens of artistic photography, capturing intricate details and setting the overall mood.",
+    "generated_at": "2025-12-02T19:40:58.324Z",
+    "local_image_url": "/examples/banksy-punk.png",
+    "original_url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-f9Em0rNqAYCCGj3R3Vme71nJ/user-dFWLjafRmCzW4LrOX7mbPBRO/img-MLT1ysW21tLqLlmAS8vGbEuu.png?st=2025-12-02T18%3A40%3A52Z&se=2025-12-02T20%3A40%3A52Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-12-02T18%3A53%3A31Z&ske=2025-12-03T18%3A53%3A31Z&sks=b&skv=2024-08-04&sig=M073o1qBF9hJRUVGmL57wST5oztBLBF80fI9vU8SyYo%3D",
+    "saved_locally": true,
+    "file_size": 1349561
+  }
+]

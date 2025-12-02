@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f23;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#1e1b4b;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#020617;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="buildingGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky -->
+  <rect width="100%" height="70%" fill="url(#skyGradient)"/>
+  
+  <!-- Manhattan Skyline Silhouette -->
+  <g fill="url(#buildingGradient)" opacity="0.9">
+    <!-- Lower Manhattan -->
+    <rect x="100" y="500" width="25" height="300"/>
+    <rect x="130" y="450" width="30" height="350"/>
+    <rect x="170" y="420" width="35" height="380"/>
+    <rect x="210" y="380" width="40" height="420"/>
+    
+    <!-- One World Trade Center -->
+    <rect x="260" y="200" width="45" height="600"/>
+    <polygon points="260,200 282.5,150 305,200"/>
+    
+    <!-- Financial District -->
+    <rect x="320" y="350" width="28" height="450"/>
+    <rect x="355" y="320" width="32" height="480"/>
+    <rect x="395" y="340" width="30" height="460"/>
+    <rect x="430" y="300" width="38" height="500"/>
+    
+    <!-- Midtown Buildings -->
+    <rect x="480" y="250" width="35" height="550"/>
+    <rect x="520" y="280" width="40" height="520"/>
+    <rect x="570" y="220" width="45" height="580"/>
+    <rect x="625" y="180" width="50" height="620"/>
+    
+    <!-- Empire State Building Area -->
+    <rect x="685" y="120" width="42" height="680"/>
+    <polygon points="685,120 706,80 727,120"/>
+    
+    <rect x="740" y="160" width="38" height="640"/>
+    <rect x="785" y="200" width="45" height="600"/>
+    <rect x="840" y="140" width="48" height="660"/>
+    
+    <!-- Central Manhattan -->
+    <rect x="900" y="180" width="35" height="620"/>
+    <rect x="945" y="220" width="40" height="580"/>
+    <rect x="995" y="170" width="43" height="630"/>
+    <rect x="1050" y="190" width="38" height="610"/>
+    <rect x="1095" y="240" width="42" height="560"/>
+    
+    <!-- Chrysler Building Area -->
+    <rect x="1150" y="100" width="40" height="700"/>
+    <polygon points="1150,100 1170,60 1190,100"/>
+    
+    <rect x="1200" y="200" width="35" height="600"/>
+    <rect x="1245" y="160" width="45" height="640"/>
+    <rect x="1300" y="220" width="38" height="580"/>
+    
+    <!-- Upper East Side -->
+    <rect x="1350" y="280" width="32" height="520"/>
+    <rect x="1390" y="300" width="35" height="500"/>
+    <rect x="1435" y="320" width="30" height="480"/>
+    <rect x="1475" y="340" width="28" height="460"/>
+    <rect x="1510" y="360" width="32" height="440"/>
+    <rect x="1550" y="380" width="30" height="420"/>
+    <rect x="1590" y="400" width="25" height="400"/>
+    <rect x="1625" y="420" width="28" height="380"/>
+    <rect x="1660" y="440" width="30" height="360"/>
+    <rect x="1700" y="460" width="25" height="340"/>
+    <rect x="1730" y="480" width="30" height="320"/>
+    <rect x="1770" y="500" width="25" height="300"/>
+    <rect x="1800" y="520" width="28" height="280"/>
+    
+    <!-- Building Details and Windows -->
+    <g fill="#334155" opacity="0.6">
+      <!-- Add subtle window details -->
+      <rect x="265" y="250" width="3" height="3"/>
+      <rect x="275" y="250" width="3" height="3"/>
+      <rect x="285" y="250" width="3" height="3"/>
+      <rect x="295" y="250" width="3" height="3"/>
+      
+      <rect x="265" y="280" width="3" height="3"/>
+      <rect x="275" y="280" width="3" height="3"/>
+      <rect x="285" y="280" width="3" height="3"/>
+      <rect x="295" y="280" width="3" height="3"/>
+      
+      <!-- More window patterns across key buildings -->
+      <rect x="690" y="180" width="3" height="3"/>
+      <rect x="700" y="180" width="3" height="3"/>
+      <rect x="710" y="180" width="3" height="3"/>
+      <rect x="720" y="180" width="3" height="3"/>
+      
+      <rect x="1155" y="160" width="3" height="3"/>
+      <rect x="1165" y="160" width="3" height="3"/>
+      <rect x="1175" y="160" width="3" height="3"/>
+      <rect x="1185" y="160" width="3" height="3"/>
+    </g>
+  </g>
+  
+  <!-- Water/Harbor reflection -->
+  <rect x="0" y="800" width="1920" height="280" fill="#0f172a" opacity="0.8"/>
+</svg>

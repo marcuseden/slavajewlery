@@ -17,108 +17,149 @@ export default function HomePage() {
   const [exampleDesigns, setExampleDesigns] = useState<ExampleDesign[]>([]);
 
   useEffect(() => {
-    // Load our generated examples
-    fetch('/example-designs.json')
+    // Load our consistent design examples
+    fetch('/consistent-designs-local.json')
       .then(res => res.json())
-      .then(data => setExampleDesigns(data))
-      .catch(err => console.log('Examples not loaded yet'));
+      .then(data => {
+        // Use the hero_angle or packshot image for homepage previews
+        const updatedData = data.map((design: any) => ({
+          ...design,
+          // Use the hero_angle image for main display
+          image_url: design.images?.find((img: any) => img.type === 'hero_angle')?.local_url || 
+                     design.images?.find((img: any) => img.type === 'packshot')?.local_url ||
+                     design.images?.[0]?.local_url
+        }));
+        setExampleDesigns(updatedData);
+      })
+      .catch(err => {
+        console.log('Consistent designs not loaded, trying fallback...');
+        // Fallback to original examples
+        fetch('/example-designs-local.json')
+          .then(res => res.json())
+          .then(data => {
+            const updatedData = data.map((design: any) => ({
+              ...design,
+              image_url: design.local_image_url || design.image_url
+            }));
+            setExampleDesigns(updatedData);
+          })
+          .catch(err => console.log('Examples not loaded yet'));
+      });
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-950 via-stone-900 to-stone-800">
-      {/* Header */}
-      <header className="relative z-50 px-6 py-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-stone-100 tracking-tight">
-            SLAVA
-          </div>
-          <nav className="hidden md:flex items-center space-x-8 text-stone-300">
-            <a href="#how-it-works" className="hover:text-stone-100 transition-colors">How it works</a>
-            <a href="#examples" className="hover:text-stone-100 transition-colors">Examples</a>
-            <a href="#guarantee" className="hover:text-stone-100 transition-colors">Guarantee</a>
-            <Button asChild size="sm" className="bg-amber-500 hover:bg-amber-600 text-black">
-              <Link href="/design">Design Now</Link>
-            </Button>
-          </nav>
-        </div>
-      </header>
+    <div className="min-h-screen relative bg-slate-950">
+      {/* Manhattan Skyline Background */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `url('/manhattan-skyline.svg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
+          backgroundRepeat: 'no-repeat',
+          filter: 'grayscale(100%) contrast(0.8) brightness(0.4) opacity(0.7) blur(0.5px)',
+        }}
+      />
+      
+      {/* Overlay gradient */}
+      <div 
+        className="fixed inset-0 z-1 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, rgba(2, 6, 23, 0.7) 0%, rgba(15, 23, 42, 0.85) 40%, rgba(30, 41, 59, 0.9) 70%, rgba(2, 6, 23, 0.95) 100%)'
+        }}
+      />
+      
+      {/* Subtle city lights effect */}
+      <div 
+        className="fixed inset-0 z-1 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 25% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                       radial-gradient(ellipse at 50% 85%, rgba(34, 197, 94, 0.03) 0%, transparent 40%),
+                       radial-gradient(ellipse at 75% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 45%)`
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10">
 
       {/* Hero Section */}
-      <section className="relative px-6 py-16 md:py-24">
+      <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm">
                 <CheckCircle className="w-4 h-4" />
-                <span>Delivered in 5 Business Days</span>
+                <span className="hidden sm:inline">Delivered in 5 Business Days</span>
+                <span className="sm:hidden">5-Day Delivery</span>
           </div>
           
-              <h1 className="text-4xl md:text-6xl font-bold text-stone-100 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-100 leading-tight">
                 Design Your Dream Jewelry with{" "}
-                <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
                   AI Magic
                 </span>
           </h1>
           
-              <p className="text-xl text-stone-300 leading-relaxed">
+              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl lg:max-w-none mx-auto lg:mx-0">
                 Simply describe your vision in words. Our AI instantly creates photorealistic designs 
                 and detailed specifications. Master jewelers in NYC handcraft your unique piece 
                 and deliver it in just{" "}
-                <span className="font-semibold text-amber-400">5 business days</span>.
+                <span className="font-semibold text-cyan-400">5 business days</span>.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild className="bg-amber-500 hover:bg-amber-600 text-black font-semibold px-8 py-6 text-lg group">
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto lg:max-w-none lg:mx-0">
+                <Button asChild className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg group shadow-lg">
               <Link href="/design">
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    Start Designing Now
+                    <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+                    <span className="hidden sm:inline">Start Designing Now</span>
+                    <span className="sm:hidden">Design Now</span>
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-                <Button variant="outline" asChild className="border-stone-600 text-stone-300 hover:bg-stone-800 px-8 py-6 text-lg">
-                  <Link href="#examples">See AI Examples</Link>
+                <Button variant="outline" asChild className="border-slate-600 text-slate-300 hover:bg-slate-800 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
+                  <Link href="#examples">See Examples</Link>
             </Button>
           </div>
 
               {/* Key Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-amber-400" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-stone-200">AI-Powered</p>
-                    <p className="text-sm text-stone-400">Instant designs</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8">
+                <div className="flex items-center justify-center sm:justify-start space-x-3">
                   <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-blue-400" />
+                    <Sparkles className="w-5 h-5 text-blue-400" />
                   </div>
                   <div>
-                    <p className="font-medium text-stone-200">5-Day Delivery</p>
-                    <p className="text-sm text-stone-400">Guaranteed</p>
+                    <p className="font-medium text-slate-200">AI-Powered</p>
+                    <p className="text-sm text-slate-400">Instant designs</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
-                    <Award className="w-5 h-5 text-purple-400" />
+                <div className="flex items-center justify-center sm:justify-start space-x-3">
+                  <div className="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-cyan-400" />
                   </div>
                   <div>
-                    <p className="font-medium text-stone-200">NYC Crafted</p>
-                    <p className="text-sm text-stone-400">Master jewelers</p>
+                    <p className="font-medium text-slate-200">5-Day Delivery</p>
+                    <p className="text-sm text-slate-400">Guaranteed</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start space-x-3">
+                  <div className="w-10 h-10 bg-teal-500/20 rounded-full flex items-center justify-center">
+                    <Award className="w-5 h-5 text-teal-400" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-slate-200">NYC Crafted</p>
+                    <p className="text-sm text-slate-400">Master jewelers</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Hero Images */}
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="relative mt-8 lg:mt-0">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {exampleDesigns.slice(0, 4).map((design, index) => (
                   <div key={index} className="relative group">
-                    <div className="aspect-square rounded-2xl overflow-hidden bg-stone-800 border border-stone-700 group-hover:border-stone-600 transition-all">
+                    <div className="aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 group-hover:border-slate-600 transition-all">
                       {design.image_url ? (
                         <img
                           src={design.image_url}
@@ -126,18 +167,18 @@ export default function HomePage() {
                           className="w-full h-full object-cover transition-transform group-hover:scale-105"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-stone-500">
-                          <Sparkles className="w-8 h-8" />
+                        <div className="w-full h-full flex items-center justify-center text-slate-500">
+                          <Sparkles className="w-6 sm:w-8 h-6 sm:h-8" />
                         </div>
                       )}
                     </div>
                     {design.title && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="absolute bottom-4 left-4">
-                          <p className="text-white text-sm font-medium">{design.title}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4">
+                          <p className="text-white text-xs sm:text-sm font-medium">{design.title}</p>
                           <div className="flex space-x-1 mt-1">
                             {design.tags?.slice(0, 2).map((tag, i) => (
-                              <span key={i} className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white">
+                              <span key={i} className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white">
                                 {tag}
                               </span>
                             ))}
@@ -150,8 +191,8 @@ export default function HomePage() {
               </div>
               
               {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-xl opacity-20 animate-pulse delay-1000"></div>
+              <div className="absolute -top-4 -right-4 w-16 sm:w-24 h-16 sm:h-24 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
+              <div className="absolute -bottom-4 -left-4 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-full blur-xl opacity-20 animate-pulse delay-1000"></div>
             </div>
           </div>
         </div>
@@ -413,6 +454,7 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }
