@@ -34,24 +34,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state changed:', event, !!session);
         setUser(session?.user ?? null);
         setLoading(false);
 
-        // Create user profile if new user
+        // Create user profile if new user (non-blocking)
         if (event === 'SIGNED_IN' && session?.user) {
-          const { data: existingProfile } = await supabase
+          // Don't await - let this run in background to avoid blocking UI
+          supabase
             .from('users')
             .select('*')
             .eq('id', session.user.id)
-            .single();
-
-          if (!existingProfile) {
-            await supabase.from('users').insert({
-              id: session.user.id,
-              email: session.user.email,
-              full_name: session.user.user_metadata.full_name || session.user.email?.split('@')[0],
+            .single()
+            .then(({ data: existingProfile }) => {
+              if (!existingProfile) {
+                return supabase.from('users').insert({
+                  id: session.user.id,
+                  email: session.user.email,
+                  full_name: session.user.user_metadata.full_name || session.user.email?.split('@')[0],
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Error creating user profile:', error);
+              // Don't throw - profile creation failure shouldn't block login
             });
-          }
         }
       }
     );
@@ -80,16 +87,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signInWithEmail = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    console.log('Attempting sign in with email:', email);
+    
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    
+    console.log('Sign in response:', { 
+      hasSession: !!data.session, 
+      hasUser: !!data.user, 
+      error: error?.message 
+    });
+    
     if (error) {
+      console.error('Sign in error:', error);
+      
       // Provide user-friendly error messages
       if (error.message.includes('Invalid login credentials') || error.message.includes('invalid')) {
         throw new Error('Invalid email or password. Please check your credentials and try again.');
+      } else if (error.message.includes('Email not confirmed')) {
+        throw new Error('Please check your email and click the confirmation link to activate your account.');
       } else if (error.message.includes('rate limit')) {
         throw new Error('Too many login attempts. Please wait a minute and try again.');
       }
       throw error;
     }
+    
+    // Check if session was created
+    if (!data.session) {
+      console.error('No session created after sign in');
+      throw new Error('Login failed. Please try again or contact support.');
+    }
+    
+    console.log('Sign in successful, session created');
   };
 
   const signUpWithEmail = async (email: string, password: string, name: string) => {

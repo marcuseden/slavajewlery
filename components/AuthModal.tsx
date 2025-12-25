@@ -29,14 +29,31 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setError('');
 
     try {
-      if (mode === 'login') {
-        await signInWithEmail(email, password);
-      } else {
-        await signUpWithEmail(email, password, name);
-      }
+      console.log('Starting authentication:', mode, email);
+      
+      // Set a safety timeout (15 seconds)
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timed out. Please check your connection and try again.')), 15000)
+      );
+      
+      const authPromise = mode === 'login' 
+        ? signInWithEmail(email, password)
+        : signUpWithEmail(email, password, name);
+      
+      await Promise.race([authPromise, timeoutPromise]);
+      
+      console.log('Authentication successful, closing modal');
+      
+      // Close modal immediately
       onClose();
+      
+      // Clear form
+      setEmail('');
+      setPassword('');
+      setName('');
     } catch (err: any) {
-      setError(err.message);
+      console.error('Authentication error:', err);
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
