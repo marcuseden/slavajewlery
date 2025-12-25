@@ -13,7 +13,7 @@ export function Header() {
   const { user, signOut } = useAuth();
 
   const navItems = [
-    { href: '/designs', label: 'Browse Designs' },
+    // { href: '/designs', label: 'Browse Designs' }, // Hidden per user request
     { href: '/how-it-works', label: 'How it works' },
     { href: '/examples', label: 'Examples' },
     { href: '/guarantee', label: 'Guarantee' },
