@@ -37,6 +37,23 @@ export interface ManufacturingConstraints {
     minProductionDays: number;
     maxProductionDays: number;
   };
+  structural: {
+    minMetalThickness: number; // mm
+    minProngDiameter: number; // mm
+    minDetailSize: number; // mm
+    minStoneSettingDepth: number; // ratio
+    maxAspectRatio: number; // length:width ratio
+    minWallThickness: number; // mm
+  };
+  quality: {
+    surfaceFinishStandards: string[];
+    stoneQualityMinimum: string;
+    metalPurityStandards: {
+      platinum: number[];
+      gold: number[];
+      silver: number[];
+    };
+  };
 }
 
 export const MANUFACTURING_RULES: ManufacturingConstraints = {
