@@ -153,74 +153,23 @@ export async function POST(request: NextRequest) {
     const numberOfChains = chainCount && chainCount[1] ? chainCount[1] : '';
     
     const lockedDesignDetails = `
-🔒 LOCKED DESIGN SPECIFICATIONS - THESE MUST BE IDENTICAL IN ALL PHOTOS:
+Specifications:
+- Metal: ${metalSpec}
+${gemstoneSpec ? '- Gemstones: ' + gemstoneSpec : ''}
+${numberOfChains ? '- Chains: ' + numberOfChains + ' delicate chains' : ''}
+- Finish: ${designElements.finish.length > 0 ? designElements.finish[0] : 'polished'}
+- Style: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'elegant, timeless'}
 
-USER'S EXACT VISION: "${sanitizedVision}"
-
-JEWELRY TYPE: ${typeSpec}
-METAL: ${metalSpec} 
-${gemstoneSpec}
-${numberOfChains ? `CHAINS: ${numberOfChains} separate chains` : ''}
-FINISH: ${designElements.finish.length > 0 ? designElements.finish[0] : 'polished'}
-STYLE: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'elegant, timeless'}
+Professional jewelry photography, luxury lighting, photorealistic.
 `.trim();
 
-    // Create SIMPLE, DIRECT master spec that prioritizes USER VISION
+    // MINIMAL PROMPT - Just user's vision
     const masterDesignSpec = `
-${nameText ? `
-🚨🚨🚨🚨🚨 ABSOLUTE CRITICAL REQUIREMENT - READ THIS FIRST 🚨🚨🚨🚨🚨
+${sanitizedVision}
 
-THE PENDANT MUST DISPLAY THIS EXACT NAME IN SCRIPT FONT:
+${nameText ? `The pendant displays the name "${nameText}" in elegant script.` : ''}
 
-${nameText.toUpperCase()}
-
-Spell it exactly: ${nameText.split('').map(c => c.toUpperCase()).join(' ')}
-
-DO NOT WRITE ANY OTHER NAME. NOT "Sonja", NOT "Small", NOT "Love", NOT anything else.
-ONLY THIS NAME: ${nameText}
-
-This is a CUSTOM PERSONALIZED NAME PENDANT. The customer paid for the name "${nameText}".
-If you write ANY other name, this order is WRONG and will be REJECTED.
-
-WRITE: ${nameText}
-DO NOT WRITE: Sonja, Small, Love, Mom, or any other word
-
-THE NAME IS: ${nameText} ${nameText} ${nameText}
-
-🚨🚨🚨🚨🚨 END CRITICAL REQUIREMENT 🚨🚨🚨🚨🚨
-` : ''}
-
-YOU ARE CREATING A SINGLE PHYSICAL JEWELRY PIECE THAT WILL BE PHOTOGRAPHED FROM MULTIPLE ANGLES.
-
-${lockedDesignDetails}
-
-⚠️ ABSOLUTE CONSISTENCY REQUIREMENT - THIS IS CRITICAL:
-You are photographing ONE REAL PHYSICAL PIECE from different angles. Think of this like a product photographer shooting the same ring from different positions.
-
-WHAT MUST BE IDENTICAL IN ALL PHOTOS:
-✓ The EXACT same number and type of gemstones in EXACT same positions
-✓ The EXACT same metal colors and finish
-✓ The EXACT same chain count (if chains) - ${numberOfChains ? numberOfChains + ' chains' : 'same number'}
-✓ The EXACT same text/name in EXACT same font - ${nameText ? '"' + nameText + '"' : 'if any text'}
-✓ The EXACT same design details, patterns, textures
-✓ The EXACT same size and proportions
-✓ The EXACT same structural elements
-
-WHAT CHANGES BETWEEN PHOTOS:
-✗ ONLY the camera angle/position
-✗ ONLY the lighting setup
-✗ ONLY the background
-
-If someone looks at both photos they must say "that's the exact same piece of jewelry from a different angle" - NOT "those are two similar pieces"
-
-QUALITY REQUIREMENTS:
-- Professional luxury jewelry photography
-- Ultra-high resolution, photorealistic, magazine quality  
-- Beautiful lighting that makes metals gleam and gemstones sparkle
-- Emotionally compelling presentation
-- Show craftsmanship and fine details
-
-${MANUFACTURING_GUARDRAILS}
+Professional luxury jewelry photography, photorealistic, high quality.
 `.trim();
     
     // Generate images SEQUENTIALLY to reduce server load and improve consistency
@@ -232,33 +181,10 @@ ${MANUFACTURING_GUARDRAILS}
       
       const fullPrompt = `${masterDesignSpec}
 
-📸 PHOTOGRAPHY SHOT #${index + 1}: ${imageType.type.toUpperCase()}
-Camera Setup: ${imageType.description}
-What to Show: ${imageType.consistency_note}
+${imageType.description}
+${imageType.consistency_note}
 
-${index > 0 && firstImageRevisedPrompt ? `
-🚨🚨🚨 CRITICAL CONSISTENCY REQUIREMENT - PHOTO #${index + 1} 🚨🚨🚨
-
-You MUST photograph the EXACT SAME PHYSICAL JEWELRY PIECE you created in Photo #1.
-
-WHAT YOU CREATED IN PHOTO #1:
-"${firstImageRevisedPrompt.substring(0, 500)}..."
-
-Imagine you are a professional product photographer. You shot Photo #1, now you're moving your camera to a different position to shoot Photo #${index + 1} of THE SAME PIECE.
-
-MANDATORY CHECKLIST - THE JEWELRY MUST HAVE:
-${nameText ? '☑ THE NAME "' + nameText.toUpperCase() + '" - NOT "Sonja", NOT "Small", NOT anything else' : ''}
-☑ EXACT same gemstone count and placement as Photo #1
-☑ EXACT same metal colors as Photo #1  
-☑ EXACT same chain count as Photo #1 ${numberOfChains ? '(' + numberOfChains + ' chains)' : ''}
-☑ EXACT same design details as Photo #1
-☑ EXACT same proportions and size as Photo #1
-
-ONLY THESE CHANGE: Camera angle, lighting, background
-
-If you create a DIFFERENT piece of jewelry, this entire photo series is REJECTED and FAILED.
-The customer needs to see the SAME piece from multiple angles to make a purchase decision.
-` : 'This is the PRIMARY view - establish the design that will be shown from different angles in subsequent photos.'}
+${index > 0 ? `Same jewelry piece as photo 1, just different camera angle.` : ''}
 `.trim();
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
