@@ -104,12 +104,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    // Attempt to create new account
+    // Attempt to create new account with email auto-confirmation
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { full_name: name },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
@@ -125,6 +126,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw new Error('Password must be at least 6 characters long.');
       }
       throw error;
+    }
+
+    // If email confirmation is required but not set up, show helpful message
+    if (data?.user && !data.session) {
+      throw new Error('Account created! Please check your email to confirm, or contact support to enable auto-login.');
     }
   };
 
