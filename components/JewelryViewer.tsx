@@ -212,7 +212,7 @@ export function JewelryViewer({ design, isOpen, onClose }: JewelryViewerProps) {
                     title={design.title}
                     description={design.prompt}
                     imageUrl={currentImage?.local_url || currentImage?.url}
-                    designUrl={`${window.location.origin}?design=${design.id}`}
+                    designUrl={typeof window !== 'undefined' ? `${window.location.origin}?design=${design.id}` : `/?design=${design.id}`}
                     className="p-3 border border-slate-600 text-slate-400 hover:bg-slate-800 rounded-lg"
                   >
                     <Share2 className="w-5 h-5" />

@@ -16,10 +16,10 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'newest';
 
     let query = supabase
-      .from('designs')
+      .from('shared_designs')
       .select(`
         *,
-        creator:profiles(email)
+        creator:users!creator_id(email)
       `)
       .eq('is_public', true)
       .range(offset, offset + limit - 1);

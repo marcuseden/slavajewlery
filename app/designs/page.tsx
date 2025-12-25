@@ -71,6 +71,8 @@ export default function DesignsPage() {
   };
 
   const filterAndSortDesigns = () => {
+    if (!Array.isArray(designs)) return;
+    
     let filtered = [...designs];
 
     // Filter by search query
@@ -164,22 +166,36 @@ export default function DesignsPage() {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-slate-950 relative">
-        {/* Times Square NYC Background */}
+        {/* Luxury Velvet Black Background */}
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: `url('/times-square-backdrop.jpg')`,
+            background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            backgroundRepeat: 'no-repeat',
           }}
         />
         
-        {/* Black overlay for readability */}
+        {/* Velvet texture overlay */}
         <div 
-          className="fixed inset-0 z-1 pointer-events-none bg-black"
+          className="fixed inset-0 z-1 pointer-events-none"
           style={{
-            opacity: 0.35
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              )
+            `,
+            opacity: 0.4
           }}
         />
         
@@ -278,7 +294,7 @@ export default function DesignsPage() {
                       title={design.title}
                       description={design.prompt}
                       imageUrl={design.images[0]?.local_url || design.images[0]?.url}
-                      designUrl={`${window.location.origin}/designs/${design.id}`}
+                      designUrl={typeof window !== 'undefined' ? `${window.location.origin}/designs/${design.id}` : `/designs/${design.id}`}
                       className="p-2 rounded-full bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm"
                     >
                       <Share2 className="w-4 h-4" />
@@ -392,7 +408,6 @@ export default function DesignsPage() {
                 </Button>
               </Link>
             </div>
-          </div>
           </div>
           </div>
         </div>

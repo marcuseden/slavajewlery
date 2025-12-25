@@ -118,22 +118,36 @@ export default function CheckoutPage() {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-slate-950 relative">
-        {/* Times Square NYC Background */}
+        {/* Luxury Velvet Black Background */}
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: `url('/times-square-backdrop.jpg')`,
+            background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            backgroundRepeat: 'no-repeat',
           }}
         />
         
-        {/* Black overlay for readability */}
+        {/* Velvet texture overlay */}
         <div 
-          className="fixed inset-0 z-1 pointer-events-none bg-black"
+          className="fixed inset-0 z-1 pointer-events-none"
           style={{
-            opacity: 0.35
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              )
+            `,
+            opacity: 0.4
           }}
         />
         

@@ -65,22 +65,36 @@ export default function HomePage() {
       <div className="min-h-screen relative bg-slate-950">
         <Header />
         
-        {/* Times Square NYC Background */}
+        {/* Luxury Velvet Black Background */}
         <div 
           className="fixed inset-0 z-0"
           style={{
-            backgroundImage: `url('/times-square-backdrop.jpg')`,
+            background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            backgroundRepeat: 'no-repeat',
           }}
         />
         
-        {/* Black overlay for readability */}
+        {/* Velvet texture overlay */}
         <div 
-          className="fixed inset-0 z-1 pointer-events-none bg-black"
+          className="fixed inset-0 z-1 pointer-events-none"
           style={{
-            opacity: 0.35
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              )
+            `,
+            opacity: 0.4
           }}
         />
       
@@ -160,6 +174,71 @@ export default function HomePage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Featured Jewelry Showcase - Right in Hero */}
+      <section className="px-4 sm:px-6 pb-12 -mt-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            {/* Quick Preview Images */}
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
+              <img
+                src="/designs/grace-kelly-ring-hero_angle.png"
+                alt="Grace Kelly Ring"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-2 left-2 right-2">
+                <p className="text-white text-xs font-semibold">Grace Kelly Ring</p>
+                <p className="text-gray-300 text-[10px]">Classic Elegance</p>
+              </div>
+            </div>
+            
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
+              <img
+                src="/designs/madonna-punk-ring-hero_angle.png"
+                alt="Madonna Punk Ring"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-2 left-2 right-2">
+                <p className="text-white text-xs font-semibold">Madonna Ring</p>
+                <p className="text-gray-300 text-[10px]">Punk Rock</p>
+              </div>
+            </div>
+            
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
+              <img
+                src="/designs/audrey-pearl-necklace-hero_angle.png"
+                alt="Audrey Pearl Necklace"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-2 left-2 right-2">
+                <p className="text-white text-xs font-semibold">Audrey Necklace</p>
+                <p className="text-gray-300 text-[10px]">Timeless Pearl</p>
+              </div>
+            </div>
+            
+            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
+              <img
+                src="/designs/bowie-lightning-earrings-hero_angle.png"
+                alt="Bowie Lightning Earrings"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-2 left-2 right-2">
+                <p className="text-white text-xs font-semibold">Bowie Earrings</p>
+                <p className="text-gray-300 text-[10px]">Bold Statement</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Small caption */}
+          <p className="text-center text-gray-400 text-sm mt-4">
+            Real AI-generated designs • Handcrafted in NYC • Delivered in 5 days
+          </p>
         </div>
       </section>
 

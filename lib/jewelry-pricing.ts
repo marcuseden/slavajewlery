@@ -256,3 +256,7 @@ export function parseJewelrySpecs(prompt: string): JewelrySpecs {
     size
   };
 }
+
+
+
+

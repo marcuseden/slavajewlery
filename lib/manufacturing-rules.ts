@@ -230,3 +230,7 @@ export function estimateProductionDays(complexityScore: number): number {
   
   return Math.min(days, MANUFACTURING_RULES.production.maxProductionDays);
 }
+
+
+
+
