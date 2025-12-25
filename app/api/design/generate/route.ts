@@ -152,19 +152,7 @@ export async function POST(request: NextRequest) {
     const chainCount = sanitizedVision.match(/(\w+)\s+chain/i);
     const numberOfChains = chainCount && chainCount[1] ? chainCount[1] : '';
     
-    // Create LOCKED design specification with NAME as TOP priority
-    const nameWarning = nameText ? `
-🚨🚨🚨 CRITICAL NAME REQUIREMENT 🚨🚨🚨
-THE JEWELRY MUST DISPLAY THE NAME: "${nameText}"
-NOT "Small", NOT "Cute", NOT any other word - ONLY "${nameText}"
-This is a CUSTOM NAME PENDANT - the customer specified "${nameText}" and that's what must appear.
-Write this EXACT name in elegant script font: ${nameText}
-🚨🚨🚨 DO NOT SUBSTITUTE ANY OTHER WORD 🚨🚨🚨
-` : '';
-
     const lockedDesignDetails = `
-${nameWarning}
-
 🔒 LOCKED DESIGN SPECIFICATIONS - THESE MUST BE IDENTICAL IN ALL PHOTOS:
 
 USER'S EXACT VISION: "${sanitizedVision}"
@@ -172,25 +160,37 @@ USER'S EXACT VISION: "${sanitizedVision}"
 JEWELRY TYPE: ${typeSpec}
 METAL: ${metalSpec} 
 ${gemstoneSpec}
-${numberOfChains ? `CHAINS: ${numberOfChains} separate chains (CRITICAL: show exactly ${numberOfChains} distinct chains)` : ''}
-${nameText ? `⚠️ NAME ON PENDANT: "${nameText}" - Write this EXACT name, letter by letter: ${nameText.split('').join('-')}` : ''}
+${numberOfChains ? `CHAINS: ${numberOfChains} separate chains` : ''}
 FINISH: ${designElements.finish.length > 0 ? designElements.finish[0] : 'polished'}
 STYLE: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'elegant, timeless'}
 `.trim();
 
     // Create SIMPLE, DIRECT master spec that prioritizes USER VISION
     const masterDesignSpec = `
-YOU ARE CREATING A SINGLE PHYSICAL JEWELRY PIECE THAT WILL BE PHOTOGRAPHED FROM MULTIPLE ANGLES.
-
 ${nameText ? `
-⚠️⚠️⚠️ MOST CRITICAL REQUIREMENT ⚠️⚠️⚠️
-This is a CUSTOM NAME NECKLACE/PENDANT featuring the name: "${nameText}"
-You MUST write this EXACT name on the pendant: ${nameText}
-Do NOT write "Small", "Cute", "Love", or any other word.
-ONLY write: ${nameText}
-Letter by letter: ${nameText.split('').join(' - ')}
-⚠️⚠️⚠️ THIS NAME IS THE CENTERPIECE OF THE DESIGN ⚠️⚠️⚠️
+🚨🚨🚨🚨🚨 ABSOLUTE CRITICAL REQUIREMENT - READ THIS FIRST 🚨🚨🚨🚨🚨
+
+THE PENDANT MUST DISPLAY THIS EXACT NAME IN SCRIPT FONT:
+
+${nameText.toUpperCase()}
+
+Spell it exactly: ${nameText.split('').map(c => c.toUpperCase()).join(' ')}
+
+DO NOT WRITE ANY OTHER NAME. NOT "Sonja", NOT "Small", NOT "Love", NOT anything else.
+ONLY THIS NAME: ${nameText}
+
+This is a CUSTOM PERSONALIZED NAME PENDANT. The customer paid for the name "${nameText}".
+If you write ANY other name, this order is WRONG and will be REJECTED.
+
+WRITE: ${nameText}
+DO NOT WRITE: Sonja, Small, Love, Mom, or any other word
+
+THE NAME IS: ${nameText} ${nameText} ${nameText}
+
+🚨🚨🚨🚨🚨 END CRITICAL REQUIREMENT 🚨🚨🚨🚨🚨
 ` : ''}
+
+YOU ARE CREATING A SINGLE PHYSICAL JEWELRY PIECE THAT WILL BE PHOTOGRAPHED FROM MULTIPLE ANGLES.
 
 ${lockedDesignDetails}
 
@@ -247,7 +247,7 @@ WHAT YOU CREATED IN PHOTO #1:
 Imagine you are a professional product photographer. You shot Photo #1, now you're moving your camera to a different position to shoot Photo #${index + 1} of THE SAME PIECE.
 
 MANDATORY CHECKLIST - THE JEWELRY MUST HAVE:
-${nameText ? '☑ EXACT name on pendant: "' + nameText + '" (NOT "Small" or any other word - ONLY "' + nameText + '")' : ''}
+${nameText ? '☑ THE NAME "' + nameText.toUpperCase() + '" - NOT "Sonja", NOT "Small", NOT anything else' : ''}
 ☑ EXACT same gemstone count and placement as Photo #1
 ☑ EXACT same metal colors as Photo #1  
 ☑ EXACT same chain count as Photo #1 ${numberOfChains ? '(' + numberOfChains + ' chains)' : ''}
@@ -269,7 +269,7 @@ The customer needs to see the SAME piece from multiple angles to make a purchase
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          quality: "hd", // High definition for compelling, breathtaking imagery
+          quality: "standard", // Standard quality for 3x faster generation (5-10s vs 15-30s per image)
           style: "natural"
         });
 
@@ -297,9 +297,9 @@ The customer needs to see the SAME piece from multiple angles to make a purchase
         });
       }
       
-      // Delay between images to avoid rate limiting and improve consistency
+      // Small delay between images to avoid rate limiting
       if (index < IMAGE_TYPES.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay for better consistency
+        await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay - just enough to avoid rate limits
       }
     }
 

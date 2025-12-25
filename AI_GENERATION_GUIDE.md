@@ -10,11 +10,12 @@
 - ✅ **Natural photorealism**: "Natural" style setting produces the most realistic product photography
 - ✅ **HD quality**: Critical for showing jewelry craftsmanship and material quality
 
-**Production Metrics:**
-- **Time per image**: 15-30 seconds
-- **Total generation time**: 60-120 seconds for 4 images (parallel generation)
+**Production Metrics (Updated):**
+- **Time per image**: 5-10 seconds (standard quality)
+- **Total generation time**: 10-20 seconds for 2 images (sequential)
 - **Success rate**: ~95% with proper guardrails
-- **Cost**: $0.08 per HD 1024x1024 image = $0.32 per design
+- **Cost**: $0.04 per standard 1024x1024 image = $0.08 per design (2 images)
+- **Speed improvement**: 3x faster than HD quality
 
 ### Alternative: DALL-E 2 (Faster but Lower Quality)
 
