@@ -82,46 +82,103 @@ export async function POST(request: NextRequest) {
     // Extract KEY DESIGN ELEMENTS for absolute consistency
     const designElements = {
       metalColors: (sanitizedVision.match(/(?:rose|white|yellow|platinum|gold|silver)/gi) || []) as string[],
-      gemstones: (sanitizedVision.match(/(?:diamond|ruby|sapphire|emerald|pearl)/gi) || []) as string[],
-      style: (sanitizedVision.match(/(?:solitaire|halo|vintage|modern|classic|art deco|minimalist)/gi) || []) as string[],
-      finish: (sanitizedVision.match(/(?:polished|matte|brushed|hammered|textured)/gi) || []) as string[]
+      gemstones: (sanitizedVision.match(/(?:diamond|ruby|sapphire|emerald|pearl|topaz|amethyst|garnet|opal|turquoise)/gi) || []) as string[],
+      style: (sanitizedVision.match(/(?:solitaire|halo|vintage|modern|classic|art deco|minimalist|bohemian|contemporary|romantic|glamorous)/gi) || []) as string[],
+      finish: (sanitizedVision.match(/(?:polished|matte|brushed|hammered|textured)/gi) || []) as string[],
+      jewelryType: (sanitizedVision.match(/(?:ring|earring|earrings|bracelet|necklace|pendant|chain|brooch|anklet|cuff|bangle|stud|hoop|charm)/gi) || ['ring']) as string[]
     };
 
-    // Create MASTER design specification with LOCKED-IN details
+    // Determine the primary jewelry type
+    const primaryType = designElements.jewelryType[0]?.toLowerCase() || 'ring';
+    const isRing = primaryType.includes('ring');
+    const isEarring = primaryType.includes('earring') || primaryType.includes('stud') || primaryType.includes('hoop');
+    const isBracelet = primaryType.includes('bracelet') || primaryType.includes('cuff') || primaryType.includes('bangle');
+    const isNecklace = primaryType.includes('necklace') || primaryType.includes('pendant') || primaryType.includes('chain');
+    
+    // Extract setting type if mentioned
+    const hasProngSetting = sanitizedVision.toLowerCase().includes('prong');
+    const hasBezelSetting = sanitizedVision.toLowerCase().includes('bezel');
+    const hasPaveSetting = sanitizedVision.toLowerCase().includes('pave') || sanitizedVision.toLowerCase().includes('pavé');
+    
+    // Build dynamic jewelry type description
+    let typeSpecificDescription = '';
+    if (isEarring) {
+      typeSpecificDescription = `JEWELRY TYPE: EARRINGS (Pair)
+• Design: Matching pair of earrings with identical design elements
+• Backing: Secure post and butterfly back (for studs) or hinged closure (for hoops)
+• Size: Proportional for ear wear, comfortable and balanced
+• Symmetry: BOTH earrings must be perfectly identical mirror images`;
+    } else if (isBracelet) {
+      typeSpecificDescription = `JEWELRY TYPE: BRACELET
+• Design: Wrist-wrapping design with elegant flow
+• Closure: Secure clasp mechanism (lobster, box, or toggle clasp)
+• Sizing: Comfortable wrist fit with slight movement allowance
+• Structure: Flexible or rigid structure as specified`;
+    } else if (isNecklace) {
+      typeSpecificDescription = `JEWELRY TYPE: NECKLACE
+• Design: Elegant chain or pendant design for neck wear
+• Chain: ${sanitizedVision.toLowerCase().includes('chain') ? 'Delicate chain with secure links' : 'Pendant centerpiece design'}
+• Clasp: Secure lobster or spring ring clasp
+• Length: Standard necklace proportions`;
+    } else {
+      // Default to ring
+      typeSpecificDescription = `JEWELRY TYPE: RING
+• Design: Elegant ring design for finger wear
+• Band: Comfortable band structure that wraps around finger
+• Sizing: Standard ring proportions with proper band width
+• Structure: Secure and wearable construction`;
+    }
+
+    // Build gemstone description dynamically
+    let gemstoneDescription = '';
+    if (designElements.gemstones.length > 0) {
+      const primaryGemstone = designElements.gemstones[0];
+      const gemstoneCount = designElements.gemstones.length;
+      
+      if (primaryGemstone.toLowerCase() === 'pearl') {
+        gemstoneDescription = `• Gemstones: ${gemstoneCount > 1 ? 'Multiple' : 'Lustrous'} ${primaryGemstone.toLowerCase()}(s) with natural iridescence
+• Setting: ${hasProngSetting ? 'Prong or peg setting' : 'Secure cup or glue setting appropriate for pearls'}`;
+      } else {
+        gemstoneDescription = `• Gemstones: ${primaryGemstone} ${gemstoneCount > 1 ? '(multiple stones)' : '(center stone)'}
+• Setting: ${hasProngSetting ? 'Classic prong setting' : hasBezelSetting ? 'Modern bezel setting' : hasPaveSetting ? 'Pavé setting' : 'Secure stone setting'}`;
+      }
+    } else {
+      gemstoneDescription = `• Style: Metal-only design without gemstones (if no stones mentioned)`;
+    }
+
+    // Build metal description
+    const metalDescription = designElements.metalColors.length > 0 
+      ? designElements.metalColors.slice(0, 3).join(' and ') 
+      : 'precious metal';
+
+    // Create MASTER design specification with DYNAMIC details based on user input
     const masterDesignSpec = `
 CREATE A STUNNING, EMOTIONALLY COMPELLING JEWELRY PIECE WITH ABSOLUTE CONSISTENCY:
 
 USER VISION: ${sanitizedVision}
 
 🔒 LOCKED DESIGN SPECIFICATIONS (MUST BE IDENTICAL IN ALL PHOTOS):
-• Metal Combination: ${designElements.metalColors.length > 0 ? designElements.metalColors.join(' + ') : 'mixed metals - rose gold, white gold, yellow gold'}
-• Center Stone: ONE brilliant-cut diamond in a ${designElements.style.includes('solitaire') ? '4-prong solitaire' : 'secure prong'} setting
-• Band Design: Interwoven triple-band design with THREE distinct metal colors flowing together
-• Finish: ${designElements.finish.length > 0 ? designElements.finish[0] : 'matte brushed'} texture on metal bands
-• Setting Style: Simple elegant prongs holding center diamond
-• Design Features: Contemporary fusion of three precious metals in braided/twisted pattern
-
-🎨 EXACT VISUAL SPECIFICATIONS (UNCHANGEABLE):
-1. METALS: Three separate bands of rose, white, and yellow gold intertwined/braided together
-2. CENTER STONE: ONE round brilliant diamond (approx 1 carat appearance) in white gold prongs
-3. BAND PATTERN: Twisted/braided tri-color metal design that wraps around the finger
-4. PROPORTIONS: Medium width band (~4-5mm), substantial but elegant
-5. STYLE: Contemporary meets timeless - modern aesthetic with classic solitaire
+${typeSpecificDescription}
+• Metal: ${metalDescription}
+${gemstoneDescription}
+• Finish: ${designElements.finish.length > 0 ? designElements.finish[0] : 'polished'} finish
+• Style: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'elegant and timeless'}
 
 ⚠️ CRITICAL CONSISTENCY RULES:
-• This is THE SAME PHYSICAL RING photographed from different angles
-• EXACT same number of metal bands (3 - rose, white, yellow)
-• EXACT same diamond size, cut, and setting
-• EXACT same braided/twisted pattern in the metal
+• This is THE SAME PHYSICAL PIECE photographed from different angles
+• EXACT same design elements in every photo
+• EXACT same gemstone types, sizes, and placement (if gemstones are specified)
+• EXACT same metal colors and finish
 • EXACT same proportions and scale
 • ONLY camera angle and background/lighting changes between photos
-• The ring must be INSTANTLY RECOGNIZABLE as the same piece in both views
+• The jewelry must be INSTANTLY RECOGNIZABLE as the same piece in both views
 
 DESIGN EXCELLENCE REQUIREMENTS:
 • Create ONE exquisite, photorealistic jewelry piece with breathtaking beauty
 • Capture the emotional essence: romance, elegance, timeless luxury, heirloom quality
-• Showcase the sparkle, brilliance, and fire of gemstones with cinematic lighting
+• Showcase the sparkle, brilliance, and fire of gemstones with cinematic lighting (if applicable)
 • Professional museum-quality photography that makes viewers fall in love
+• Honor ALL user specifications exactly as described
 
 ${MANUFACTURING_GUARDRAILS}
 `.trim();
@@ -135,27 +192,27 @@ ${MANUFACTURING_GUARDRAILS}
       const fullPrompt = `${masterDesignSpec}
 
 📸 PHOTOGRAPHY SETUP FOR THIS SPECIFIC VIEW:
-View Type: ${imageType.type.toUpperCase()} ${index > 0 ? `(Photo ${index + 1} of THE SAME RING)` : '(Primary View)'}
+View Type: ${imageType.type.toUpperCase()} ${index > 0 ? `(Photo ${index + 1} of THE SAME JEWELRY PIECE)` : '(Primary View)'}
 Camera Setup: ${imageType.description}
 What to Show: ${imageType.consistency_note}
 
 ${index > 0 ? `
 ⚠️⚠️⚠️ CONSISTENCY WARNING - THIS IS PHOTO #${index + 1}:
-You MUST photograph the EXACT SAME RING you created in Photo #1:
-• SAME tri-color metal braid pattern (rose + white + yellow gold)
-• SAME center diamond size and setting
-• SAME band width and proportions  
-• SAME twisted/braided metal design
-• ONLY the camera angle changes - NOTHING about the ring itself changes
-• If you create a different ring, this photo series will FAIL
+You MUST photograph the EXACT SAME JEWELRY PIECE you created in Photo #1:
+• SAME metal colors, finish, and texture
+• SAME gemstone types, sizes, colors, and placement (if applicable)
+• SAME design patterns, proportions, and scale
+• SAME structural elements and decorative details
+• ONLY the camera angle changes - NOTHING about the jewelry itself changes
+• If you create a different piece, this photo series will FAIL
 ` : ''}
 
 FINAL QUALITY CHECK:
 • Ultra-high resolution, photorealistic, magazine-quality
 • Emotionally compelling - viewers should feel desire and admiration  
-• Perfect lighting that makes gemstones sparkle and metals gleam
+• Perfect lighting that makes gemstones sparkle and metals gleam (if applicable)
 • Professional luxury jewelry photography worthy of a cover shoot
-• ${index > 0 ? 'CRITICAL: This must be THE SAME ring as photo #1, just a different angle!' : 'Create the definitive version of this design'}`;
+• ${index > 0 ? 'CRITICAL: This must be THE SAME jewelry piece as photo #1, just a different angle!' : 'Create the definitive version of this design'}`;
 
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);

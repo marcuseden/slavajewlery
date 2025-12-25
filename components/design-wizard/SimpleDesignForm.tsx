@@ -1011,13 +1011,13 @@ export function SimpleDesignForm() {
               } disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-base py-6 shadow-lg transition-all`}
             >
               {isGenerating ? (
-                <div className="flex flex-col items-center gap-3 w-full">
+                <div className="flex flex-col items-center gap-3 w-full px-4 py-2">
                   <div className="flex items-center gap-3">
                     <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                     <span className="font-semibold text-white">Creating your design...</span>
                   </div>
-                  <div className="w-full max-w-xs">
-                    <div className="w-full bg-black/20 backdrop-blur-sm border border-white/10 rounded-full h-2 overflow-hidden">
+                  <div className="w-full max-w-md px-2">
+                    <div className="w-full bg-black/20 backdrop-blur-sm border border-white/10 rounded-full h-2.5 overflow-hidden">
                       <div 
                         className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 shadow-lg shadow-purple-500/50"
                         style={{ width: `${generationProgress}%` }}
@@ -1146,6 +1146,17 @@ export function SimpleDesignForm() {
                   <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                     💎 Request Custom Quote
                   </Button>
+                  
+                  {/* Regenerate with same prompt */}
+                  <Button 
+                    variant="outline" 
+                    className="w-full bg-gradient-to-r from-purple-600/20 to-blue-600/20 border-2 border-purple-500 text-purple-200 hover:bg-purple-600/30 hover:border-purple-400 transition-all duration-300"
+                    onClick={handleGenerate}
+                    disabled={isGenerating}
+                  >
+                    🔄 Regenerate Design (Try Different Variation)
+                  </Button>
+                  
                   <Button 
                     variant="outline" 
                     className="w-full bg-transparent border-2 border-stone-400 text-stone-200 hover:bg-stone-800 hover:border-stone-300 transition-all duration-300"
@@ -1155,7 +1166,7 @@ export function SimpleDesignForm() {
                       setVision('');
                     }}
                   >
-                    ✨ Generate Another Design
+                    ✨ Start New Design
                   </Button>
                 </div>
               </div>
