@@ -186,7 +186,7 @@ Professional jewelry photography, luxury lighting, photorealistic.
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          quality: "standard", // Standard quality for 3x faster generation (5-10s vs 15-30s per image)
+          quality: "hd", // HD quality for professional, elegant jewelry (like ChatGPT uses)
           style: "natural"
         });
 
@@ -214,9 +214,9 @@ Professional jewelry photography, luxury lighting, photorealistic.
         });
       }
       
-      // Delay between images for consistency
+      // Delay between images for consistency and rate limiting
       if (index < IMAGE_TYPES.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 second delay to help AI maintain consistency
+        await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay for HD quality and consistency
       }
     }
 

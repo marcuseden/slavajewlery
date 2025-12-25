@@ -401,7 +401,7 @@ export function SimpleDesignForm() {
 
       // Set timeout for the fetch request
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 45000); // 45 second timeout (generation is now ~15-25 seconds)
+      const timeoutId = setTimeout(() => controller.abort(), 90000); // 90 second timeout for HD quality images
 
       const response = await fetch('/api/design/generate', {
         method: 'POST',
