@@ -1052,62 +1052,102 @@ export function SimpleDesignForm() {
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || !vision.trim() || vision.length < 20}
-              className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200 disabled:opacity-50 disabled:cursor-not-allowed h-16 text-lg relative overflow-hidden group"
+              className="w-full bg-gradient-to-r from-amber-100 via-yellow-50 to-amber-100 hover:from-amber-200 hover:via-yellow-100 hover:to-amber-200 text-stone-900 disabled:opacity-50 disabled:cursor-not-allowed h-20 text-lg relative overflow-hidden group border-2 border-amber-300/50 shadow-lg"
             >
               {isGenerating ? (
-                <div className="flex flex-col items-center justify-center w-full space-y-3 py-2">
-                  {/* Animated Icon and Text */}
-                  <div className="flex items-center space-x-3">
-                    <div className="relative">
-                      <div className="absolute inset-0 animate-ping">
-                        <Sparkles className="w-5 h-5 text-stone-600 opacity-40" />
+                <div className="flex flex-col items-center justify-center w-full space-y-4 py-3">
+                  {/* Spinning Ring Animation */}
+                  <div className="flex items-center space-x-4">
+                    <div className="relative w-12 h-12">
+                      {/* Outer rotating ring */}
+                      <div className="absolute inset-0 animate-spin" style={{ animationDuration: '3s' }}>
+                        <svg viewBox="0 0 50 50" className="w-12 h-12">
+                          <circle
+                            cx="25"
+                            cy="25"
+                            r="20"
+                            fill="none"
+                            stroke="url(#goldGradient)"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeDasharray="90 40"
+                          />
+                          <defs>
+                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#F59E0B" />
+                              <stop offset="50%" stopColor="#FCD34D" />
+                              <stop offset="100%" stopColor="#F59E0B" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
                       </div>
-                      <Sparkles className="w-5 h-5 text-stone-900 animate-pulse" />
+                      {/* Inner pulsing diamond */}
+                      <div className="absolute inset-0 flex items-center justify-center animate-pulse">
+                        <svg viewBox="0 0 24 24" className="w-6 h-6 text-amber-500" fill="currentColor">
+                          <path d="M12 2L4 8l8 14 8-14-8-6z" />
+                        </svg>
+                      </div>
+                      {/* Sparkle effects */}
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-300 rounded-full animate-ping" />
+                      <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-amber-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
                     </div>
-                    <span className="font-semibold text-base">Crafting your masterpiece...</span>
+                    <div className="text-left">
+                      <div className="font-bold text-lg bg-gradient-to-r from-amber-700 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
+                        Crafting your masterpiece...
+                      </div>
+                      <div className="text-xs text-amber-600 font-medium">
+                        {Math.round(generationProgress) < 30 && '✨ Analyzing your vision'}
+                        {Math.round(generationProgress) >= 30 && Math.round(generationProgress) < 70 && '🎨 Creating luxury imagery'}
+                        {Math.round(generationProgress) >= 70 && '💎 Adding final sparkle'}
+                      </div>
+                    </div>
                   </div>
                   
-                  {/* Enhanced Progress Bar */}
-                  <div className="w-full px-4">
-                    <div className="relative w-full bg-stone-300 rounded-full h-2.5 overflow-hidden shadow-inner">
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_infinite]" 
-                        style={{
-                          backgroundSize: '200% 100%',
-                          animation: 'shimmer 2s infinite'
-                        }}
-                      />
-                      {/* Progress fill */}
-                      <div 
-                        className="relative h-full bg-gradient-to-r from-stone-700 via-stone-800 to-stone-900 transition-all duration-500 ease-out shadow-lg"
-                        style={{ width: `${generationProgress}%` }}
-                      >
-                        {/* Glowing edge */}
-                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/60 blur-sm" />
+                  {/* Luxury Progress Bar */}
+                  <div className="w-full px-6">
+                    <div className="relative">
+                      {/* Background track */}
+                      <div className="w-full bg-gradient-to-r from-stone-300 via-stone-200 to-stone-300 rounded-full h-4 overflow-hidden shadow-inner border border-stone-400/30">
+                        {/* Animated shimmer background */}
+                        <div 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                          style={{
+                            animation: 'shimmer 2s infinite',
+                            backgroundSize: '200% 100%'
+                          }}
+                        />
+                        {/* Progress fill with gradient */}
+                        <div 
+                          className="relative h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 transition-all duration-700 ease-out"
+                          style={{ 
+                            width: `${generationProgress}%`,
+                            boxShadow: '0 0 20px rgba(251, 191, 36, 0.5)'
+                          }}
+                        >
+                          {/* Glowing edge effect */}
+                          <div className="absolute right-0 top-0 bottom-0 w-2 bg-white/80 blur-sm" />
+                          {/* Moving sparkles */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[shimmer_1s_infinite]" />
+                        </div>
                       </div>
-                    </div>
-                    
-                    {/* Progress percentage with better styling */}
-                    <div className="flex justify-between items-center mt-2">
-                      <span className="text-xs font-medium text-stone-700">
-                        {Math.round(generationProgress) < 30 && '✨ Analyzing design...'}
-                        {Math.round(generationProgress) >= 30 && Math.round(generationProgress) < 70 && '🎨 Creating imagery...'}
-                        {Math.round(generationProgress) >= 70 && '💎 Perfecting details...'}
-                      </span>
-                      <span className="text-xs font-bold text-stone-900 bg-stone-200 px-2 py-0.5 rounded-full">
-                        {Math.round(generationProgress)}%
-                      </span>
+                      
+                      {/* Percentage badge */}
+                      <div className="flex justify-center mt-2">
+                        <div className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg border-2 border-yellow-300/50">
+                          {Math.round(generationProgress)}% Complete
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               ) : (
                 <>
-                  <span className="relative z-10 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5" />
+                  <span className="relative z-10 flex items-center gap-2 font-bold">
+                    <Sparkles className="w-6 h-6" />
                     {currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'}
                   </span>
-                  {/* Hover effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-stone-200 to-stone-100 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {/* Hover gradient shimmer */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 via-amber-100 to-yellow-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </>
               )}
             </Button>
