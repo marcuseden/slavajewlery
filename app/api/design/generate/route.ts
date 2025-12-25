@@ -81,10 +81,10 @@ export async function POST(request: NextRequest) {
 
     // Extract KEY DESIGN ELEMENTS for absolute consistency
     const designElements = {
-      metalColors: sanitizedVision.match(/(?:rose|white|yellow|platinum|gold|silver)/gi) || [],
-      gemstones: sanitizedVision.match(/(?:diamond|ruby|sapphire|emerald|pearl)/gi) || [],
-      style: sanitizedVision.match(/(?:solitaire|halo|vintage|modern|classic|art deco|minimalist)/gi) || [],
-      finish: sanitizedVision.match(/(?:polished|matte|brushed|hammered|textured)/gi) || []
+      metalColors: (sanitizedVision.match(/(?:rose|white|yellow|platinum|gold|silver)/gi) || []) as string[],
+      gemstones: (sanitizedVision.match(/(?:diamond|ruby|sapphire|emerald|pearl)/gi) || []) as string[],
+      style: (sanitizedVision.match(/(?:solitaire|halo|vintage|modern|classic|art deco|minimalist)/gi) || []) as string[],
+      finish: (sanitizedVision.match(/(?:polished|matte|brushed|hammered|textured)/gi) || []) as string[]
     };
 
     // Create MASTER design specification with LOCKED-IN details
