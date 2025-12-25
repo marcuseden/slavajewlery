@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Design Your Jewelry - Make It",
-  description: "Create your one-of-a-kind jewelry piece with our AI-powered design wizard",
+  description: "Create your one-of-a-kind jewelry piece with our advanced design tool",
 };
 
 export default function DesignLayout({

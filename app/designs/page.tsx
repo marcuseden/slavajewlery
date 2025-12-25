@@ -65,38 +65,38 @@ export default function BrowseDesignsPage() {
       <Header />
       
       {/* Background */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
-        }}
-      />
-      
+        <div 
+          className="fixed inset-0 z-0"
+          style={{
+            background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
+          }}
+        />
+        
       {/* Texture overlay */}
-      <div 
-        className="fixed inset-0 z-1 pointer-events-none"
-        style={{
-          backgroundImage: `
-            repeating-linear-gradient(
-              0deg,
-              rgba(255, 255, 255, 0.03) 0px,
-              transparent 1px,
-              transparent 2px,
-              rgba(255, 255, 255, 0.03) 3px
-            ),
-            repeating-linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.03) 0px,
-              transparent 1px,
-              transparent 2px,
-              rgba(255, 255, 255, 0.03) 3px
-            )
-          `,
-          opacity: 0.4
-        }}
-      />
-
-      {/* Content */}
+        <div 
+          className="fixed inset-0 z-1 pointer-events-none"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 3px
+              )
+            `,
+            opacity: 0.4
+          }}
+        />
+        
+        {/* Content */}
       <div className="relative z-10 px-4 sm:px-6 py-12 pt-24">
         <div className="max-w-7xl mx-auto">
           
@@ -106,7 +106,7 @@ export default function BrowseDesignsPage() {
               Browse Custom Designs
             </h1>
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto">
-              Explore AI-generated jewelry designs. Click any design to use it as inspiration or customize it.
+              Explore custom jewelry designs. Click any design to use it as inspiration or customize it for yourself.
             </p>
           </div>
 
@@ -136,8 +136,8 @@ export default function BrowseDesignsPage() {
             <div className="text-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
               <p className="text-gray-400">Loading designs...</p>
-            </div>
-          )}
+                    </div>
+                  )}
 
           {/* Designs Grid */}
           {!loading && filteredDesigns.length > 0 && (
@@ -165,7 +165,7 @@ export default function BrowseDesignsPage() {
                         Use this design →
                       </div>
                     </div>
-                  </div>
+                      </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-white mb-2 line-clamp-1">
                       {design.title || 'Custom Design'}
@@ -183,9 +183,9 @@ export default function BrowseDesignsPage() {
                       </div>
                     )}
                   </div>
-                </Link>
-              ))}
-            </div>
+                    </Link>
+            ))}
+          </div>
           )}
 
           {/* Empty State */}
@@ -214,7 +214,7 @@ export default function BrowseDesignsPage() {
                 Create Your Own Design
               </h2>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Don't see exactly what you want? Describe your dream jewelry and our AI will create it in seconds.
+                Don't see exactly what you want? Describe your dream jewelry and we'll create it in seconds.
               </p>
               <Link href="/design">
                 <Button className="bg-white hover:bg-gray-100 text-black font-bold px-10 py-7 text-lg group">

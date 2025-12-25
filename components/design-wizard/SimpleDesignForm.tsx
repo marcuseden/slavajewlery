@@ -423,7 +423,7 @@ export function SimpleDesignForm() {
 
       if (!response.ok) {
         if (response.status === 504 || response.status === 408) {
-          throw new Error('Generation is taking longer than expected. The AI is working on complex details - please try again or simplify your description.');
+          throw new Error('Generation is taking longer than expected. We\'re working on complex details - please try again or simplify your description.');
         }
         throw new Error('Failed to generate design');
       }
@@ -558,7 +558,7 @@ export function SimpleDesignForm() {
       case 2: return 'Good start - Add specifics';
       case 3: return 'Detailed prompt - Well done!';
       case 4: return 'Excellent prompt - Very detailed!';
-      case 5: return 'Perfect prompt - AI ready!';
+      case 5: return 'Perfect prompt - Ready to generate!';
       default: return 'Keep typing...';
     }
   };
@@ -649,7 +649,7 @@ export function SimpleDesignForm() {
             Design Your Dream Jewelry
           </h1>
           <p className="text-xl text-stone-400 mb-8">
-            Describe your vision and watch AI bring it to life with photorealistic images
+            Describe your vision and watch it come to life with photorealistic images
           </p>
         </div>
 
@@ -799,7 +799,7 @@ export function SimpleDesignForm() {
             {/* Info box */}
             <div className="mt-6 p-4 bg-stone-800/50 border border-stone-700 rounded-lg">
               <p className="text-xs text-stone-300">
-                💡 <strong>Pro tip:</strong> These tags are based on our top-selling jewelry categories. Click to add, click again to remove. Active tags show with a ✓ checkmark and colored background.
+                💡 <strong>Pro tip:</strong> These tags are based on our top-selling jewelry categories. Each tag adds expert design guidance to help you create the perfect piece. Click to add, click again to remove.
               </p>
             </div>
           </div>
@@ -876,7 +876,7 @@ export function SimpleDesignForm() {
                   </div>
                   <div className="flex-1">
                     <h4 className="text-sm font-semibold text-blue-200 mb-3">
-                      Add more details to improve your design:
+                      Complete your design with these details:
                     </h4>
                     <div className="space-y-3">
                       {promptSuggestions.map((suggestion, idx) => (
@@ -1132,7 +1132,7 @@ export function SimpleDesignForm() {
                 <div className="mt-6 p-4 bg-stone-800 rounded-lg">
                   <h4 className="font-medium text-stone-200 mb-2">💡 Pro Tip:</h4>
                   <p className="text-stone-300 text-sm">
-                    The more specific you are, the more accurate our AI pricing becomes. 
+                    The more specific you are, the more accurate your pricing becomes. 
                     Include materials, size, style, and any gemstones for the best results.
                   </p>
                 </div>

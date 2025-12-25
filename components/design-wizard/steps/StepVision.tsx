@@ -57,7 +57,7 @@ export function StepVision({ data, updateData, onNext }: StepVisionProps) {
         </h2>
         <p className="text-stone-400 mb-6">
           Share your inspiration, style preferences, any specific details you envision. 
-          This helps our AI create specifications that match your dream piece.
+          This helps us create specifications that match your dream piece.
         </p>
         
         <textarea

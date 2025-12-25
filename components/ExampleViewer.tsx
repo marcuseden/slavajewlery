@@ -51,7 +51,7 @@ export function ExampleViewer({ design, onClose, onUsePrompt }: ExampleViewerPro
         <div className="flex justify-between items-center p-4 sm:p-6 border-b border-slate-700 sticky top-0 bg-slate-900/95 backdrop-blur">
           <div>
             <h2 className="text-lg sm:text-2xl font-bold text-slate-100">{design.title}</h2>
-            <p className="text-sm sm:text-base text-slate-400">AI-Generated Design with Multiple Views</p>
+            <p className="text-sm sm:text-base text-slate-400">Custom Design with Multiple Views</p>
           </div>
           <button
             onClick={onClose}

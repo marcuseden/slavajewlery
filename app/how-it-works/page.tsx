@@ -16,7 +16,7 @@ export default function HowItWorksPage() {
         'Use natural language - no jewelry expertise needed',
         'Click helper tags for instant guidance',
         'Get real-time suggestions for missing details',
-        'Our AI understands celebrity styles and eras'
+        'We understand celebrity styles and eras'
       ],
       image: '/designs/grace-kelly-ring-hero_angle.png',
       time: '30 seconds'
@@ -24,8 +24,8 @@ export default function HowItWorksPage() {
     {
       number: 2,
       icon: Wand2,
-      title: 'AI Creates Your Design',
-      description: 'Our advanced AI generates photorealistic images and detailed manufacturing specifications in under 90 seconds.',
+      title: 'We Create Your Design',
+      description: 'Our advanced technology generates photorealistic images and detailed manufacturing specifications in under 90 seconds.',
       details: [
         '3 professional product photos from different angles',
         'Detailed manufacturing specifications',
@@ -101,7 +101,7 @@ export default function HowItWorksPage() {
               <span className="text-gray-400">In 4 Simple Steps.</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Our AI-powered process transforms your description into a custom jewelry piece, 
+              Our advanced technology transforms your description into a custom jewelry piece, 
               handcrafted by NYC master jewelers and delivered in just 5 days.
             </p>
             <div className="flex items-center justify-center gap-4 text-sm text-gray-400">
@@ -179,12 +179,12 @@ export default function HowItWorksPage() {
           <div className="mt-24 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30 rounded-2xl p-8 sm:p-12">
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Powered by Advanced AI
+                Advanced Technology
               </h2>
               <p className="text-lg text-gray-300 mb-6">
-                We use OpenAI's DALL-E 3 for photorealistic image generation and GPT-4 for 
-                manufacturing specifications. Every design is validated for manufacturability 
-                before you see it.
+                We use cutting-edge image generation and intelligent design systems to create 
+                photorealistic previews and detailed manufacturing specifications. Every design 
+                is validated for manufacturability before you see it.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
                 <div className="text-center">

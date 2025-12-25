@@ -64,7 +64,7 @@ export function JewelryViewer({ design, isOpen, onClose }: JewelryViewerProps) {
               <h2 className="text-2xl font-bold text-white">{design.title}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-sm bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full">
-                  AI Generated
+                  Custom Design
                 </span>
                 {design.tags && design.tags.slice(0, 2).map((tag, i) => (
                   <span key={i} className="text-sm bg-slate-700 text-slate-300 px-2 py-1 rounded-full">

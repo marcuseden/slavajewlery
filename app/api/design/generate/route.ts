@@ -19,27 +19,24 @@ STRICT MANUFACTURING REQUIREMENTS - DO NOT DEVIATE:
 - All curves and edges must be physically producible with standard jeweler tools
 - Avoid thin cantilevers or structurally weak designs
 - Each piece must be wearable and durable for daily use
+- NEVER include hands, fingers, body parts, or models in product shots
+- Show ONLY the jewelry piece isolated on background
 `.trim();
 
 // Simplified consistency guardrails (embedded in master spec now)
 
 // Image types for jewelry photography - SAME design, different views
-// Reduced to 3 images for faster generation and lower timeout risk
+// Reduced to 2 images for faster generation and to avoid problematic hand anatomy
 const IMAGE_TYPES = [
   {
     type: 'hero_angle', 
-    description: '3/4 angle view with dramatic studio lighting creating natural shadows, professional jewelry photography on dark background',
-    consistency_note: 'Three-quarter angle showing full design with depth and dimension'
+    description: 'professional product photography, 3/4 angle view on dark velvet surface with dramatic studio lighting creating natural shadows, no hands, no models, jewelry piece only',
+    consistency_note: 'Three-quarter angle showing full design with depth and dimension, product only'
   },
   {
     type: 'packshot_front',
-    description: 'clean white background, perfectly centered front view, professional product photography, studio lighting',
-    consistency_note: 'Front facing view of the exact same piece showing complete design'
-  },
-  {
-    type: 'on_model_worn',
-    description: 'worn on elegant hand/neck/ear with natural skin tone, lifestyle photography in natural light, same exact piece',
-    consistency_note: 'The exact same piece being worn on model, all design details identical'
+    description: 'clean white background, perfectly centered front view, professional product photography, studio lighting, jewelry piece isolated, no hands, no models',
+    consistency_note: 'Front facing view of the exact same piece showing complete design, product only'
   }
 ];
 

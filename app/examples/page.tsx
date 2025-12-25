@@ -119,7 +119,7 @@ export default function ExamplesPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-              Real AI-Generated.
+              Designed by You.
               <br />
               <span className="text-gray-400">Handcrafted in NYC.</span>
             </h1>
@@ -206,7 +206,7 @@ export default function ExamplesPage() {
                 ))}
               </div>
               <blockquote className="text-2xl text-white font-medium mb-4">
-                "I described my grandmother's vintage ring from memory, and the AI created something even more beautiful. The craftsmanship is exceptional."
+                "I described my grandmother's vintage ring from memory, and they created something even more beautiful. The craftsmanship is exceptional."
               </blockquote>
               <div className="text-gray-400">— Sarah M., Manhattan</div>
             </div>
@@ -219,7 +219,7 @@ export default function ExamplesPage() {
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               These are just examples. Describe any jewelry you can imagine, 
-              and our AI will create a unique design just for you.
+              and we'll create a unique design just for you.
             </p>
             <Link href="/design">
               <Button className="bg-white hover:bg-gray-100 text-black font-bold px-12 py-7 text-lg group">

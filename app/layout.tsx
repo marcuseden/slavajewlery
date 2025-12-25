@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Make It - Custom AI Jewelry Design Studio",
-  description: "Design your dream jewelry with AI. Custom pieces handcrafted by NYC master jewelers and delivered in 5 days.",
+  title: "Make It - Custom Jewelry Design Studio",
+  description: "Design your dream jewelry instantly. Custom pieces handcrafted by NYC master jewelers and delivered in 5 days.",
 };
 
 export default function RootLayout({

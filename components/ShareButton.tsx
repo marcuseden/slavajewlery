@@ -18,7 +18,7 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
   const [copied, setCopied] = useState(false);
 
   const shareUrl = typeof window !== 'undefined' ? designUrl : '';
-  const shareText = `Check out this AI-generated jewelry design: ${title}`;
+  const shareText = `Check out this custom jewelry design: ${title}`;
 
   const shareOptions = [
     {
