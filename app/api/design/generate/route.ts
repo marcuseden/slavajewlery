@@ -142,16 +142,29 @@ export async function POST(request: NextRequest) {
       ? designElements.metalColors.join(' and ') + ' metal'
       : 'precious metal';
 
-    // Extract specific details for locked consistency
-    const hasNameEngraving = /(?:with|name|names?|engraved?|inscription)\s+["']?([A-Za-z]+)["']?/i.test(sanitizedVision);
-    const extractedName = sanitizedVision.match(/["']([A-Za-z]+)["']|(?:with|name)\s+([A-Za-z]+)/i);
+    // Extract specific details for locked consistency - NAME IS CRITICAL
+    // Handle all quote types: regular quotes, smart quotes, backticks
+    const extractedName = sanitizedVision.match(/["'"'`]([A-Za-z]+)["'"'`]|(?:with|name)\s+["'"'`]?([A-Za-z]+)["'"'`]?/i);
     const nameText = extractedName ? (extractedName[1] || extractedName[2]) : '';
+    
+    console.log('🔍 Name extraction:', { extractedName, nameText, originalVision: sanitizedVision.substring(0, 100) });
     
     const chainCount = sanitizedVision.match(/(\w+)\s+chain/i);
     const numberOfChains = chainCount && chainCount[1] ? chainCount[1] : '';
     
-    // Create LOCKED design specification
+    // Create LOCKED design specification with NAME as TOP priority
+    const nameWarning = nameText ? `
+🚨🚨🚨 CRITICAL NAME REQUIREMENT 🚨🚨🚨
+THE JEWELRY MUST DISPLAY THE NAME: "${nameText}"
+NOT "Small", NOT "Cute", NOT any other word - ONLY "${nameText}"
+This is a CUSTOM NAME PENDANT - the customer specified "${nameText}" and that's what must appear.
+Write this EXACT name in elegant script font: ${nameText}
+🚨🚨🚨 DO NOT SUBSTITUTE ANY OTHER WORD 🚨🚨🚨
+` : '';
+
     const lockedDesignDetails = `
+${nameWarning}
+
 🔒 LOCKED DESIGN SPECIFICATIONS - THESE MUST BE IDENTICAL IN ALL PHOTOS:
 
 USER'S EXACT VISION: "${sanitizedVision}"
@@ -160,7 +173,7 @@ JEWELRY TYPE: ${typeSpec}
 METAL: ${metalSpec} 
 ${gemstoneSpec}
 ${numberOfChains ? `CHAINS: ${numberOfChains} separate chains (CRITICAL: show exactly ${numberOfChains} distinct chains)` : ''}
-${nameText ? `NAME/TEXT: "${nameText}" (CRITICAL: this exact name must appear in the EXACT same font and style in all photos)` : ''}
+${nameText ? `⚠️ NAME ON PENDANT: "${nameText}" - Write this EXACT name, letter by letter: ${nameText.split('').join('-')}` : ''}
 FINISH: ${designElements.finish.length > 0 ? designElements.finish[0] : 'polished'}
 STYLE: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'elegant, timeless'}
 `.trim();
@@ -168,6 +181,16 @@ STYLE: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'el
     // Create SIMPLE, DIRECT master spec that prioritizes USER VISION
     const masterDesignSpec = `
 YOU ARE CREATING A SINGLE PHYSICAL JEWELRY PIECE THAT WILL BE PHOTOGRAPHED FROM MULTIPLE ANGLES.
+
+${nameText ? `
+⚠️⚠️⚠️ MOST CRITICAL REQUIREMENT ⚠️⚠️⚠️
+This is a CUSTOM NAME NECKLACE/PENDANT featuring the name: "${nameText}"
+You MUST write this EXACT name on the pendant: ${nameText}
+Do NOT write "Small", "Cute", "Love", or any other word.
+ONLY write: ${nameText}
+Letter by letter: ${nameText.split('').join(' - ')}
+⚠️⚠️⚠️ THIS NAME IS THE CENTERPIECE OF THE DESIGN ⚠️⚠️⚠️
+` : ''}
 
 ${lockedDesignDetails}
 
@@ -224,10 +247,10 @@ WHAT YOU CREATED IN PHOTO #1:
 Imagine you are a professional product photographer. You shot Photo #1, now you're moving your camera to a different position to shoot Photo #${index + 1} of THE SAME PIECE.
 
 MANDATORY CHECKLIST - THE JEWELRY MUST HAVE:
+${nameText ? '☑ EXACT name on pendant: "' + nameText + '" (NOT "Small" or any other word - ONLY "' + nameText + '")' : ''}
 ☑ EXACT same gemstone count and placement as Photo #1
 ☑ EXACT same metal colors as Photo #1  
 ☑ EXACT same chain count as Photo #1 ${numberOfChains ? '(' + numberOfChains + ' chains)' : ''}
-☑ EXACT same name/text as Photo #1 ${nameText ? '("' + nameText + '" in same font)' : ''}
 ☑ EXACT same design details as Photo #1
 ☑ EXACT same proportions and size as Photo #1
 
