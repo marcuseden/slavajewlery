@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { validateDesignForProduction, sanitizePromptForProduction } from '@/lib/manufacturing-rules';
-import { createClient } from '@/lib/supabase';
+import { createServerSupabaseClient } from '@/lib/supabase';
 import { logger } from '@/lib/secure-logger';
 
 const openai = new OpenAI({
@@ -45,7 +45,7 @@ const IMAGE_TYPES = [
 export async function POST(request: NextRequest) {
   try {
     // AUTHENTICATION REQUIRED - GDPR & Security Compliance
-    const supabase = createClient();
+    const supabase = await createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !user) {

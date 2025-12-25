@@ -10,24 +10,32 @@
 -- 6. User data export/deletion support
 -- ============================================================================
 
--- Create user role enum
-CREATE TYPE user_role AS ENUM (
-  'owner',      -- Full system access, user & role management
-  'admin',      -- Configuration & moderation, no ownership transfer
-  'editor',     -- Create & modify allowed resources
-  'viewer',     -- Read-only access
-  'service'     -- Scoped, non-human access with rotation
-);
+-- Create user role enum (if not exists)
+DO $$ BEGIN
+  CREATE TYPE user_role AS ENUM (
+    'owner',      -- Full system access, user & role management
+    'admin',      -- Configuration & moderation, no ownership transfer
+    'editor',     -- Create & modify allowed resources
+    'viewer',     -- Read-only access
+    'service'     -- Scoped, non-human access with rotation
+  );
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
--- Create data classification enum for GDPR
-CREATE TYPE data_classification AS ENUM (
-  'public',           -- Publicly shareable data
-  'internal',         -- Internal use only, not personal
-  'personal',         -- PII - Personal Identifiable Information
-  'sensitive',        -- Sensitive personal data (financial, health)
-  'anonymous',        -- Anonymized/aggregated data
-  'encrypted'         -- Encrypted at rest and in transit
-);
+-- Create data classification enum for GDPR (if not exists)
+DO $$ BEGIN
+  CREATE TYPE data_classification AS ENUM (
+    'public',           -- Publicly shareable data
+    'internal',         -- Internal use only, not personal
+    'personal',         -- PII - Personal Identifiable Information
+    'sensitive',        -- Sensitive personal data (financial, health)
+    'anonymous',        -- Anonymized/aggregated data
+    'encrypted'         -- Encrypted at rest and in transit
+  );
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
 -- Add role and GDPR fields to users table
 ALTER TABLE public.users 
@@ -578,6 +586,77 @@ CREATE TRIGGER update_retention_policies_updated_at
   BEFORE UPDATE ON public.data_retention_policies
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
+
+-- ============================================================================
+-- USER DESIGNS TABLE - For saving custom designs
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS user_designs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  title TEXT NOT NULL DEFAULT 'Untitled Design',
+  prompt TEXT NOT NULL,
+  images JSONB NOT NULL DEFAULT '[]'::jsonb,
+  specifications TEXT,
+  pricing_breakdown JSONB,
+  jewelry_type TEXT DEFAULT 'custom',
+  style_tags TEXT[] DEFAULT ARRAY[]::TEXT[],
+  materials JSONB DEFAULT '{}'::jsonb,
+  status TEXT DEFAULT 'saved' CHECK (status IN ('saved', 'ordered', 'archived')),
+  is_public BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Add indexes for performance
+CREATE INDEX IF NOT EXISTS idx_user_designs_user_id ON user_designs(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_designs_created_at ON user_designs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_user_designs_status ON user_designs(status);
+CREATE INDEX IF NOT EXISTS idx_user_designs_is_public ON user_designs(is_public) WHERE is_public = TRUE;
+
+-- Enable RLS
+ALTER TABLE user_designs ENABLE ROW LEVEL SECURITY;
+
+-- Users can view their own designs
+CREATE POLICY user_designs_select_own ON user_designs
+  FOR SELECT
+  USING (auth.uid() = user_id);
+
+-- Users can insert their own designs
+CREATE POLICY user_designs_insert_own ON user_designs
+  FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+-- Users can update their own designs
+CREATE POLICY user_designs_update_own ON user_designs
+  FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+-- Users can delete their own designs
+CREATE POLICY user_designs_delete_own ON user_designs
+  FOR DELETE
+  USING (auth.uid() = user_id);
+
+-- Anyone can view public designs
+CREATE POLICY user_designs_select_public ON user_designs
+  FOR SELECT
+  USING (is_public = TRUE);
+
+-- Admins can view all designs
+CREATE POLICY user_designs_admin_all ON user_designs
+  FOR ALL
+  USING (is_admin(auth.uid()));
+
+-- Update timestamp trigger
+CREATE TRIGGER update_user_designs_updated_at
+  BEFORE UPDATE ON user_designs
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+-- Grant permissions
+GRANT SELECT, INSERT, UPDATE, DELETE ON user_designs TO authenticated;
+GRANT SELECT ON user_designs TO anon;
 
 -- ============================================================================
 -- INITIAL OWNER SETUP (Run this manually after migration)

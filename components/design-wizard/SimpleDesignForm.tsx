@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Star, HelpCircle, X, Calculator, Sparkles } from 'lucide-react';
 import { calculateJewelryPrice, parseJewelrySpecs, type PricingBreakdown } from '@/lib/jewelry-pricing';
+import { SaveDesignButton } from '@/components/SaveDesignButton';
+import { ShareButton } from '@/components/ShareButton';
+import { useAuth } from '@/components/AuthProvider';
 
 // Enhanced tag system with design rules based on top-selling products
 interface TagDefinition {
@@ -332,9 +335,12 @@ function analyzePromptGaps(prompt: string): PromptSuggestion[] {
 
 export function SimpleDesignForm() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [vision, setVision] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
+  const [generatedSpecs, setGeneratedSpecs] = useState<string>('');
   const [error, setError] = useState('');
   const [showTips, setShowTips] = useState(false); // Hidden by default
   const [currentExample, setCurrentExample] = useState<typeof EXAMPLE_PROMPTS[0] | null>(null);
@@ -343,6 +349,7 @@ export function SimpleDesignForm() {
   const [isCalculatingPrice, setIsCalculatingPrice] = useState(false);
   const [promptSuggestions, setPromptSuggestions] = useState<PromptSuggestion[]>([]);
   const [generationProgress, setGenerationProgress] = useState(0);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
@@ -375,6 +382,13 @@ export function SimpleDesignForm() {
       return;
     }
 
+    // Check authentication before generating
+    if (!user) {
+      setError('Please sign in to generate designs');
+      setShowLoginPrompt(true);
+      return;
+    }
+
     setIsGenerating(true);
     setError('');
     setGeneratedImages([]);
@@ -404,6 +418,7 @@ export function SimpleDesignForm() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Include cookies for authentication
         body: JSON.stringify({
           user_vision: vision,
           intent: 'custom',
@@ -422,10 +437,16 @@ export function SimpleDesignForm() {
       if (progressInterval) clearInterval(progressInterval);
 
       if (!response.ok) {
+        if (response.status === 401) {
+          setError('Please sign in to generate designs');
+          setShowLoginPrompt(true);
+          return;
+        }
         if (response.status === 504 || response.status === 408) {
           throw new Error('Generation is taking longer than expected. We\'re working on complex details - please try again or simplify your description.');
         }
-        throw new Error('Failed to generate design');
+        const errorData = await response.json().catch(() => ({ error: 'Failed to generate design' }));
+        throw new Error(errorData.error || 'Failed to generate design');
       }
 
       const result = await response.json();
@@ -434,6 +455,7 @@ export function SimpleDesignForm() {
         setGenerationProgress(100); // Complete!
         setTimeout(() => {
           setGeneratedImages(result.images);
+          setGeneratedSpecs(result.specifications || '');
         }, 500); // Small delay to show 100%
       } else {
         throw new Error('Invalid response format');
@@ -1068,7 +1090,7 @@ export function SimpleDesignForm() {
               ))}
             </div>
 
-            <div className="text-center pt-8">
+              <div className="text-center pt-8">
               <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 max-w-2xl mx-auto">
                 <h3 className="text-lg font-medium text-stone-200 mb-4">
                   Love this design?
@@ -1077,7 +1099,42 @@ export function SimpleDesignForm() {
                   Our master jewelers in NYC can bring this vision to life. Each piece is handcrafted 
                   to perfection with premium materials and attention to detail.
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-3">
+                  {/* Save and Share Actions */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <SaveDesignButton
+                      design={{
+                        title: 'Custom Design',
+                        prompt: vision,
+                        images: generatedImages,
+                        specifications: generatedSpecs,
+                        jewelry_type: 'custom'
+                      }}
+                      onSaveSuccess={() => {
+                        // Optional: show success message
+                      }}
+                      onLoginRequired={() => {
+                        router.push('/?signup=true');
+                      }}
+                      variant="button"
+                      className="w-full"
+                    />
+                    <ShareButton
+                      title="My Custom Jewelry Design"
+                      description={vision}
+                      imageUrl={generatedImages[0]?.url}
+                      designUrl={typeof window !== 'undefined' ? window.location.href : ''}
+                    >
+                      <Button 
+                        variant="outline" 
+                        className="w-full bg-stone-900 border-stone-600 hover:bg-stone-800"
+                      >
+                        <Sparkles className="w-5 h-5 mr-2" />
+                        Share
+                      </Button>
+                    </ShareButton>
+                  </div>
+
                   <Button className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200">
                     Request Custom Quote
                   </Button>
@@ -1086,6 +1143,7 @@ export function SimpleDesignForm() {
                     className="w-full bg-stone-900 border-stone-600 hover:bg-stone-800"
                     onClick={() => {
                       setGeneratedImages([]);
+                      setGeneratedSpecs('');
                       setVision('');
                     }}
                   >
@@ -1137,6 +1195,36 @@ export function SimpleDesignForm() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Login Required Modal */}
+        {showLoginPrompt && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-stone-900 border border-stone-700 rounded-2xl max-w-md w-full p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-semibold text-stone-100">
+                  Sign In Required
+                </h3>
+                <button
+                  onClick={() => setShowLoginPrompt(false)}
+                  className="p-2 hover:bg-stone-800 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-stone-400" />
+                </button>
+              </div>
+              
+              <p className="text-stone-300 mb-6">
+                Please sign in to generate custom jewelry designs. Your designs will be saved to your account.
+              </p>
+              
+              <Button
+                onClick={() => router.push('/?signup=true')}
+                className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200"
+              >
+                Sign In / Sign Up
+              </Button>
             </div>
           </div>
         )}
