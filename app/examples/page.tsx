@@ -20,8 +20,7 @@ export default function ExamplesPage() {
       image: '/designs/grace-kelly-ring-hero_angle.png',
       images: [
         '/designs/grace-kelly-ring-packshot.png',
-        '/designs/grace-kelly-ring-hero_angle.png',
-        '/designs/grace-kelly-ring-on_model.png'
+        '/designs/grace-kelly-ring-hero_angle.png'
       ],
       tags: ['classic', 'platinum', 'diamond', 'engagement'],
       style: '1950s Hollywood Glamour'
@@ -34,8 +33,7 @@ export default function ExamplesPage() {
       image: '/designs/madonna-punk-ring-hero_angle.png',
       images: [
         '/designs/madonna-punk-ring-packshot.png',
-        '/designs/madonna-punk-ring-hero_angle.png',
-        '/designs/madonna-punk-ring-on_model.png'
+        '/designs/madonna-punk-ring-hero_angle.png'
       ],
       tags: ['punk', 'bold', 'onyx', 'statement'],
       style: '1980s Punk Rock'
@@ -48,8 +46,7 @@ export default function ExamplesPage() {
       image: '/designs/audrey-pearl-necklace-hero_angle.png',
       images: [
         '/designs/audrey-pearl-necklace-packshot.png',
-        '/designs/audrey-pearl-necklace-hero_angle.png',
-        '/designs/audrey-pearl-necklace-on_model.png'
+        '/designs/audrey-pearl-necklace-hero_angle.png'
       ],
       tags: ['elegant', 'pearls', 'classic', 'multi-strand'],
       style: '1960s Sophistication'
@@ -62,8 +59,7 @@ export default function ExamplesPage() {
       image: '/designs/bowie-lightning-earrings-hero_angle.png',
       images: [
         '/designs/bowie-lightning-earrings-packshot.png',
-        '/designs/bowie-lightning-earrings-hero_angle.png',
-        '/designs/bowie-lightning-earrings-on_model.png'
+        '/designs/bowie-lightning-earrings-hero_angle.png'
       ],
       tags: ['statement', 'gold', 'geometric', 'art deco'],
       style: 'Art Deco Rock'
@@ -76,8 +72,7 @@ export default function ExamplesPage() {
       image: '/designs/frida-turquoise-bracelet-hero_angle.png',
       images: [
         '/designs/frida-turquoise-bracelet-packshot.png',
-        '/designs/frida-turquoise-bracelet-hero_angle.png',
-        '/designs/frida-turquoise-bracelet-on_model.png'
+        '/designs/frida-turquoise-bracelet-hero_angle.png'
       ],
       tags: ['bohemian', 'rose gold', 'turquoise', 'charms'],
       style: 'Mexican Folk Art'
@@ -156,7 +151,7 @@ export default function ExamplesPage() {
                 className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl overflow-hidden group hover:border-blue-500/50 transition-all"
               >
                 {/* Image Gallery */}
-                <div className="grid grid-cols-3 gap-2 p-4 bg-stone-900/50">
+                <div className="grid grid-cols-2 gap-2 p-4 bg-stone-900/50">
                   {example.images.map((img, idx) => (
                     <div key={idx} className="aspect-square relative rounded-lg overflow-hidden">
                       <img
