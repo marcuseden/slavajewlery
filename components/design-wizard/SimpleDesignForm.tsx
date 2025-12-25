@@ -9,7 +9,6 @@ import { Star, HelpCircle, X, Calculator, Sparkles } from 'lucide-react';
 import { calculateJewelryPrice, parseJewelrySpecs, type PricingBreakdown } from '@/lib/jewelry-pricing';
 import { SaveDesignButton } from '@/components/SaveDesignButton';
 import { ShareButton } from '@/components/ShareButton';
-import { useAuth } from '@/components/AuthProvider';
 
 // Enhanced tag system with design rules based on top-selling products
 interface TagDefinition {
@@ -336,7 +335,6 @@ function analyzePromptGaps(prompt: string): PromptSuggestion[] {
 export function SimpleDesignForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
   const [vision, setVision] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
@@ -349,7 +347,6 @@ export function SimpleDesignForm() {
   const [isCalculatingPrice, setIsCalculatingPrice] = useState(false);
   const [promptSuggestions, setPromptSuggestions] = useState<PromptSuggestion[]>([]);
   const [generationProgress, setGenerationProgress] = useState(0);
-  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
@@ -379,13 +376,6 @@ export function SimpleDesignForm() {
   const handleGenerate = async () => {
     if (!vision.trim() || vision.length < 20) {
       setError('Please provide a more detailed description (at least 20 characters)');
-      return;
-    }
-
-    // Check authentication before generating
-    if (!user) {
-      setError('Please sign in to generate designs');
-      setShowLoginPrompt(true);
       return;
     }
 
@@ -437,11 +427,6 @@ export function SimpleDesignForm() {
       if (progressInterval) clearInterval(progressInterval);
 
       if (!response.ok) {
-        if (response.status === 401) {
-          setError('Please sign in to generate designs');
-          setShowLoginPrompt(true);
-          return;
-        }
         if (response.status === 504 || response.status === 408) {
           throw new Error('Generation is taking longer than expected. We\'re working on complex details - please try again or simplify your description.');
         }
@@ -1195,36 +1180,6 @@ export function SimpleDesignForm() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* Login Required Modal */}
-        {showLoginPrompt && (
-          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-stone-900 border border-stone-700 rounded-2xl max-w-md w-full p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold text-stone-100">
-                  Sign In Required
-                </h3>
-                <button
-                  onClick={() => setShowLoginPrompt(false)}
-                  className="p-2 hover:bg-stone-800 rounded-lg transition-colors"
-                >
-                  <X className="w-5 h-5 text-stone-400" />
-                </button>
-              </div>
-              
-              <p className="text-stone-300 mb-6">
-                Please sign in to generate custom jewelry designs. Your designs will be saved to your account.
-              </p>
-              
-              <Button
-                onClick={() => router.push('/?signup=true')}
-                className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200"
-              >
-                Sign In / Sign Up
-              </Button>
             </div>
           </div>
         )}

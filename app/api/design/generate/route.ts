@@ -44,18 +44,11 @@ const IMAGE_TYPES = [
 
 export async function POST(request: NextRequest) {
   try {
-    // AUTHENTICATION REQUIRED - GDPR & Security Compliance
+    // OPTIONAL AUTHENTICATION - Allow anonymous design generation for trial
+    // Users only need to authenticate when saving designs
     const supabase = await createServerSupabaseClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     
-    if (authError || !user) {
-      logger.warn('Unauthorized design generation attempt');
-      return NextResponse.json(
-        { error: 'Authentication required. Please sign in to create designs.' },
-        { status: 401 }
-      );
-    }
-
     const body = await request.json();
     const { user_vision, ...designData } = body;
 
@@ -80,7 +73,7 @@ export async function POST(request: NextRequest) {
     const validation = validateDesignForProduction(user_vision);
     const sanitizedVision = sanitizePromptForProduction(user_vision);
     
-    logger.info('Design generation started', { userId: user.id });
+    logger.info('Design generation started', { userId: user?.id || 'anonymous' });
     
     if (!validation.isValid) {
       console.warn('Design validation issues:', validation.issues);
