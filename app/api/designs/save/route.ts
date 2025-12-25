@@ -105,8 +105,8 @@ export async function POST(request: NextRequest) {
       if (!shareError && sharedData) {
         sharedDesign = sharedData;
         logger.info('Shared design created', { userId: user.id, sharedDesignId: sharedData.id });
-      } else {
-        logger.error('Failed to create shared design', shareError, { userId: user.id });
+      } else if (shareError) {
+        logger.error('Failed to create shared design', shareError as Error, { userId: user.id });
       }
     }
 
