@@ -650,13 +650,13 @@ export function SimpleDesignForm() {
       />
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-12 pt-24">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-stone-100 mb-4">
-            Design Your Dream Jewelry
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 pt-20">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+            Design Your Jewelry
           </h1>
-          <p className="text-xl text-stone-400 mb-8">
-            Describe your vision and watch it come to life with photorealistic images
+          <p className="text-base sm:text-lg text-stone-400">
+            Describe your vision, get instant designs
           </p>
         </div>
 
@@ -665,40 +665,39 @@ export function SimpleDesignForm() {
           <div className="text-center mb-6">
             <button
               onClick={() => setShowTips(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-stone-800/50 hover:bg-stone-700/50 border border-stone-600 hover:border-stone-500 rounded-lg text-stone-300 hover:text-stone-200 text-sm transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-black hover:bg-gray-100 rounded-lg text-sm font-medium transition-all"
             >
               <Sparkles className="w-4 h-4" />
-              Show design helper tags (Top sellers)
+              Quick add: Type, Style, Material
             </button>
           </div>
         )}
 
         {/* Enhanced Tag Clouds with Best-Seller Guidance */}
         {showTips && (
-          <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 mb-6 relative z-10">
-            <div className="flex justify-between items-center mb-6">
+          <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-4 sm:p-6 mb-6 relative z-10">
+            <div className="flex justify-between items-start mb-4">
               <div>
-              <h2 className="text-xl font-semibold text-stone-100">
-                  Top-Selling Design Tags
-              </h2>
+                <h2 className="text-lg sm:text-xl font-semibold text-white">
+                  Quick Tags
+                </h2>
                 <p className="text-xs text-stone-400 mt-1">
-                  Click any tag to add expert design guidance to your prompt
+                  Click to add
                 </p>
               </div>
               <button
                 onClick={() => setShowTips(false)}
-                className="text-stone-400 hover:text-stone-300 text-sm px-3 py-1 hover:bg-stone-800 rounded transition-all"
+                className="text-white hover:text-stone-300 text-2xl leading-none"
               >
-                Hide ×
+                ×
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               {/* Type - Top 10 Best Sellers */}
               <div>
-                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider flex items-center gap-2">
-                  <span>Type</span>
-                  <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
+                <h3 className="text-xs sm:text-sm font-semibold text-white mb-3 uppercase">
+                  Type
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {JEWELRY_TYPES.map((type, index) => {
@@ -732,9 +731,8 @@ export function SimpleDesignForm() {
 
               {/* Style - Top 10 Best Sellers */}
               <div>
-                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider flex items-center gap-2">
-                  <span>Style</span>
-                  <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
+                <h3 className="text-xs sm:text-sm font-semibold text-white mb-3 uppercase">
+                  Style
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {STYLES.map((style, index) => {
@@ -768,9 +766,8 @@ export function SimpleDesignForm() {
 
               {/* Material - Top 10 Best Sellers */}
               <div>
-                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider flex items-center gap-2">
-                  <span>Material</span>
-                  <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
+                <h3 className="text-xs sm:text-sm font-semibold text-white mb-3 uppercase">
+                  Material
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {MATERIALS.map((material, index) => {
@@ -804,9 +801,9 @@ export function SimpleDesignForm() {
             </div>
 
             {/* Info box */}
-            <div className="mt-6 p-4 bg-stone-800/50 border border-stone-700 rounded-lg">
-              <p className="text-xs text-stone-300">
-                💡 <strong>Pro tip:</strong> These tags are based on our top-selling jewelry categories. Each tag adds expert design guidance to help you create the perfect piece. Click to add, click again to remove.
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-stone-800/30 border border-stone-700/50 rounded-lg">
+              <p className="text-xs text-stone-400">
+                💡 Based on best-sellers. Click to add, click again to remove.
               </p>
             </div>
           </div>
@@ -832,87 +829,48 @@ export function SimpleDesignForm() {
 
 
         {/* Input Form */}
-        <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-8 mb-8">
-          <div className="space-y-6">
+        <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-4 sm:p-8 mb-8">
+          <div className="space-y-4">
             <div>
-              <label htmlFor="vision" className="block text-lg font-medium text-stone-200 mb-4">
-                {currentExample ? 'Customize this design or describe something new' : 'Describe your jewelry vision'}
+              <label htmlFor="vision" className="block text-base sm:text-lg font-semibold text-white mb-3">
+                {currentExample ? 'Customize this design' : 'Describe your jewelry'}
               </label>
               <textarea
                 id="vision"
                 value={vision}
                 onChange={(e) => setVision(e.target.value)}
-                placeholder="Start typing or click the tags above to build your description... For example: 'A vintage-inspired engagement ring with art deco elements, platinum setting with a 1.5 carat oval diamond and small sapphire accents in geometric patterns, inspired by Audrey Hepburn elegance'"
-                className="w-full h-32 p-4 bg-stone-800 border border-stone-600 rounded-lg text-stone-100 placeholder-stone-500 focus:border-stone-400 focus:outline-none resize-none"
-                rows={6}
+                placeholder="e.g., A vintage engagement ring with art deco elements, platinum setting with oval diamond..."
+                className="w-full min-h-[160px] p-4 bg-stone-900 border-2 border-stone-700 rounded-xl text-white text-base placeholder-stone-500 focus:border-white focus:outline-none resize-none"
               />
-              <div className="flex justify-between items-center mt-3">
-                {/* Character Counter */}
-                <div className="flex items-center gap-2">
-                  <div className="relative w-10 h-10">
-                    <svg className="w-10 h-10 transform -rotate-90" viewBox="0 0 36 36">
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="16"
-                        fill="none"
-                        className="stroke-stone-700"
-                        strokeWidth="2"
-                      />
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="16"
-                        fill="none"
-                        className={vision.length >= 20 ? 'stroke-green-500' : 'stroke-yellow-500'}
-                        strokeWidth="2"
-                        strokeDasharray={`${Math.min(100, (vision.length / 20) * 100)} 100`}
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className={`text-[10px] font-bold ${vision.length >= 20 ? 'text-green-400' : 'text-yellow-400'}`}>
-                        {Math.min(100, Math.round((vision.length / 20) * 100))}%
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className={`text-xs font-semibold ${vision.length >= 20 ? 'text-green-400' : 'text-yellow-400'}`}>
-                      {vision.length}/20 minimum
-                    </div>
-                    <div className="text-[10px] text-stone-500">
-                      {vision.length < 20 ? `${20 - vision.length} more needed` : 'Ready to generate'}
-                    </div>
-                  </div>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-3">
+                {/* Simple character count */}
+                <div className="text-sm text-stone-400">
+                  {vision.length < 20 ? (
+                    <span className="text-yellow-400">{20 - vision.length} more characters needed</span>
+                  ) : (
+                    <span className="text-green-400">✓ Ready to generate</span>
+                  )}
                 </div>
 
-                {/* Quality Indicator */}
+                {/* Simple quality stars */}
                 {vision.length >= 20 && (
                   <button
                     onClick={() => setShowPromptTips(true)}
-                    className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-yellow-900/20 to-amber-900/20 hover:from-yellow-900/30 hover:to-amber-900/30 border border-yellow-700/30 rounded-lg transition-all group"
+                    className="flex items-center gap-2 text-sm text-stone-300 hover:text-white"
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-0.5">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
                           key={star}
-                          className={`w-4 h-4 transition-all ${
+                          className={`w-4 h-4 ${
                             star <= promptQuality
-                              ? 'fill-yellow-400 text-yellow-400 drop-shadow-[0_0_3px_rgba(250,204,21,0.5)]'
+                              ? 'fill-yellow-400 text-yellow-400'
                               : 'fill-stone-700 text-stone-700'
                           }`}
                         />
                       ))}
                     </div>
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-yellow-200">
-                        {getQualityMessage(promptQuality)}
-                      </div>
-                      <div className="text-[10px] text-yellow-400/70 flex items-center gap-1">
-                        <HelpCircle className="w-3 h-3" />
-                        Click for tips
-                      </div>
-                    </div>
+                    <span>{getQualityMessage(promptQuality)}</span>
                   </button>
                 )}
               </div>
@@ -920,38 +878,32 @@ export function SimpleDesignForm() {
 
             {/* Smart Prompt Suggestions */}
             {promptSuggestions.length > 0 && !isGenerating && (
-              <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <HelpCircle className="w-4 h-4 text-blue-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-semibold text-blue-200 mb-3">
-                      Complete your design with these details:
-                    </h4>
-                    <div className="space-y-3">
-                      {promptSuggestions.map((suggestion, idx) => (
-                        <div key={idx}>
-                          <p className="text-xs text-blue-300 mb-2">{suggestion.question}</p>
-                          <div className="flex flex-wrap gap-2">
-                            {suggestion.options.map((option, optIdx) => (
-                              <button
-                                key={optIdx}
-                                onClick={() => {
-                                  const currentText = vision.trim();
-                                  const separator = currentText.length > 0 ? ', ' : '';
-                                  setVision(currentText + separator + option.addition);
-                                }}
-                                className="px-3 py-1.5 text-xs bg-blue-800/30 hover:bg-blue-700/40 border border-blue-600/40 hover:border-blue-500/60 rounded-lg text-blue-200 hover:text-blue-100 transition-all cursor-pointer active:scale-95"
-                              >
-                                + {option.label}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
+              <div className="bg-blue-900/10 border border-blue-500/20 rounded-lg p-4">
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-white flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4" />
+                    Add more details:
+                  </h4>
+                  {promptSuggestions.map((suggestion, idx) => (
+                    <div key={idx}>
+                      <p className="text-xs text-stone-400 mb-2">{suggestion.question}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {suggestion.options.map((option, optIdx) => (
+                          <button
+                            key={optIdx}
+                            onClick={() => {
+                              const currentText = vision.trim();
+                              const separator = currentText.length > 0 ? ', ' : '';
+                              setVision(currentText + separator + option.addition);
+                            }}
+                            className="px-3 py-1.5 text-xs bg-white text-black hover:bg-gray-100 rounded-lg font-medium"
+                          >
+                            + {option.label}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -1052,103 +1004,31 @@ export function SimpleDesignForm() {
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || !vision.trim() || vision.length < 20}
-              className="w-full bg-gradient-to-r from-amber-100 via-yellow-50 to-amber-100 hover:from-amber-200 hover:via-yellow-100 hover:to-amber-200 text-stone-900 disabled:opacity-50 disabled:cursor-not-allowed h-20 text-lg relative overflow-hidden group border-2 border-amber-300/50 shadow-lg"
+              className="w-full bg-white hover:bg-gray-100 text-black disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-base py-6 shadow-lg"
             >
               {isGenerating ? (
-                <div className="flex flex-col items-center justify-center w-full space-y-4 py-3">
-                  {/* Spinning Ring Animation */}
-                  <div className="flex items-center space-x-4">
-                    <div className="relative w-12 h-12">
-                      {/* Outer rotating ring */}
-                      <div className="absolute inset-0 animate-spin" style={{ animationDuration: '3s' }}>
-                        <svg viewBox="0 0 50 50" className="w-12 h-12">
-                          <circle
-                            cx="25"
-                            cy="25"
-                            r="20"
-                            fill="none"
-                            stroke="url(#goldGradient)"
-                            strokeWidth="3"
-                            strokeLinecap="round"
-                            strokeDasharray="90 40"
-                          />
-                          <defs>
-                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                              <stop offset="0%" stopColor="#F59E0B" />
-                              <stop offset="50%" stopColor="#FCD34D" />
-                              <stop offset="100%" stopColor="#F59E0B" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                      </div>
-                      {/* Inner pulsing diamond */}
-                      <div className="absolute inset-0 flex items-center justify-center animate-pulse">
-                        <svg viewBox="0 0 24 24" className="w-6 h-6 text-amber-500" fill="currentColor">
-                          <path d="M12 2L4 8l8 14 8-14-8-6z" />
-                        </svg>
-                      </div>
-                      {/* Sparkle effects */}
-                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-300 rounded-full animate-ping" />
-                      <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-amber-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-bold text-lg bg-gradient-to-r from-amber-700 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
-                        Crafting your masterpiece...
-                      </div>
-                      <div className="text-xs text-amber-600 font-medium">
-                        {Math.round(generationProgress) < 30 && '✨ Analyzing your vision'}
-                        {Math.round(generationProgress) >= 30 && Math.round(generationProgress) < 70 && '🎨 Creating luxury imagery'}
-                        {Math.round(generationProgress) >= 70 && '💎 Adding final sparkle'}
-                      </div>
-                    </div>
+                <div className="flex flex-col items-center gap-3 w-full">
+                  <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                    <span className="font-semibold">Creating your design...</span>
                   </div>
-                  
-                  {/* Luxury Progress Bar */}
-                  <div className="w-full px-6">
-                    <div className="relative">
-                      {/* Background track */}
-                      <div className="w-full bg-gradient-to-r from-stone-300 via-stone-200 to-stone-300 rounded-full h-4 overflow-hidden shadow-inner border border-stone-400/30">
-                        {/* Animated shimmer background */}
-                        <div 
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-                          style={{
-                            animation: 'shimmer 2s infinite',
-                            backgroundSize: '200% 100%'
-                          }}
-                        />
-                        {/* Progress fill with gradient */}
-                        <div 
-                          className="relative h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 transition-all duration-700 ease-out"
-                          style={{ 
-                            width: `${generationProgress}%`,
-                            boxShadow: '0 0 20px rgba(251, 191, 36, 0.5)'
-                          }}
-                        >
-                          {/* Glowing edge effect */}
-                          <div className="absolute right-0 top-0 bottom-0 w-2 bg-white/80 blur-sm" />
-                          {/* Moving sparkles */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[shimmer_1s_infinite]" />
-                        </div>
-                      </div>
-                      
-                      {/* Percentage badge */}
-                      <div className="flex justify-center mt-2">
-                        <div className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg border-2 border-yellow-300/50">
-                          {Math.round(generationProgress)}% Complete
-                        </div>
-                      </div>
+                  <div className="w-full max-w-xs">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                      <div 
+                        className="h-full bg-black transition-all duration-500"
+                        style={{ width: `${generationProgress}%` }}
+                      />
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1.5 text-center">
+                      {Math.round(generationProgress)}%
                     </div>
                   </div>
                 </div>
               ) : (
-                <>
-                  <span className="relative z-10 flex items-center gap-2 font-bold">
-                    <Sparkles className="w-6 h-6" />
-                    {currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'}
-                  </span>
-                  {/* Hover gradient shimmer */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 via-amber-100 to-yellow-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </>
+                <span className="flex items-center justify-center gap-2">
+                  <Sparkles className="w-5 h-5" />
+                  {currentExample ? 'Generate Custom Version' : 'Generate Design'}
+                </span>
               )}
             </Button>
 
@@ -1241,7 +1121,14 @@ export function SimpleDesignForm() {
                       title="My Custom Jewelry Design"
                       description={vision}
                       imageUrl={generatedImages[0]?.url}
-                      designUrl={typeof window !== 'undefined' ? window.location.href : ''}
+                      design={{
+                        prompt: vision,
+                        images: generatedImages,
+                        pricing_breakdown: pricingBreakdown || undefined,
+                        jewelry_type: 'custom',
+                        style_tags: [],
+                        materials: []
+                      }}
                     >
                       <Button 
                         className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"

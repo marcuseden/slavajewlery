@@ -41,24 +41,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Create user profile if new user (non-blocking)
         if (event === 'SIGNED_IN' && session?.user) {
           // Don't await - let this run in background to avoid blocking UI
-          supabase
-            .from('users')
-            .select('*')
-            .eq('id', session.user.id)
-            .single()
-            .then(({ data: existingProfile }) => {
+          (async () => {
+            try {
+              const { data: existingProfile } = await supabase
+                .from('users')
+                .select('*')
+                .eq('id', session.user.id)
+                .single();
+
               if (!existingProfile) {
-                return supabase.from('users').insert({
+                await supabase.from('users').insert({
                   id: session.user.id,
                   email: session.user.email,
                   full_name: session.user.user_metadata.full_name || session.user.email?.split('@')[0],
                 });
               }
-            })
-            .catch((error) => {
+            } catch (error) {
               console.error('Error creating user profile:', error);
               // Don't throw - profile creation failure shouldn't block login
-            });
+            }
+          })();
         }
       }
     );

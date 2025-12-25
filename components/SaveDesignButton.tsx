@@ -16,7 +16,8 @@ interface SaveDesignButtonProps {
     style_tags?: string[];
     materials?: any;
   };
-  onSaveSuccess?: (savedDesign: any) => void;
+  makePublic?: boolean; // If true, also creates shareable version
+  onSaveSuccess?: (savedDesign: any, sharedDesign?: any) => void;
   onLoginRequired?: () => void;
   className?: string;
   variant?: 'icon' | 'button';
@@ -24,6 +25,7 @@ interface SaveDesignButtonProps {
 
 export function SaveDesignButton({ 
   design, 
+  makePublic = false,
   onSaveSuccess, 
   onLoginRequired,
   className = '',
@@ -53,7 +55,10 @@ export function SaveDesignButton({
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(design),
+        body: JSON.stringify({
+          ...design,
+          makePublic
+        }),
       });
 
       if (!response.ok) {
@@ -71,7 +76,7 @@ export function SaveDesignButton({
       setIsSaved(true);
       
       if (onSaveSuccess) {
-        onSaveSuccess(result.design);
+        onSaveSuccess(result.design, result.sharedDesign);
       }
 
       // Show success state for 2 seconds

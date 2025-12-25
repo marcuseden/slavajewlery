@@ -54,12 +54,12 @@ export function Header() {
             <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <div className="flex items-center space-x-3">
-                  <Link href="/dashboard">
-                    <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-gray-800">
+                  <Button asChild variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-gray-800">
+                    <Link href="/dashboard">
                       <User className="w-4 h-4 mr-2" />
                       Dashboard
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                   <Button
                     onClick={handleSignOut}
                     variant="ghost"
@@ -69,11 +69,11 @@ export function Header() {
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign Out
                   </Button>
-                  <Link href="/design">
-                    <Button className="bg-black hover:bg-gray-900 text-white font-semibold px-6">
+                  <Button asChild className="bg-black hover:bg-gray-900 text-white font-semibold px-6">
+                    <Link href="/design">
                       Design Now
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </div>
               ) : (
                 <div className="flex items-center space-x-3">
@@ -85,11 +85,11 @@ export function Header() {
                   >
                     Sign In
                   </Button>
-                  <Link href="/design">
-                    <Button className="bg-black hover:bg-gray-900 text-white font-semibold px-6">
+                  <Button asChild className="bg-black hover:bg-gray-900 text-white font-semibold px-6">
+                    <Link href="/design">
                       Design Now
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </div>
               )}
             </div>
@@ -126,12 +126,12 @@ export function Header() {
               <div className="mt-4 pt-4 border-t border-slate-800 space-y-2">
                 {user ? (
                   <>
-                    <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-gray-800">
+                    <Button asChild variant="ghost" className="w-full justify-start text-slate-300 hover:text-white hover:bg-gray-800">
+                      <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
                         <User className="w-4 h-4 mr-2" />
                         Dashboard
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                     <Button
                       onClick={() => {
                         handleSignOut();
@@ -143,11 +143,11 @@ export function Header() {
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign Out
                     </Button>
-                    <Link href="/design" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button className="w-full bg-black hover:bg-gray-900 text-white font-semibold">
+                    <Button asChild className="w-full bg-black hover:bg-gray-900 text-white font-semibold">
+                      <Link href="/design" onClick={() => setIsMobileMenuOpen(false)}>
                         Design Now
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                   </>
                 ) : (
                   <>
@@ -161,11 +161,11 @@ export function Header() {
                     >
                       Sign In
                     </Button>
-                    <Link href="/design" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button className="w-full bg-black hover:bg-gray-900 text-white font-semibold">
+                    <Button asChild className="w-full bg-black hover:bg-gray-900 text-white font-semibold">
+                      <Link href="/design" onClick={() => setIsMobileMenuOpen(false)}>
                         Design Now
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                   </>
                 )}
               </div>

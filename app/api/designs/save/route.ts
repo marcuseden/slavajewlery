@@ -34,7 +34,8 @@ export async function POST(request: NextRequest) {
       pricing_breakdown,
       jewelry_type,
       style_tags,
-      materials
+      materials,
+      makePublic // New parameter to control if design should be shareable
     } = body;
 
     // Validate required fields
@@ -45,9 +46,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    logger.info('Saving design', { userId: user.id });
+    logger.info('Saving design', { userId: user.id, makePublic });
 
-    // Save design to user_designs table
+    // Save design to user_designs table (private copy)
     const { data: savedDesign, error: saveError } = await supabase
       .from('user_designs')
       .insert({
@@ -75,9 +76,44 @@ export async function POST(request: NextRequest) {
 
     logger.info('Design saved successfully', { userId: user.id, designId: savedDesign.id });
 
+    // Also create shareable version if requested
+    let sharedDesign = null;
+    if (makePublic) {
+      // Calculate estimated price in cents
+      const estimatedPriceCents = pricing_breakdown?.finalPrice 
+        ? Math.round(pricing_breakdown.finalPrice * 100)
+        : 250000; // Default $2,500
+
+      const { data: sharedData, error: shareError } = await supabase
+        .from('shared_designs')
+        .insert({
+          creator_id: user.id,
+          title: title || 'Custom Design',
+          prompt,
+          tags: style_tags || [],
+          jewelry_type: jewelry_type || 'custom',
+          style_tags: style_tags || [],
+          materials: Array.isArray(materials) ? materials : [],
+          estimated_price: estimatedPriceCents,
+          pricing_breakdown,
+          images,
+          is_public: true
+        })
+        .select()
+        .single();
+
+      if (!shareError && sharedData) {
+        sharedDesign = sharedData;
+        logger.info('Shared design created', { userId: user.id, sharedDesignId: sharedData.id });
+      } else {
+        logger.error('Failed to create shared design', shareError, { userId: user.id });
+      }
+    }
+
     return NextResponse.json({
       success: true,
       design: savedDesign,
+      sharedDesign: sharedDesign,
       message: 'Design saved successfully!'
     });
 

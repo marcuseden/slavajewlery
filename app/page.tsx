@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Sparkles, Clock, Award, Shield, ArrowRight, Star, CheckCircle } from "lucide-react";
-import { AuthProvider } from '@/components/AuthProvider';
 import { Header } from '@/components/Header';
 import { JewelryViewer } from '@/components/JewelryViewer';
 
@@ -84,9 +83,8 @@ export default function HomePage() {
   }, []);
 
   return (
-    <AuthProvider>
-      <div className="min-h-screen relative bg-slate-950">
-        <Header />
+    <div className="min-h-screen relative bg-slate-950">
+      <Header />
         
         {/* Luxury Velvet Black Background */}
         <div 
@@ -581,8 +579,7 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
-    </div>
-    </AuthProvider>
   );
 }

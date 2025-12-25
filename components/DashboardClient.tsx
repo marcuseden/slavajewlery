@@ -87,11 +87,46 @@ const DUMMY_FOLLOWERS = [
 export function DashboardClient() {
   const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState<'designs' | 'orders' | 'followers'>('designs');
+  const [userDesigns, setUserDesigns] = useState<any[]>([]);
+  const [loadingDesigns, setLoadingDesigns] = useState(true);
 
-  // Use dummy data for m_lowegren@mac.com or any user
-  const userDesigns = DUMMY_DESIGNS;
+  // Use dummy data for orders and followers (until implemented)
   const userOrders = DUMMY_ORDERS;
   const userFollowers = DUMMY_FOLLOWERS;
+
+  // Load user's designs from database
+  useEffect(() => {
+    if (user) {
+      setLoadingDesigns(true);
+      fetch('/api/designs/save', {
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.designs) {
+            // Transform database designs to match component format
+            const transformedDesigns = data.designs.map((design: any) => ({
+              id: design.id,
+              title: design.title || 'Untitled Design',
+              prompt: design.prompt,
+              image: design.images?.[0]?.url || design.images?.[0]?.local_url || '/designs/grace-kelly-ring-hero_angle.png',
+              created_at: design.created_at,
+              status: design.status || 'saved',
+              price: design.pricing_breakdown?.finalPrice || 2500
+            }));
+            setUserDesigns(transformedDesigns);
+          }
+        })
+        .catch(err => {
+          console.error('Error loading designs:', err);
+          // Fallback to dummy data on error
+          setUserDesigns(DUMMY_DESIGNS);
+        })
+        .finally(() => {
+          setLoadingDesigns(false);
+        });
+    }
+  }, [user]);
 
   if (loading) {
     return (
@@ -208,8 +243,26 @@ export function DashboardClient() {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {userDesigns.map((design) => (
+              {loadingDesigns ? (
+                <div className="text-center py-20">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+                  <p className="text-gray-400">Loading your designs...</p>
+                </div>
+              ) : userDesigns.length === 0 ? (
+                <div className="text-center py-20 bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl">
+                  <Sparkles className="w-16 h-16 text-stone-500 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-white mb-2">No designs yet</h3>
+                  <p className="text-gray-400 mb-6">Create your first custom jewelry design</p>
+                  <Link href="/design">
+                    <Button className="bg-white hover:bg-gray-100 text-black font-semibold">
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Create Your First Design
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {userDesigns.map((design) => (
                   <div key={design.id} className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl overflow-hidden group hover:border-blue-500/50 transition-all">
                     <div className="aspect-square relative bg-stone-900">
                       <img
@@ -228,8 +281,8 @@ export function DashboardClient() {
                       </p>
                       <div className="flex items-center justify-between">
                         <span className="text-white font-bold">${design.price.toLocaleString()}</span>
-                        <Link href={`/design?prompt=${encodeURIComponent(design.prompt)}`}>
-                          <Button size="sm" className="bg-stone-700 hover:bg-stone-600 text-white">
+                        <Link href={`/design-view/${design.id}`}>
+                          <Button size="sm" className="bg-white hover:bg-gray-100 text-black font-semibold">
                             <Eye className="w-3 h-3 mr-1" />
                             View
                           </Button>
@@ -237,8 +290,9 @@ export function DashboardClient() {
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

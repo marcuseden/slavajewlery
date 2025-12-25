@@ -8,17 +8,98 @@ interface ShareButtonProps {
   title: string;
   description: string;
   imageUrl?: string;
-  designUrl: string;
+  designUrl?: string; // Optional - will be generated if design data provided
   className?: string;
   children?: React.ReactNode;
+  // Optional: provide design data to auto-create shareable link
+  design?: {
+    prompt: string;
+    images: any[];
+    pricing_breakdown?: any;
+    jewelry_type?: string;
+    style_tags?: string[];
+    materials?: any;
+  };
+  sharedDesignId?: string; // If already saved as shared design
 }
 
-export function ShareButton({ title, description, imageUrl, designUrl, className, children }: ShareButtonProps) {
+export function ShareButton({ 
+  title, 
+  description, 
+  imageUrl, 
+  designUrl, 
+  className, 
+  children,
+  design,
+  sharedDesignId 
+}: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isCreatingLink, setIsCreatingLink] = useState(false);
+  const [actualShareUrl, setActualShareUrl] = useState(designUrl || '');
 
-  const shareUrl = typeof window !== 'undefined' ? designUrl : '';
   const shareText = `Check out this custom jewelry design: ${title}`;
+
+  // Create shareable link when modal opens
+  useEffect(() => {
+    if (isOpen && !actualShareUrl && design && typeof window !== 'undefined') {
+      createShareableLink();
+    }
+  }, [isOpen]);
+
+  const createShareableLink = async () => {
+    if (!design) return;
+
+    setIsCreatingLink(true);
+    try {
+      // Save design as public to get shareable ID
+      const response = await fetch('/api/designs/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          title,
+          prompt: design.prompt,
+          images: design.images,
+          pricing_breakdown: design.pricing_breakdown,
+          jewelry_type: design.jewelry_type,
+          style_tags: design.style_tags,
+          materials: design.materials,
+          makePublic: true // Create shareable version
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.sharedDesign?.id) {
+          const url = `${window.location.origin}/shared/${result.sharedDesign.id}`;
+          setActualShareUrl(url);
+        }
+      } else {
+        // Fallback to current page URL
+        setActualShareUrl(window.location.href);
+      }
+    } catch (error) {
+      console.error('Failed to create shareable link:', error);
+      // Fallback to current page URL
+      setActualShareUrl(window.location.href);
+    } finally {
+      setIsCreatingLink(false);
+    }
+  };
+
+  // If sharedDesignId is provided, use it immediately
+  useEffect(() => {
+    if (sharedDesignId && typeof window !== 'undefined') {
+      setActualShareUrl(`${window.location.origin}/shared/${sharedDesignId}`);
+    } else if (designUrl) {
+      setActualShareUrl(designUrl);
+    }
+  }, [sharedDesignId, designUrl]);
+
+  const shareUrl = actualShareUrl || (typeof window !== 'undefined' ? window.location.href : '');
 
   const shareOptions = [
     {
@@ -172,12 +253,10 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
     <>
       {/* Trigger Button */}
       {children ? (
-        <button
-          onClick={() => setIsOpen(true)}
-          className={className}
-        >
-          {children}
-        </button>
+        React.cloneElement(children as React.ReactElement, {
+          onClick: () => setIsOpen(true),
+          className: className
+        })
       ) : (
         <Button
           onClick={() => setIsOpen(true)}
@@ -202,8 +281,17 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
               <X className="w-6 h-6" />
             </button>
 
+            {/* Loading State */}
+            {isCreatingLink && (
+              <div className="bg-gray-950 rounded-2xl p-8 border border-gray-800 text-center">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+                <p className="text-gray-300">Creating shareable link...</p>
+              </div>
+            )}
+
             {/* Share Content */}
-            <div className="bg-gray-950 rounded-2xl p-6 border border-gray-800">
+            {!isCreatingLink && (
+              <div className="bg-gray-950 rounded-2xl p-6 border border-gray-800">
               {/* Image Preview */}
               {imageUrl && (
                 <div className="mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900 border border-gray-700">
@@ -273,6 +361,7 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
                 )}
               </div>
             </div>
+            )}
           </div>
         </div>
       )}
