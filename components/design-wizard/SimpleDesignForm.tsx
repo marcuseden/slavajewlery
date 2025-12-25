@@ -436,6 +436,54 @@ export function SimpleDesignForm() {
     }
   };
 
+  // Check if a tag's prompt text is in the current vision
+  const isTagActive = (tagPrompt: string): boolean => {
+    const lowerVision = vision.toLowerCase();
+    const lowerPrompt = tagPrompt.toLowerCase();
+    return lowerVision.includes(lowerPrompt);
+  };
+
+  // Toggle tag - add if not present, remove if present
+  const toggleTag = (tagPrompt: string) => {
+    const isActive = isTagActive(tagPrompt);
+    
+    if (isActive) {
+      // Remove the tag from vision
+      let newVision = vision;
+      
+      // Try to remove with various separators
+      const variations = [
+        `, ${tagPrompt}`,
+        `${tagPrompt}, `,
+        ` ${tagPrompt}`,
+        tagPrompt
+      ];
+      
+      for (const variant of variations) {
+        if (newVision.includes(variant)) {
+          newVision = newVision.replace(variant, '');
+          break;
+        }
+      }
+      
+      // Clean up multiple spaces and trailing/leading commas/spaces
+      newVision = newVision
+        .replace(/\s+/g, ' ')
+        .replace(/,\s*,/g, ',')
+        .replace(/^[,\s]+/, '')
+        .replace(/[,\s]+$/, '')
+        .trim();
+      
+      setVision(newVision);
+    } else {
+      // Add the tag to vision
+    const currentText = vision.trim();
+      const separator = currentText.length > 0 ? ', ' : '';
+      const newVision = currentText + separator + tagPrompt;
+      setVision(newVision);
+    }
+  };
+
   const addToVision = (text: string, isEnhancedTag: boolean = false) => {
     const currentText = vision.trim();
     
@@ -446,9 +494,9 @@ export function SimpleDesignForm() {
       setVision(newVision);
     } else {
       // For simple text additions
-      const separator = currentText.length > 0 ? (currentText.endsWith('.') || currentText.endsWith(',') ? ' ' : ', ') : '';
-      const newVision = currentText + separator + text;
-      setVision(newVision);
+    const separator = currentText.length > 0 ? (currentText.endsWith('.') || currentText.endsWith(',') ? ' ' : ', ') : '';
+    const newVision = currentText + separator + text;
+    setVision(newVision);
     }
   };
 
@@ -598,9 +646,9 @@ export function SimpleDesignForm() {
           <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 mb-6 relative z-10">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h2 className="text-xl font-semibold text-stone-100">
+              <h2 className="text-xl font-semibold text-stone-100">
                   Top-Selling Design Tags
-                </h2>
+              </h2>
                 <p className="text-xs text-stone-400 mt-1">
                   Click any tag to add expert design guidance to your prompt
                 </p>
@@ -621,23 +669,32 @@ export function SimpleDesignForm() {
                   <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {JEWELRY_TYPES.map((type, index) => (
+                  {JEWELRY_TYPES.map((type, index) => {
+                    const isActive = isTagActive(type.prompt);
+                    return (
                     <button
-                      key={type.label}
-                      onClick={() => addToVision(type.prompt, true)}
-                      title={type.description}
-                      className="group relative px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all cursor-pointer active:scale-95"
-                    >
-                      <span className="flex items-center gap-1">
-                        <span className="text-[10px] text-stone-500">#{index + 1}</span>
-                        {type.label}
-                      </span>
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                        {type.description}
-                      </div>
+                        key={type.label}
+                        onClick={() => toggleTag(type.prompt)}
+                        title={isActive ? 'Click to remove' : type.description}
+                        className={`group relative px-3 py-1.5 text-sm rounded-full transition-all cursor-pointer active:scale-95 ${
+                          isActive 
+                            ? 'bg-blue-600 border-2 border-blue-400 text-white shadow-lg shadow-blue-900/50' 
+                            : 'bg-stone-800 border border-stone-600 text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200'
+                        }`}
+                      >
+                        <span className="flex items-center gap-1">
+                          <span className={`text-[10px] ${isActive ? 'text-blue-200' : 'text-stone-500'}`}>
+                            {isActive ? '✓' : `#${index + 1}`}
+                          </span>
+                          {type.label}
+                        </span>
+                        {/* Tooltip */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                          {isActive ? 'Click to remove' : type.description}
+                        </div>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -648,23 +705,32 @@ export function SimpleDesignForm() {
                   <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {STYLES.map((style, index) => (
+                  {STYLES.map((style, index) => {
+                    const isActive = isTagActive(style.prompt);
+                    return (
                     <button
-                      key={style.label}
-                      onClick={() => addToVision(style.prompt, true)}
-                      title={style.description}
-                      className="group relative px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all cursor-pointer active:scale-95"
-                    >
-                      <span className="flex items-center gap-1">
-                        <span className="text-[10px] text-stone-500">#{index + 1}</span>
-                        {style.label}
-                      </span>
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                        {style.description}
-                      </div>
+                        key={style.label}
+                        onClick={() => toggleTag(style.prompt)}
+                        title={isActive ? 'Click to remove' : style.description}
+                        className={`group relative px-3 py-1.5 text-sm rounded-full transition-all cursor-pointer active:scale-95 ${
+                          isActive 
+                            ? 'bg-purple-600 border-2 border-purple-400 text-white shadow-lg shadow-purple-900/50' 
+                            : 'bg-stone-800 border border-stone-600 text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200'
+                        }`}
+                      >
+                        <span className="flex items-center gap-1">
+                          <span className={`text-[10px] ${isActive ? 'text-purple-200' : 'text-stone-500'}`}>
+                            {isActive ? '✓' : `#${index + 1}`}
+                          </span>
+                          {style.label}
+                        </span>
+                        {/* Tooltip */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                          {isActive ? 'Click to remove' : style.description}
+                        </div>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -675,23 +741,32 @@ export function SimpleDesignForm() {
                   <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {MATERIALS.map((material, index) => (
+                  {MATERIALS.map((material, index) => {
+                    const isActive = isTagActive(material.prompt);
+                    return (
                     <button
-                      key={material.label}
-                      onClick={() => addToVision(material.prompt, true)}
-                      title={material.description}
-                      className="group relative px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all cursor-pointer active:scale-95"
-                    >
-                      <span className="flex items-center gap-1">
-                        <span className="text-[10px] text-stone-500">#{index + 1}</span>
-                        {material.label}
-                      </span>
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                        {material.description}
-                      </div>
+                        key={material.label}
+                        onClick={() => toggleTag(material.prompt)}
+                        title={isActive ? 'Click to remove' : material.description}
+                        className={`group relative px-3 py-1.5 text-sm rounded-full transition-all cursor-pointer active:scale-95 ${
+                          isActive 
+                            ? 'bg-amber-600 border-2 border-amber-400 text-white shadow-lg shadow-amber-900/50' 
+                            : 'bg-stone-800 border border-stone-600 text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200'
+                        }`}
+                      >
+                        <span className="flex items-center gap-1">
+                          <span className={`text-[10px] ${isActive ? 'text-amber-200' : 'text-stone-500'}`}>
+                            {isActive ? '✓' : `#${index + 1}`}
+                          </span>
+                          {material.label}
+                        </span>
+                        {/* Tooltip */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                          {isActive ? 'Click to remove' : material.description}
+                        </div>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -699,7 +774,7 @@ export function SimpleDesignForm() {
             {/* Info box */}
             <div className="mt-6 p-4 bg-stone-800/50 border border-stone-700 rounded-lg">
               <p className="text-xs text-stone-300">
-                💡 <strong>Pro tip:</strong> These tags are based on our top-selling jewelry categories. Each tag adds specific design guidance that our AI uses to create the most popular, proven styles. Click multiple tags to combine best-selling elements.
+                💡 <strong>Pro tip:</strong> These tags are based on our top-selling jewelry categories. Click to add, click again to remove. Active tags show with a ✓ checkmark and colored background.
               </p>
             </div>
           </div>
