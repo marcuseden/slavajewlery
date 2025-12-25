@@ -253,10 +253,9 @@ export function ShareButton({
     <>
       {/* Trigger Button */}
       {children ? (
-        React.cloneElement(children as React.ReactElement, {
-          onClick: () => setIsOpen(true),
-          className: className
-        })
+        <div onClick={() => setIsOpen(true)} className={className} style={{ cursor: 'pointer' }}>
+          {children}
+        </div>
       ) : (
         <Button
           onClick={() => setIsOpen(true)}
