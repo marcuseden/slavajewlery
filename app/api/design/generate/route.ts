@@ -173,10 +173,10 @@ Professional jewelry photography, luxury lighting, photorealistic.
     for (let index = 0; index < IMAGE_TYPES.length; index++) {
       const imageType = IMAGE_TYPES[index];
       
-      // ABSOLUTE MINIMAL - user's vision + just camera angle
+      // Minimal prompt + strong consistency for photo 2
       const fullPrompt = index === 0 
         ? masterDesignSpec 
-        : `${masterDesignSpec}, ${imageType.description.toLowerCase()}`;
+        : `Photo 2 of the SAME necklace from photo 1. ${masterDesignSpec}. CRITICAL: Exact same pendant with "Mirja", exact same three chains, exact same design. Only camera angle changes. ${firstImageRevisedPrompt ? 'Photo 1 showed: ' + firstImageRevisedPrompt.substring(0, 200) : ''}`;
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       
@@ -214,9 +214,9 @@ Professional jewelry photography, luxury lighting, photorealistic.
         });
       }
       
-      // Small delay between images to avoid rate limiting
+      // Delay between images for consistency
       if (index < IMAGE_TYPES.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay - just enough to avoid rate limits
+        await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 second delay to help AI maintain consistency
       }
     }
 
