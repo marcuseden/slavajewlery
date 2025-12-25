@@ -1004,22 +1004,26 @@ export function SimpleDesignForm() {
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || !vision.trim() || vision.length < 20}
-              className="w-full bg-white hover:bg-gray-100 text-black disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-base py-6 shadow-lg"
+              className={`w-full ${
+                isGenerating 
+                  ? 'bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-purple-700/50 text-white backdrop-blur-md' 
+                  : 'bg-white hover:bg-gray-100 text-black'
+              } disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-base py-6 shadow-lg transition-all`}
             >
               {isGenerating ? (
                 <div className="flex flex-col items-center gap-3 w-full">
                   <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
-                    <span className="font-semibold">Creating your design...</span>
+                    <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                    <span className="font-semibold text-white">Creating your design...</span>
                   </div>
                   <div className="w-full max-w-xs">
-                    <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                    <div className="w-full bg-black/20 backdrop-blur-sm border border-white/10 rounded-full h-2 overflow-hidden">
                       <div 
-                        className="h-full bg-black transition-all duration-500"
+                        className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 shadow-lg shadow-purple-500/50"
                         style={{ width: `${generationProgress}%` }}
                       />
                     </div>
-                    <div className="text-xs text-gray-600 mt-1.5 text-center">
+                    <div className="text-xs text-gray-300 mt-2 text-center font-medium">
                       {Math.round(generationProgress)}%
                     </div>
                   </div>
