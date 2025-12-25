@@ -5,8 +5,11 @@
   "devCommand": "npm run dev",
   "outputDirectory": ".next",
   "functions": {
+    "app/api/design/generate": {
+      "maxDuration": 300
+    },
     "app/api/**": {
-      "maxDuration": 30
+      "maxDuration": 60
     }
   },
   "headers": [

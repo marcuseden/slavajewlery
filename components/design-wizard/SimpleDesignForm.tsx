@@ -212,6 +212,124 @@ interface GeneratedImage {
   prompt: string;
 }
 
+// Smart prompt suggestions based on what's missing
+interface PromptSuggestion {
+  category: string;
+  question: string;
+  options: { label: string; addition: string }[];
+}
+
+function analyzePromptGaps(prompt: string): PromptSuggestion[] {
+  const suggestions: PromptSuggestion[] = [];
+  const lowerPrompt = prompt.toLowerCase();
+
+  // Check for jewelry type
+  const hasType = ['ring', 'necklace', 'bracelet', 'earring', 'pendant', 'band'].some(t => lowerPrompt.includes(t));
+  if (!hasType) {
+    suggestions.push({
+      category: 'Type',
+      question: 'What type of jewelry?',
+      options: [
+        { label: 'Engagement Ring', addition: 'engagement ring with solitaire setting' },
+        { label: 'Necklace', addition: 'elegant necklace' },
+        { label: 'Earrings', addition: 'stud earrings' },
+        { label: 'Bracelet', addition: 'tennis bracelet' }
+      ]
+    });
+  }
+
+  // Check for metal/material
+  const hasMetal = ['gold', 'platinum', 'silver', 'metal'].some(m => lowerPrompt.includes(m));
+  if (!hasMetal) {
+    suggestions.push({
+      category: 'Material',
+      question: 'What metal?',
+      options: [
+        { label: '14k Gold', addition: '14k gold' },
+        { label: 'Platinum', addition: 'platinum' },
+        { label: 'White Gold', addition: 'white gold' },
+        { label: 'Rose Gold', addition: 'rose gold' }
+      ]
+    });
+  }
+
+  // Check for gemstones
+  const hasGemstone = ['diamond', 'sapphire', 'ruby', 'emerald', 'pearl', 'stone'].some(g => lowerPrompt.includes(g));
+  if (!hasGemstone && hasType) {
+    suggestions.push({
+      category: 'Gemstone',
+      question: 'What stones?',
+      options: [
+        { label: 'Diamond', addition: 'with brilliant diamond center stone' },
+        { label: 'Sapphire', addition: 'with deep blue sapphire' },
+        { label: 'No Stones', addition: 'metal only band' },
+        { label: 'Pearl', addition: 'with lustrous pearls' }
+      ]
+    });
+  }
+
+  // Check for size/scale
+  const hasSize = ['delicate', 'bold', 'chunky', 'thin', 'thick', 'small', 'large', 'statement'].some(s => lowerPrompt.includes(s));
+  if (!hasSize) {
+    suggestions.push({
+      category: 'Size',
+      question: 'What size/scale?',
+      options: [
+        { label: 'Delicate', addition: 'delicate and refined' },
+        { label: 'Statement', addition: 'bold statement piece' },
+        { label: 'Medium', addition: 'balanced proportions' },
+        { label: 'Chunky', addition: 'substantial and chunky' }
+      ]
+    });
+  }
+
+  // Check for style
+  const hasStyle = ['vintage', 'modern', 'classic', 'minimalist', 'art deco', 'bohemian', 'romantic'].some(s => lowerPrompt.includes(s));
+  if (!hasStyle) {
+    suggestions.push({
+      category: 'Style',
+      question: 'What style?',
+      options: [
+        { label: 'Classic', addition: 'classic timeless style' },
+        { label: 'Modern', addition: 'modern contemporary design' },
+        { label: 'Vintage', addition: 'vintage-inspired elegance' },
+        { label: 'Minimalist', addition: 'minimalist clean lines' }
+      ]
+    });
+  }
+
+  // Check for finish
+  const hasFinish = ['polished', 'matte', 'brushed', 'satin', 'hammered'].some(f => lowerPrompt.includes(f));
+  if (!hasFinish && hasMetal) {
+    suggestions.push({
+      category: 'Finish',
+      question: 'What finish?',
+      options: [
+        { label: 'Polished', addition: 'polished mirror finish' },
+        { label: 'Matte', addition: 'matte brushed texture' },
+        { label: 'Mixed', addition: 'polished and matte combination' }
+      ]
+    });
+  }
+
+  // Check for setting style (if has gemstones)
+  const hasSetting = ['prong', 'bezel', 'pave', 'channel', 'halo', 'setting'].some(s => lowerPrompt.includes(s));
+  if (hasGemstone && !hasSetting) {
+    suggestions.push({
+      category: 'Setting',
+      question: 'Stone setting style?',
+      options: [
+        { label: 'Prong', addition: 'classic prong setting' },
+        { label: 'Halo', addition: 'surrounded by halo of diamonds' },
+        { label: 'Bezel', addition: 'modern bezel setting' },
+        { label: 'Pave', addition: 'pave-set accents' }
+      ]
+    });
+  }
+
+  return suggestions.slice(0, 3); // Show max 3 suggestions at a time
+}
+
 export function SimpleDesignForm() {
   const searchParams = useSearchParams();
   const [vision, setVision] = useState('');
@@ -223,6 +341,7 @@ export function SimpleDesignForm() {
   const [showPromptTips, setShowPromptTips] = useState(false);
   const [pricingBreakdown, setPricingBreakdown] = useState<PricingBreakdown | null>(null);
   const [isCalculatingPrice, setIsCalculatingPrice] = useState(false);
+  const [promptSuggestions, setPromptSuggestions] = useState<PromptSuggestion[]>([]);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
@@ -239,6 +358,16 @@ export function SimpleDesignForm() {
     }
   }, [searchParams]);
 
+  // Update suggestions when prompt changes
+  useEffect(() => {
+    if (vision.length >= 10) {
+      const suggestions = analyzePromptGaps(vision);
+      setPromptSuggestions(suggestions);
+    } else {
+      setPromptSuggestions([]);
+    }
+  }, [vision]);
+
   const handleGenerate = async () => {
     if (!vision.trim() || vision.length < 20) {
       setError('Please provide a more detailed description (at least 20 characters)');
@@ -248,8 +377,13 @@ export function SimpleDesignForm() {
     setIsGenerating(true);
     setError('');
     setGeneratedImages([]);
+    setPromptSuggestions([]); // Hide suggestions during generation
 
     try {
+      // Set timeout for the fetch request
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
+
       const response = await fetch('/api/design/generate', {
         method: 'POST',
         headers: {
@@ -266,9 +400,15 @@ export function SimpleDesignForm() {
           stone_config: { center_stone: { type: 'diamond', shape: 'round', carat: 1 } },
           size_fit: { ring_size: 7 }
         }),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
+        if (response.status === 504 || response.status === 408) {
+          throw new Error('Generation is taking longer than expected. The AI is working on complex details - please try again or simplify your description.');
+        }
         throw new Error('Failed to generate design');
       }
 
@@ -282,7 +422,15 @@ export function SimpleDesignForm() {
 
     } catch (err) {
       console.error('Generation error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to generate design');
+      if (err instanceof Error) {
+        if (err.name === 'AbortError') {
+          setError('Request timed out. The design is complex - try adding more specific details or simplifying your description.');
+        } else {
+          setError(err.message);
+        }
+      } else {
+        setError('Failed to generate design. Please try again.');
+      }
     } finally {
       setIsGenerating(false);
     }
@@ -618,6 +766,44 @@ export function SimpleDesignForm() {
                 )}
               </div>
             </div>
+
+            {/* Smart Prompt Suggestions */}
+            {promptSuggestions.length > 0 && !isGenerating && (
+              <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <HelpCircle className="w-4 h-4 text-blue-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-semibold text-blue-200 mb-3">
+                      Add more details to improve your design:
+                    </h4>
+                    <div className="space-y-3">
+                      {promptSuggestions.map((suggestion, idx) => (
+                        <div key={idx}>
+                          <p className="text-xs text-blue-300 mb-2">{suggestion.question}</p>
+                          <div className="flex flex-wrap gap-2">
+                            {suggestion.options.map((option, optIdx) => (
+                              <button
+                                key={optIdx}
+                                onClick={() => {
+                                  const currentText = vision.trim();
+                                  const separator = currentText.length > 0 ? ', ' : '';
+                                  setVision(currentText + separator + option.addition);
+                                }}
+                                className="px-3 py-1.5 text-xs bg-blue-800/30 hover:bg-blue-700/40 border border-blue-600/40 hover:border-blue-500/60 rounded-lg text-blue-200 hover:text-blue-100 transition-all cursor-pointer active:scale-95"
+                              >
+                                + {option.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {error && (
               <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
