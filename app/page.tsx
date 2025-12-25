@@ -24,10 +24,33 @@ interface ExampleDesign {
   images?: JewelryImage[];
 }
 
+// Hero jewelry showcase images
+const HERO_JEWELRY_IMAGES = [
+  { url: '/designs/grace-kelly-ring-hero_angle.png', title: 'Grace Kelly Ring' },
+  { url: '/designs/madonna-punk-ring-hero_angle.png', title: 'Madonna Punk Ring' },
+  { url: '/designs/audrey-pearl-necklace-hero_angle.png', title: 'Audrey Pearl Necklace' },
+  { url: '/designs/bowie-lightning-earrings-hero_angle.png', title: 'Bowie Lightning Earrings' },
+  { url: '/designs/frida-turquoise-bracelet-hero_angle.png', title: 'Frida Turquoise Bracelet' }
+];
+
 export default function HomePage() {
   const [exampleDesigns, setExampleDesigns] = useState<ExampleDesign[]>([]);
   const [selectedDesign, setSelectedDesign] = useState<ExampleDesign | null>(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [currentHeroImage, setCurrentHeroImage] = useState(0);
+
+  // Randomize hero image on load
+  useEffect(() => {
+    setCurrentHeroImage(Math.floor(Math.random() * HERO_JEWELRY_IMAGES.length));
+  }, []);
+
+  // Rotate hero image every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroImage((prev) => (prev + 1) % HERO_JEWELRY_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Load our consistent design examples
@@ -101,75 +124,106 @@ export default function HomePage() {
       {/* Content */}
       <div className="relative z-10">
 
-      {/* Hero Section */}
-        <section className="relative px-4 sm:px-6 py-12 sm:py-16 md:py-24 pt-24">
+      {/* Hero Section - Apple Style */}
+        <section className="relative px-4 sm:px-6 py-8 sm:py-12 md:py-16 pt-20 sm:pt-24">
         <div className="max-w-7xl mx-auto">
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-6 sm:space-y-8 text-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            
+            {/* Left: Copy */}
+            <div className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-black/10 border border-gray-600/20 rounded-full text-gray-300 text-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-gray-300 text-sm">
                 <CheckCircle className="w-4 h-4" />
-                <span className="hidden sm:inline">Delivered in 5 Business Days</span>
-                <span className="sm:hidden">5-Day Delivery</span>
-          </div>
+                <span>Delivered in 5 Days</span>
+              </div>
           
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-100 leading-tight">
-                Design Your Dream Jewelry{" "}
-                <span className="bg-gradient-to-r from-gray-300 via-white to-gray-200 bg-clip-text text-transparent">
-                  Instantly
+              {/* Headline - Apple Style: Short, Powerful */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight">
+                Stunning jewelry.
+                <br />
+                <span className="bg-gradient-to-r from-gray-400 via-gray-200 to-white bg-clip-text text-transparent">
+                  Created instantly.
                 </span>
-          </h1>
+              </h1>
           
-              <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                Simply describe your vision in words. We instantly create photorealistic designs 
-                and detailed specifications. Master jewelers in NYC handcraft your unique piece 
-                and deliver it in just{" "}
-                <span className="font-semibold text-gray-300">5 business days</span>.
+              {/* Sub-headline - Shorter, Punchier */}
+              <p className="text-lg sm:text-xl lg:text-2xl text-slate-300 leading-relaxed max-w-xl">
+                Describe your vision. We create it in seconds.
+                <br className="hidden sm:block" />
+                <span className="text-white font-medium">Handcrafted in NYC. Yours in 5 days.</span>
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto justify-center">
-                <Button asChild className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-semibold px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg group shadow-lg">
-              <Link href="/design">
-                    <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
-                    <span className="hidden sm:inline">Start Designing Now</span>
-                    <span className="sm:hidden">Design Now</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-                <Button variant="outline" asChild className="border-slate-600 text-slate-300 hover:bg-slate-800 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
-                  <Link href="#examples">See Examples</Link>
-            </Button>
-          </div>
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 lg:justify-start justify-center pt-4">
+                <Button asChild className="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-6 text-lg group shadow-2xl">
+                  <Link href="/design">
+                    Start Designing
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-lg backdrop-blur-sm">
+                  <Link href="#examples">View Examples</Link>
+                </Button>
+              </div>
 
-              {/* Key Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 max-w-2xl mx-auto">
-                <div className="flex items-center justify-center space-x-3">
-                  <div className="w-10 h-10 bg-black/20 rounded-full flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-gray-300" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-slate-200">Instant Design</p>
-                    <p className="text-sm text-slate-400">In 30 seconds</p>
-                  </div>
+              {/* Key Stats - Minimal */}
+              <div className="flex items-center justify-center lg:justify-start gap-6 sm:gap-8 pt-4 text-sm sm:text-base">
+                <div className="text-gray-400">
+                  <span className="text-white font-semibold">30 sec</span> to design
                 </div>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-gray-300" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-slate-200">5-Day Delivery</p>
-                    <p className="text-sm text-slate-400">Guaranteed</p>
-                  </div>
+                <div className="w-px h-6 bg-white/20" />
+                <div className="text-gray-400">
+                  <span className="text-white font-semibold">5 days</span> delivery
                 </div>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className="w-10 h-10 bg-teal-500/20 rounded-full flex items-center justify-center">
-                    <Award className="w-5 h-5 text-teal-400" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-slate-200">NYC Crafted</p>
-                    <p className="text-sm text-slate-400">Master jewelers</p>
-                  </div>
+                <div className="w-px h-6 bg-white/20" />
+                <div className="text-gray-400">
+                  <span className="text-white font-semibold">NYC</span> crafted
                 </div>
+              </div>
+            </div>
+
+            {/* Right: Big Rotating Jewelry Image */}
+            <div className="relative order-1 lg:order-2">
+              <div className="relative aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 shadow-2xl">
+                {/* Rotating jewelry images */}
+                {HERO_JEWELRY_IMAGES.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ${
+                      index === currentHeroImage ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Subtle gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                ))}
+                
+                {/* Image indicator dots */}
+                <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2">
+                  {HERO_JEWELRY_IMAGES.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentHeroImage(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentHeroImage 
+                          ? 'bg-white w-8' 
+                          : 'bg-white/40 hover:bg-white/60'
+                      }`}
+                      aria-label={`View image ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+              
+              {/* Floating badge */}
+              <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white text-black px-6 py-4 rounded-2xl shadow-2xl border border-gray-200">
+                <div className="text-2xl font-bold">$2,500+</div>
+                <div className="text-xs text-gray-600">Custom designs</div>
               </div>
             </div>
 
@@ -177,68 +231,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Jewelry Showcase - Right in Hero */}
-      <section className="px-4 sm:px-6 pb-12 -mt-8">
+      {/* Quick Social Proof - Minimal */}
+      <section className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            {/* Quick Preview Images */}
-            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
-              <img
-                src="/designs/grace-kelly-ring-hero_angle.png"
-                alt="Grace Kelly Ring"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-2 left-2 right-2">
-                <p className="text-white text-xs font-semibold">Grace Kelly Ring</p>
-                <p className="text-gray-300 text-[10px]">Classic Elegance</p>
-              </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-center">
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">1,000+</div>
+              <div className="text-sm text-gray-400 mt-1">Designs created</div>
             </div>
-            
-            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
-              <img
-                src="/designs/madonna-punk-ring-hero_angle.png"
-                alt="Madonna Punk Ring"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-2 left-2 right-2">
-                <p className="text-white text-xs font-semibold">Madonna Ring</p>
-                <p className="text-gray-300 text-[10px]">Punk Rock</p>
+            <div className="hidden sm:block w-px h-12 bg-white/20" />
+            <div>
+              <div className="flex items-center justify-center gap-1 mb-1">
+                {[1,2,3,4,5].map(i => (
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                ))}
               </div>
+              <div className="text-sm text-gray-400">4.9 from 500+ reviews</div>
             </div>
-            
-            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
-              <img
-                src="/designs/audrey-pearl-necklace-hero_angle.png"
-                alt="Audrey Pearl Necklace"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-2 left-2 right-2">
-                <p className="text-white text-xs font-semibold">Audrey Necklace</p>
-                <p className="text-gray-300 text-[10px]">Timeless Pearl</p>
-              </div>
-            </div>
-            
-            <div className="aspect-square relative overflow-hidden rounded-lg border border-gray-600/30 bg-black/20 backdrop-blur-sm group hover:border-gray-400 transition-all">
-              <img
-                src="/designs/bowie-lightning-earrings-hero_angle.png"
-                alt="Bowie Lightning Earrings"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-2 left-2 right-2">
-                <p className="text-white text-xs font-semibold">Bowie Earrings</p>
-                <p className="text-gray-300 text-[10px]">Bold Statement</p>
-              </div>
+            <div className="hidden sm:block w-px h-12 bg-white/20" />
+            <div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">5 days</div>
+              <div className="text-sm text-gray-400 mt-1">Guaranteed delivery</div>
             </div>
           </div>
-          
-          {/* Small caption */}
-          <p className="text-center text-gray-400 text-sm mt-4">
-            Real AI-generated designs • Handcrafted in NYC • Delivered in 5 days
-          </p>
         </div>
       </section>
 
@@ -272,15 +287,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How It Works - Prompt to Product */}
-      <section id="how-it-works" className="px-6 py-20">
+      {/* How It Works - Apple Style: Minimal */}
+      <section id="how-it-works" className="px-6 py-16 sm:py-20">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-4">
-              From Words to Wearable Art
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Effortlessly simple.
+              <br />
+              <span className="text-gray-400">Remarkably beautiful.</span>
           </h2>
-            <p className="text-xl text-stone-400 max-w-2xl mx-auto">
-              See how simple descriptions become stunning jewelry in seconds
+            <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+              Words become wearable art in seconds.
             </p>
           </div>
           
@@ -373,36 +390,29 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="text-center mt-16">
-            <div className="bg-gradient-to-r from-black/10 to-gray-800/10 border border-gray-600/20 rounded-2xl p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-white mb-4">
-                Ready to Create Your Own?
-              </h3>
-              <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
-                Describe any jewelry piece you can imagine - from vintage Victorian rings to modern minimalist necklaces. 
-                We understand style, materials, and celebrity inspiration.
-              </p>
-              <Link href="/design">
-                <Button className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-gray-700 text-white font-bold px-8 py-4 text-lg">
-                  Start Designing Now →
-                </Button>
-              </Link>
-            </div>
+          {/* Minimal CTA */}
+          <div className="text-center mt-12 sm:mt-16">
+            <Link href="/design">
+              <Button className="bg-white hover:bg-gray-100 text-black font-semibold px-10 py-6 text-lg shadow-2xl">
+                Design Yours Now
+              </Button>
+            </Link>
+            <p className="text-gray-500 text-sm mt-4">Free • Instant • No commitment</p>
           </div>
         </div>
       </section>
 
       {/* Examples Showcase */}
-      <section id="examples" className="px-6 py-20 bg-black/30 backdrop-blur-md/30">
+      <section id="examples" className="px-6 py-16 sm:py-20 bg-black/20">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-4">
-              Real Custom Designs
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Extraordinary designs.
+              <br />
+              <span className="text-gray-400">From simple words.</span>
             </h2>
-            <p className="text-xl text-stone-400 max-w-3xl mx-auto">
-              These stunning pieces were created from simple text descriptions. 
-              Each design is unique and ready to become reality in just 5 days.
+            <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+              Each piece crafted to perfection. Delivered in 5 days.
               </p>
             </div>
 
@@ -449,9 +459,9 @@ export default function HomePage() {
             </div>
 
           <div className="text-center">
-            <Button asChild className="bg-black hover:bg-black/30 backdrop-blur-md text-white font-semibold px-8 py-6 text-lg group">
+            <Button asChild className="bg-white hover:bg-gray-100 text-black font-semibold px-10 py-6 text-lg group shadow-2xl">
               <Link href="/design">
-                Create Your Own Design
+                Start Creating
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -460,16 +470,14 @@ export default function HomePage() {
       </section>
 
       {/* Guarantee Section */}
-      <section id="guarantee" className="px-6 py-20 bg-gradient-to-r from-black/10 to-gray-800/10">
+      <section id="guarantee" className="px-6 py-16 sm:py-20">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-100 mb-6">
-              Our Unbeatable Guarantee
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Exceptional quality.
+              <br />
+              <span className="text-gray-400">Guaranteed.</span>
           </h2>
-            <p className="text-xl text-stone-300 max-w-3xl mx-auto">
-              We're so confident in our process that we offer industry-leading guarantees. 
-              Your satisfaction is our obsession.
-            </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -497,26 +505,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="px-6 py-20">
+      {/* Final CTA - Apple Minimal */}
+      <section className="px-6 py-16 sm:py-24">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-stone-100 mb-6">
-            Ready to Create Your Dream Piece?
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Your perfect piece.
+            <br />
+            <span className="text-gray-400">Waiting to be created.</span>
           </h2>
-          <p className="text-xl text-stone-400 mb-8 max-w-2xl mx-auto">
-            Join thousands of customers who've brought their jewelry visions to life. 
-            Your perfect piece is just one description away.
-          </p>
-          <div className="space-y-4">
-            <Button asChild className="bg-black hover:bg-black/30 backdrop-blur-md text-white font-bold px-12 py-8 text-xl group">
-            <Link href="/design">
-                <Sparkles className="w-6 h-6 mr-3" />
-              Start Designing Now
+          <div className="space-y-6 mt-10">
+            <Button asChild className="bg-white hover:bg-gray-100 text-black font-bold px-12 py-7 text-xl group shadow-2xl">
+              <Link href="/design">
+                Get Started
                 <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </Button>
-            <p className="text-stone-500 text-sm">
-              Free design generation • No commitment until you love it • 5-day delivery guaranteed
+              </Link>
+            </Button>
+            <p className="text-gray-500 text-sm">
+              Free to design • 5-day delivery • Lifetime warranty
             </p>
           </div>
         </div>
