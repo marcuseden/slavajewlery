@@ -1,5 +1,16 @@
-// Manufacturing constraints for jewelry production
-// Ensures all generated designs are actually producible
+/**
+ * MANUFACTURING RULES FOR AI-GENERATED JEWELRY
+ * 
+ * Purpose: Ensure 100% of AI-generated designs are physically manufacturable
+ * by NYC master jewelers using standard jewelry fabrication techniques.
+ * 
+ * Critical Success Factors:
+ * 1. Structural integrity - pieces must be wearable and durable
+ * 2. Material feasibility - only real metals and gemstones
+ * 3. Technical feasibility - achievable with standard jeweler tools
+ * 4. Quality standards - meets luxury jewelry expectations
+ * 5. Safety standards - no sharp edges, secure stone settings
+ */
 
 export interface ManufacturingConstraints {
   materials: {
@@ -112,7 +123,15 @@ export const MANUFACTURING_RULES: ManufacturingConstraints = {
       'hammered texture',
       'milgrain detailing',
       'hand engraving',
-      'laser engraving'
+      'laser engraving',
+      'satin finish',
+      'mirror polish',
+      'antiquing/oxidation',
+      'wire wrapping',
+      'bezel setting',
+      'prong setting',
+      'channel setting',
+      'pave setting'
     ],
     forbidden: [
       'impossible geometry',
@@ -122,7 +141,17 @@ export const MANUFACTURING_RULES: ManufacturingConstraints = {
       'holographic',
       'levitating',
       'impossible interlocking',
-      'microscopic detail beyond 0.1mm'
+      'microscopic detail beyond 0.3mm',
+      'unsupported overhangs',
+      'physics-defying structures',
+      'invisible settings',
+      'magical properties',
+      'self-assembling',
+      'transparent metal',
+      'flexible diamonds',
+      'color-changing without treatment',
+      'perpetual motion',
+      'defying material properties'
     ]
   },
   
@@ -135,11 +164,33 @@ export const MANUFACTURING_RULES: ManufacturingConstraints = {
   production: {
     maxComplexityScore: 8, // Out of 10
     minProductionDays: 3,
-    maxProductionDays: 7
+    maxProductionDays: 14 // Increased for complex pieces
+  },
+  
+  structural: {
+    minMetalThickness: 1.5, // mm - for wearability
+    minProngDiameter: 0.8, // mm - for stone security
+    minDetailSize: 0.3, // mm - practical manufacturing limit
+    minStoneSettingDepth: 0.6, // ratio of stone height
+    maxAspectRatio: 5, // length:width ratio for structural integrity
+    minWallThickness: 1.2 // mm - for hollow forms
+  },
+  
+  quality: {
+    surfaceFinishStandards: ['mirror polish', 'satin finish', 'brushed', 'matte', 'hammered'],
+    stoneQualityMinimum: 'SI clarity for diamonds, eye-clean for colored stones',
+    metalPurityStandards: {
+      platinum: [900, 950, 999],
+      gold: [10, 14, 18, 22], // karats
+      silver: [925, 950, 999] // parts per thousand
+    }
   }
 };
 
-// Validate if a design prompt follows manufacturing rules
+/**
+ * Validate if a design prompt follows manufacturing rules
+ * Returns validation results with actionable issues and warnings
+ */
 export function validateDesignForProduction(prompt: string): {
   isValid: boolean;
   issues: string[];
@@ -149,29 +200,72 @@ export function validateDesignForProduction(prompt: string): {
   const warnings: string[] = [];
   const lowerPrompt = prompt.toLowerCase();
 
-  // Check for forbidden techniques
+  // Check for forbidden techniques (CRITICAL - blocks generation)
   MANUFACTURING_RULES.techniques.forbidden.forEach(forbidden => {
     if (lowerPrompt.includes(forbidden.toLowerCase())) {
-      issues.push(`Cannot manufacture: ${forbidden} - not physically possible`);
+      issues.push(`Cannot manufacture: "${forbidden}" - not physically possible with real materials`);
     }
   });
 
-  // Warn about complex techniques
-  const complexTechniques = ['filigree', 'granulation', 'repoussé', 'enamel'];
-  complexTechniques.forEach(technique => {
+  // Check for structural issues
+  const structuralKeywords = {
+    'ultra thin': 'May not meet minimum thickness requirements (1.5mm)',
+    'paper thin': 'Not structurally sound for jewelry',
+    'hair thin': 'Below manufacturing capabilities',
+    'microscopic': 'Details must be minimum 0.3mm',
+    'invisible': 'All elements must have physical presence',
+    'extremely delicate': 'May not be durable for daily wear'
+  };
+
+  Object.entries(structuralKeywords).forEach(([keyword, warning]) => {
+    if (lowerPrompt.includes(keyword)) {
+      warnings.push(warning);
+    }
+  });
+
+  // Warn about complex techniques (adds time/cost)
+  const complexTechniques = {
+    'filigree': 3,
+    'granulation': 3,
+    'repoussé': 2,
+    'enamel': 4,
+    'hand engraving': 2,
+    'pave setting': 3,
+    'micro pave': 4
+  };
+  
+  Object.entries(complexTechniques).forEach(([technique, days]) => {
     if (lowerPrompt.includes(technique)) {
-      warnings.push(`${technique} adds 2-3 days to production time`);
+      warnings.push(`${technique} adds ${days}+ days to production timeline (high skill required)`);
     }
   });
 
   // Check for unrealistic gemstone sizes
   Object.entries(MANUFACTURING_RULES.gemstones.maxCaratForType).forEach(([stone, maxCarat]) => {
-    const regex = new RegExp(`(\\d+(?:\\.\\d+)?)\\s*carat\\s*${stone}`, 'i');
+    const regex = new RegExp(`(\\d+(?:\\.\\d+)?)\\s*(?:carat|ct)\\s*${stone}`, 'i');
     const match = lowerPrompt.match(regex);
     if (match && parseFloat(match[1]) > maxCarat) {
-      issues.push(`${stone} size ${match[1]} carat exceeds maximum ${maxCarat} carat for custom work`);
+      issues.push(`${stone} ${match[1]}ct exceeds practical maximum (${maxCarat}ct for custom work) - extremely rare and expensive`);
     }
   });
+
+  // Check for gemstone setting feasibility
+  const unsecureSettings = ['floating', 'suspended', 'unsupported', 'hovering'];
+  unsecureSettings.forEach(term => {
+    if (lowerPrompt.includes(term)) {
+      issues.push(`"${term}" stones require physical support - suggest prong, bezel, or tension setting`);
+    }
+  });
+
+  // Warn about expensive materials
+  if (lowerPrompt.includes('platinum') || lowerPrompt.includes('950')) {
+    warnings.push('Platinum requires specialized equipment and significantly higher material cost');
+  }
+
+  // Check for color-specific requirements
+  if (lowerPrompt.match(/\b(rainbow|multicolor|shifting|iridescent)\b/i)) {
+    warnings.push('Color effects require specific gemstones or treatments - clarify if using opals, labradorite, or surface treatments');
+  }
 
   return {
     isValid: issues.length === 0,
@@ -180,25 +274,49 @@ export function validateDesignForProduction(prompt: string): {
   };
 }
 
-// Generate a production-safe prompt from user input
+/**
+ * Generate a production-safe prompt from user input
+ * Replaces impossible requests with realistic alternatives
+ */
 export function sanitizePromptForProduction(prompt: string): string {
   let sanitized = prompt;
 
-  // Replace forbidden techniques with allowed alternatives
+  // Replace forbidden techniques with allowed manufacturing alternatives
   const replacements: Record<string, string> = {
-    'floating': 'suspended with thin wire',
-    'levitating': 'elevated with minimal support',
-    'impossible': 'intricate',
-    'holographic': 'iridescent finish',
-    'liquid metal': 'flowing curved design'
+    'floating': 'delicately suspended with minimal wire support',
+    'levitating': 'elevated with fine metal support',
+    'hovering': 'raised on thin posts',
+    'impossible': 'intricate and complex',
+    'holographic': 'iridescent labradorite or opal',
+    'liquid metal': 'flowing organic curved design',
+    'anti-gravity': 'asymmetrical balanced',
+    'invisible setting': 'minimal bezel setting',
+    'paper thin': 'delicate 1.5mm thickness',
+    'microscopic': 'fine detailed 0.3mm',
+    'magical': 'exceptional craftsmanship',
+    'perfect': 'high quality SI clarity',
+    'flawless': 'VS clarity grade',
+    'weightless': 'lightweight hollow construction',
+    'transparent metal': 'polished reflective finish'
   };
 
   Object.entries(replacements).forEach(([forbidden, allowed]) => {
-    const regex = new RegExp(forbidden, 'gi');
+    const regex = new RegExp(`\\b${forbidden}\\b`, 'gi');
     sanitized = sanitized.replace(regex, allowed);
   });
 
-  return sanitized;
+  // Add manufacturing context if not present
+  if (!sanitized.match(/\b(cast|forged|fabricated|hand[- ]made|crafted)\b/i)) {
+    sanitized = sanitized + ', expertly handcrafted using traditional jewelry techniques';
+  }
+
+  // Ensure gemstone setting is specified
+  if (sanitized.match(/\b(diamond|gemstone|stone|ruby|sapphire|emerald)\b/i) && 
+      !sanitized.match(/\b(prong|bezel|channel|pave|halo|tension|setting)\b/i)) {
+    sanitized = sanitized + ', set in secure professional setting';
+  }
+
+  return sanitized.trim();
 }
 
 // Calculate complexity score for production planning

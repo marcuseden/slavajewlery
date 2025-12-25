@@ -1,27 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { validateDesignForProduction, sanitizePromptForProduction } from '@/lib/manufacturing-rules';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// CRITICAL: Manufacturing and consistency guardrails
+const MANUFACTURING_GUARDRAILS = `
+STRICT MANUFACTURING REQUIREMENTS - DO NOT DEVIATE:
+- Use ONLY real, manufacturable jewelry techniques (casting, forging, stone setting, engraving)
+- NO floating elements, impossible geometry, or physics-defying designs
+- ALL gemstones must be securely set using standard settings (prong, bezel, channel, pave, halo)
+- Metal thickness minimum 1.5mm for structural integrity
+- All prongs minimum 0.8mm diameter
+- Gemstone settings must have proper depth (min 60% of stone height)
+- NO microscopic details smaller than 0.3mm
+- All curves and edges must be physically producible with standard jeweler tools
+- Avoid thin cantilevers or structurally weak designs
+- Each piece must be wearable and durable for daily use
+`.trim();
+
+const CONSISTENCY_GUARDRAILS = `
+ABSOLUTE CONSISTENCY RULES - SAME EXACT JEWELRY PIECE:
+- Maintain IDENTICAL dimensions, proportions, and scale in every image
+- Keep EXACT same metal color, finish, and texture across all views
+- Use IDENTICAL gemstone count, size, color, cut, and placement
+- Preserve EXACT same design details, engravings, and decorative elements
+- Maintain IDENTICAL style, era aesthetic, and design motifs
+- Keep SAME level of wear/patina (should be pristine/new for all)
+- All images must show THE SAME SINGULAR PHYSICAL PIECE from different angles
+- Think of it as photographing ONE real jewelry piece that exists, not creating variations
+`.trim();
+
 // Image types for jewelry photography - SAME design, different views
 const IMAGE_TYPES = [
   {
     type: 'packshot_front',
-    description: 'clean white background, front view, product photography'
+    description: 'clean white background, perfectly centered front view, professional product photography, studio lighting',
+    consistency_note: 'Front facing view showing full design, same piece as all other images'
   },
   {
     type: 'hero_angle', 
-    description: '3/4 angle view with dramatic studio lighting and shadows'
+    description: '3/4 angle view with dramatic studio lighting creating natural shadows, professional jewelry photography',
+    consistency_note: 'Three-quarter angle of the exact same piece, showing depth and dimension'
   },
   {
     type: 'on_model_worn',
-    description: 'worn on elegant hand/neck/ear, natural skin tone, lifestyle photography'
+    description: 'worn on elegant hand/neck/ear with natural skin tone, lifestyle photography in natural light',
+    consistency_note: 'The exact same piece being worn, maintaining all design details'
   },
   {
     type: 'macro_detail',
-    description: 'extreme close-up showing intricate details and craftsmanship, macro lens'
+    description: 'extreme close-up macro photography showing intricate craftsmanship details, sharp focus on gemstone or metalwork',
+    consistency_note: 'Close-up of the exact same piece showing fine details and quality'
   }
 ];
 
@@ -46,22 +78,52 @@ export async function POST(request: NextRequest) {
 
     console.log('Generating jewelry design for:', user_vision.slice(0, 100) + '...');
 
-    // Generate multiple views of the SAME design
-    const baseDesignPrompt = `Professional jewelry photography of this exact piece: ${user_vision}`;
+    // Validate and sanitize for manufacturing
+    const validation = validateDesignForProduction(user_vision);
+    const sanitizedVision = sanitizePromptForProduction(user_vision);
     
-    const imagePromises = IMAGE_TYPES.map(async (imageType) => {
-      const fullPrompt = `${baseDesignPrompt}, ${imageType.description}, high detail luxury jewelry photography, 4k resolution, professional lighting`;
+    if (!validation.isValid) {
+      console.warn('Design validation issues:', validation.issues);
+    }
 
-      console.log(`Generating ${imageType.type} of the same design...`);
+    // Create MASTER design specification for consistency
+    const masterDesignSpec = `
+MASTER JEWELRY SPECIFICATION (THIS EXACT PIECE FOR ALL IMAGES):
+${sanitizedVision}
+
+${MANUFACTURING_GUARDRAILS}
+
+${CONSISTENCY_GUARDRAILS}
+
+TECHNICAL SPECIFICATIONS:
+- Professional jewelry photography
+- High-end craftsmanship quality
+- Pristine new condition
+- Accurate scale and proportions
+- Realistic materials and finishes
+- Production-ready design
+`.trim();
+    
+    const imagePromises = IMAGE_TYPES.map(async (imageType, index) => {
+      const fullPrompt = `${masterDesignSpec}
+
+PHOTOGRAPHY SPECIFICATION FOR THIS VIEW:
+${imageType.description}
+
+CONSISTENCY REMINDER: ${imageType.consistency_note}
+
+Style: Professional luxury jewelry photography, 4K resolution, photorealistic rendering`;
+
+      console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       
       try {
         const imageResponse = await openai.images.generate({
-          model: "dall-e-3",
+          model: "dall-e-3", // Best for consistency and quality
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          quality: "hd",
-          style: "natural"
+          quality: "hd", // Essential for jewelry detail
+          style: "natural" // Most realistic for product photography
         });
 
         return {
@@ -96,27 +158,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate design specifications using GPT-4
+    // Generate manufacturing specifications using GPT-4
     let specifications = null;
     try {
-      const specPrompt = `As a master jeweler, create detailed manufacturing specifications for this custom jewelry piece:
+      const specPrompt = `As a NYC master jeweler with 30+ years experience, create REALISTIC manufacturing specifications for this piece:
 
-Design Vision: ${user_vision}
+DESIGN: ${sanitizedVision}
 
-Provide concise specifications including:
-1. Materials and dimensions
-2. Stone specifications  
-3. Manufacturing techniques
-4. Estimated timeline
-5. Price range
+VALIDATION RESULTS:
+${validation.isValid ? '✓ Design is manufacturable' : '⚠ Issues found: ' + validation.issues.join(', ')}
+${validation.warnings.length > 0 ? 'Warnings: ' + validation.warnings.join(', ') : ''}
 
-Keep response under 300 words and focus on technical details.`;
+Provide REALISTIC specifications:
+1. MATERIALS: Exact metal type, karat/purity, estimated weight in grams
+2. GEMSTONES: Type, cut, size in mm or carat, clarity grade, color grade, quantity, setting style
+3. DIMENSIONS: Length, width, height in mm; ring size if applicable
+4. TECHNIQUES: Specific manufacturing methods (casting, forging, hand-fabrication, stone setting method)
+5. PRODUCTION: Realistic timeline in business days, complexity level (1-8)
+6. QUALITY CHECKS: Critical inspection points
+
+Keep under 300 words. Be SPECIFIC and REALISTIC. Only suggest what's actually producible.`;
 
       const specResponse = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: [{ role: "user", content: specPrompt }],
-        max_tokens: 400,
-        temperature: 0.3
+        messages: [
+          { 
+            role: "system", 
+            content: "You are a master jeweler. Only provide specifications for designs that are physically manufacturable. Be precise with measurements and realistic about production capabilities."
+          },
+          { 
+            role: "user", 
+            content: specPrompt 
+          }
+        ],
+        max_tokens: 500,
+        temperature: 0.2 // Lower temperature for more consistent, realistic specs
       });
 
       specifications = specResponse.choices[0].message.content;
@@ -130,7 +206,14 @@ Keep response under 300 words and focus on technical details.`;
       images: successfulImages,
       specifications,
       user_vision,
+      sanitized_vision: sanitizedVision,
+      validation: {
+        is_manufacturable: validation.isValid,
+        issues: validation.issues,
+        warnings: validation.warnings
+      },
       generated_at: new Date().toISOString(),
+      generation_model: "dall-e-3",
       ...(failedImages.length > 0 && { 
         warnings: `${failedImages.length} image(s) failed to generate` 
       })

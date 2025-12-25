@@ -65,7 +65,7 @@ export function SimpleDesignForm() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [error, setError] = useState('');
-  const [showTips, setShowTips] = useState(true);
+  const [showTips, setShowTips] = useState(false); // Hidden by default
   const [currentExample, setCurrentExample] = useState<typeof EXAMPLE_PROMPTS[0] | null>(null);
   const [showPromptTips, setShowPromptTips] = useState(false);
   const [pricingBreakdown, setPricingBreakdown] = useState<PricingBreakdown | null>(null);
@@ -270,12 +270,24 @@ export function SimpleDesignForm() {
           </p>
         </div>
 
+        {/* Collapsed Tag Section - Hidden by Default */}
+        {!showTips && (
+          <div className="text-center mb-6">
+            <button
+              onClick={() => setShowTips(true)}
+              className="text-stone-400 hover:text-stone-300 text-sm underline"
+            >
+              Show design helper tags
+            </button>
+          </div>
+        )}
+
         {/* Simplified Tag Clouds */}
         {showTips && (
           <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 mb-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold text-stone-100">
-                Quick Tags
+                Design Helper Tags
               </h2>
               <button
                 onClick={() => setShowTips(false)}
@@ -343,17 +355,6 @@ export function SimpleDesignForm() {
           </div>
         )}
 
-        {!showTips && (
-          <div className="text-center mb-6">
-            <button
-              onClick={() => setShowTips(true)}
-              className="text-stone-400 hover:text-stone-300 text-sm underline"
-            >
-              Show design helpers and inspiration
-            </button>
-          </div>
-        )}
-
         {/* Example Image - Show above input when example is selected */}
         {currentExample && (
           <div className="mb-6">
@@ -372,41 +373,6 @@ export function SimpleDesignForm() {
           </div>
         )}
 
-        {/* Show example carousel when no example is selected */}
-        {!currentExample && (
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-stone-100 mb-4 text-center">
-              Get Inspired by Celebrity Styles
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
-              {EXAMPLE_PROMPTS.map((example, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setVision(example.prompt);
-                    setCurrentExample(example);
-                    setShowTips(false);
-                  }}
-                  className="aspect-square relative rounded-lg overflow-hidden border border-stone-600 hover:border-stone-500 transition-all group"
-                >
-                  <img
-                    src={example.image}
-                    alt={example.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <p className="text-white text-xs font-medium truncate">{example.title}</p>
-                    </div>
-                  </div>
-                  <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    Select
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Input Form */}
         <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-8 mb-8">
@@ -677,43 +643,6 @@ export function SimpleDesignForm() {
             </div>
           </div>
         )}
-        <div className="mt-16">
-          <h3 className="text-xl font-semibold text-stone-200 mb-6 text-center">
-            Celebrity & Subculture Inspired Examples
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {EXAMPLE_PROMPTS.map((example, index) => (
-              <button
-                key={index}
-                onClick={() => setVision(example.prompt)}
-                className="text-left bg-stone-800 border border-stone-600 rounded-lg hover:bg-stone-700 hover:border-stone-500 transition-all group overflow-hidden"
-              >
-                <div className="aspect-square relative bg-stone-700 overflow-hidden">
-                  <img
-                    src={example.image}
-                    alt={example.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                    AI Generated
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h4 className="font-medium text-stone-200 mb-2">{example.title}</h4>
-                  <p className="text-stone-400 text-sm line-clamp-3">"{example.prompt}"</p>
-                  <div className="mt-3 text-xs text-stone-500 group-hover:text-stone-400">
-                    Click to use this prompt →
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <p className="text-stone-400 text-sm">
-              💡 Try combinations like "Madonna punk style" or "Grace Kelly elegance" for unique results
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
