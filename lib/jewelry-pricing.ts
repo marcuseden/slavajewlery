@@ -100,22 +100,36 @@ function estimateLaborHours(specs: JewelrySpecs): number {
   return baseHours * sizeMultiplier[specs.size];
 }
 
-// Calculate gemstone cost
+// Calculate gemstone cost based on realistic market pricing
 function calculateGemstoneCost(specs: JewelrySpecs): number {
   if (!specs.hasGemstones || !specs.gemstoneCarat || !specs.gemstoneType) {
     return 0;
   }
 
-  // Approximate price per carat (USD) - in production, use gemstone price APIs
+  // Realistic market prices per carat (USD) for SI clarity diamonds, good quality colored stones
   const pricePerCarat = {
-    diamond: 5000, // Varies widely by quality
-    ruby: 1500,
-    emerald: 2000,
-    sapphire: 1200,
-    pearl: 300
+    diamond: 3500, // SI clarity, good cut (reduced from 5000)
+    ruby: 1200,
+    emerald: 1500,
+    sapphire: 800,
+    pearl: 150 // Per pearl for strand, not per carat
   };
 
-  return specs.gemstoneCarat * pricePerCarat[specs.gemstoneType];
+  let gemstoneCost = specs.gemstoneCarat * pricePerCarat[specs.gemstoneType];
+
+  // Special handling for pearl necklaces (multi-strand)
+  if (specs.gemstoneType === 'pearl' && specs.type === 'necklace') {
+    // Multi-strand pearl necklaces: estimate 50-100 pearls at $50-200 per pearl
+    const pearlCount = specs.size === 'large' ? 100 : specs.size === 'small' ? 50 : 75;
+    const pricePerPearl = specs.complexity === 'intricate' ? 150 : 
+                          specs.complexity === 'complex' ? 100 : 50;
+    gemstoneCost = pearlCount * pricePerPearl;
+    
+    // Add diamond clasp if mentioned
+    gemstoneCost += 500; // Small diamond clasp
+  }
+
+  return gemstoneCost;
 }
 
 // Main pricing calculation function
@@ -148,10 +162,11 @@ export async function calculateJewelryPrice(specs: JewelrySpecs): Promise<Pricin
   // Calculate gemstone cost
   const gemstoneCost = calculateGemstoneCost(specs);
   
-  // Calculate subtotal and apply 60% margin
+  // Calculate subtotal and apply realistic retail margin (2.0x - 2.5x markup is industry standard)
   const subtotal = materialCost + laborCost + gemstoneCost;
-  const margin = subtotal * 0.60; // 60% margin
-  const finalPrice = subtotal + margin;
+  const markupMultiplier = 2.2; // 120% margin (2.2x cost = 54.5% margin)
+  const finalPrice = subtotal * markupMultiplier;
+  const margin = finalPrice - subtotal;
   
   return {
     materialCost: Math.round(materialCost),
@@ -217,24 +232,33 @@ export function parseJewelrySpecs(prompt: string): JewelrySpecs {
     else if (lowerPrompt.includes('sapphire')) gemstoneType = 'sapphire';
     else if (lowerPrompt.includes('pearl')) gemstoneType = 'pearl';
     
-    // Estimate carat size based on keywords
-    if (lowerPrompt.includes('large') || lowerPrompt.includes('statement')) {
+    // Estimate carat size based on keywords and jewelry type
+    if (gemstoneType === 'pearl' && type === 'necklace') {
+      // For pearl necklaces, this represents count estimate, not carats
+      gemstoneCarat = 75; // Average pearl count (overridden in calculateGemstoneCost)
+    } else if (lowerPrompt.includes('large') || lowerPrompt.includes('statement')) {
       gemstoneCarat = type === 'ring' ? 2.0 : 1.5;
     } else if (lowerPrompt.includes('small') || lowerPrompt.includes('delicate')) {
       gemstoneCarat = 0.5;
+    } else if (lowerPrompt.includes('solitaire') || lowerPrompt.includes('center stone')) {
+      gemstoneCarat = 1.0;
+    } else if (lowerPrompt.includes('accent') || lowerPrompt.includes('pave')) {
+      gemstoneCarat = 0.3; // Small accent stones
     } else {
-      gemstoneCarat = 1.0; // default
+      gemstoneCarat = 0.75; // More realistic default
     }
   }
   
   // Determine complexity
   let complexity: JewelrySpecs['complexity'] = 'moderate'; // default
-  if (lowerPrompt.includes('simple') || lowerPrompt.includes('minimalist') || lowerPrompt.includes('clean')) {
+  if (lowerPrompt.includes('simple') || lowerPrompt.includes('minimalist') || lowerPrompt.includes('clean') || lowerPrompt.includes('solitaire')) {
     complexity = 'simple';
-  } else if (lowerPrompt.includes('intricate') || lowerPrompt.includes('ornate') || lowerPrompt.includes('detailed')) {
+  } else if (lowerPrompt.includes('intricate') || lowerPrompt.includes('ornate') || lowerPrompt.includes('detailed') || lowerPrompt.includes('filigree') || lowerPrompt.includes('pave')) {
     complexity = 'intricate';
-  } else if (lowerPrompt.includes('complex') || lowerPrompt.includes('elaborate')) {
+  } else if (lowerPrompt.includes('complex') || lowerPrompt.includes('elaborate') || lowerPrompt.includes('multi-strand')) {
     complexity = 'complex';
+  } else if (lowerPrompt.includes('classic') || lowerPrompt.includes('elegant') || lowerPrompt.includes('timeless')) {
+    complexity = 'moderate';
   }
   
   // Determine size
