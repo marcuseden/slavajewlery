@@ -437,15 +437,19 @@ export function SimpleDesignForm() {
   };
 
   // Check if a tag's prompt text is in the current vision
-  const isTagActive = (tagPrompt: string): boolean => {
+  const isTagActive = (tagLabel: string, tagPrompt: string): boolean => {
     const lowerVision = vision.toLowerCase();
     const lowerPrompt = tagPrompt.toLowerCase();
-    return lowerVision.includes(lowerPrompt);
+    const lowerLabel = tagLabel.toLowerCase();
+    
+    // Check if either the full prompt or at least the key label is in the vision
+    // This handles both full tag additions and partial matches
+    return lowerVision.includes(lowerPrompt) || lowerVision.includes(lowerLabel);
   };
 
   // Toggle tag - add if not present, remove if present
-  const toggleTag = (tagPrompt: string) => {
-    const isActive = isTagActive(tagPrompt);
+  const toggleTag = (tagLabel: string, tagPrompt: string) => {
+    const isActive = isTagActive(tagLabel, tagPrompt);
     
     if (isActive) {
       // Remove the tag from vision
@@ -670,11 +674,11 @@ export function SimpleDesignForm() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {JEWELRY_TYPES.map((type, index) => {
-                    const isActive = isTagActive(type.prompt);
+                    const isActive = isTagActive(type.label, type.prompt);
                     return (
                     <button
                         key={type.label}
-                        onClick={() => toggleTag(type.prompt)}
+                        onClick={() => toggleTag(type.label, type.prompt)}
                         title={isActive ? 'Click to remove' : type.description}
                         className={`group relative px-3 py-1.5 text-sm rounded-full transition-all cursor-pointer active:scale-95 ${
                           isActive 
@@ -706,11 +710,11 @@ export function SimpleDesignForm() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {STYLES.map((style, index) => {
-                    const isActive = isTagActive(style.prompt);
+                    const isActive = isTagActive(style.label, style.prompt);
                     return (
                     <button
                         key={style.label}
-                        onClick={() => toggleTag(style.prompt)}
+                        onClick={() => toggleTag(style.label, style.prompt)}
                         title={isActive ? 'Click to remove' : style.description}
                         className={`group relative px-3 py-1.5 text-sm rounded-full transition-all cursor-pointer active:scale-95 ${
                           isActive 
@@ -742,11 +746,11 @@ export function SimpleDesignForm() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {MATERIALS.map((material, index) => {
-                    const isActive = isTagActive(material.prompt);
+                    const isActive = isTagActive(material.label, material.prompt);
                     return (
-                    <button
+                      <button
                         key={material.label}
-                        onClick={() => toggleTag(material.prompt)}
+                        onClick={() => toggleTag(material.label, material.prompt)}
                         title={isActive ? 'Click to remove' : material.description}
                         className={`group relative px-3 py-1.5 text-sm rounded-full transition-all cursor-pointer active:scale-95 ${
                           isActive 
@@ -764,7 +768,7 @@ export function SimpleDesignForm() {
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                           {isActive ? 'Click to remove' : material.description}
                         </div>
-                    </button>
+                      </button>
                     );
                   })}
                 </div>
