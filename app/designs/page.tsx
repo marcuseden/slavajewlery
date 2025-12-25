@@ -1,417 +1,232 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Search, Filter, Heart, ShoppingCart, Share2, Star, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { Header } from '@/components/Header';
-import { AuthProvider } from '@/components/AuthProvider';
-import { ShareButton } from '@/components/ShareButton';
+import { Sparkles, ArrowRight, Star } from 'lucide-react';
 
-interface SharedDesign {
+interface JewelryImage {
+  type: string;
+  url?: string;
+  local_url?: string;
+  prompt: string;
+}
+
+interface Design {
   id: string;
   title: string;
   prompt: string;
-  tags: string[];
-  jewelry_type: string;
-  style_tags: string[];
-  materials: string[];
-  estimated_price: number;
-  images: any[];
-  creator_id: string;
-  total_orders: number;
-  created_at: string;
-  creator?: {
-    email: string;
-  };
+  tags?: string[];
+  image_url?: string;
+  images?: JewelryImage[];
 }
 
-export default function DesignsPage() {
-  const [designs, setDesigns] = useState<SharedDesign[]>([]);
-  const [filteredDesigns, setFilteredDesigns] = useState<SharedDesign[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'price_low' | 'price_high'>('newest');
-  const [isLoading, setIsLoading] = useState(true);
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
-
-  const jewelryTypes = ['all', 'ring', 'necklace', 'bracelet', 'earrings', 'pendant'];
+export default function BrowseDesignsPage() {
+  const [designs, setDesigns] = useState<Design[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedTag, setSelectedTag] = useState<string>('all');
 
   useEffect(() => {
-    fetchDesigns();
-    fetchUserFavorites();
+    // Load designs from JSON files
+    Promise.all([
+      fetch('/consistent-designs-local.json').then(res => res.json()).catch(() => []),
+      fetch('/example-designs-local.json').then(res => res.json()).catch(() => [])
+    ])
+      .then(([consistentDesigns, exampleDesigns]) => {
+        const allDesigns = [...consistentDesigns, ...exampleDesigns].map((design: any) => ({
+          ...design,
+          image_url: design.images?.find((img: any) => img.type === 'hero_angle')?.local_url || 
+                     design.images?.find((img: any) => img.type === 'packshot')?.local_url ||
+                     design.local_image_url ||
+                     design.image_url ||
+                     design.images?.[0]?.local_url
+        }));
+        setDesigns(allDesigns);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error loading designs:', err);
+        setLoading(false);
+      });
   }, []);
 
-  useEffect(() => {
-    filterAndSortDesigns();
-  }, [designs, searchQuery, selectedType, sortBy]);
+  // Extract unique tags
+  const allTags = Array.from(new Set(designs.flatMap(d => d.tags || []))).sort();
+  const tags = ['all', ...allTags];
 
-  const fetchDesigns = async () => {
-    try {
-      const response = await fetch('/api/designs/shared');
-      const data = await response.json();
-      setDesigns(data);
-    } catch (error) {
-      console.error('Error fetching designs:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const fetchUserFavorites = async () => {
-    try {
-      const response = await fetch('/api/user/favorites');
-      if (response.ok) {
-        const data = await response.json();
-        setFavorites(new Set(data.map((f: any) => f.shared_design_id)));
-      }
-    } catch (error) {
-      console.error('Error fetching favorites:', error);
-    }
-  };
-
-  const filterAndSortDesigns = () => {
-    if (!Array.isArray(designs)) return;
-    
-    let filtered = [...designs];
-
-    // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter(design =>
-        design.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        design.prompt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        design.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-    }
-
-    // Filter by jewelry type
-    if (selectedType !== 'all') {
-      filtered = filtered.filter(design => design.jewelry_type === selectedType);
-    }
-
-    // Sort designs
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'popular':
-          return b.total_orders - a.total_orders;
-        case 'price_low':
-          return a.estimated_price - b.estimated_price;
-        case 'price_high':
-          return b.estimated_price - a.estimated_price;
-        case 'newest':
-        default:
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      }
-    });
-
-    setFilteredDesigns(filtered);
-  };
-
-  const toggleFavorite = async (designId: string) => {
-    try {
-      const isFavorited = favorites.has(designId);
-      const method = isFavorited ? 'DELETE' : 'POST';
-      
-      const response = await fetch(`/api/user/favorites/${designId}`, {
-        method,
-      });
-
-      if (response.ok) {
-        const newFavorites = new Set(favorites);
-        if (isFavorited) {
-          newFavorites.delete(designId);
-        } else {
-          newFavorites.add(designId);
-        }
-        setFavorites(newFavorites);
-      }
-    } catch (error) {
-      console.error('Error toggling favorite:', error);
-    }
-  };
-
-  const handleOrder = (design: SharedDesign) => {
-    // Store design data for checkout
-    localStorage.setItem('checkoutData', JSON.stringify({
-      designId: design.id,
-      customPrompt: design.prompt,
-      pricingBreakdown: {
-        subtotal: design.estimated_price,
-        discount: Math.round(design.estimated_price * 0.05), // 5% discount for shared designs
-        commission: Math.round(design.estimated_price * 0.05), // 5% commission
-        total: Math.round(design.estimated_price * 0.95) // After discount
-      },
-      images: design.images
-    }));
-    
-    window.location.href = '/checkout';
-  };
-
-  if (isLoading) {
-    return (
-      <AuthProvider>
-        <div className="min-h-screen bg-slate-950">
-          <Header />
-          <div className="pt-20 flex items-center justify-center">
-            <div className="text-white text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
-              <p>Loading designs...</p>
-            </div>
-          </div>
-        </div>
-      </AuthProvider>
-    );
-  }
+  // Filter designs by selected tag
+  const filteredDesigns = selectedTag === 'all' 
+    ? designs 
+    : designs.filter(d => d.tags?.includes(selectedTag));
 
   return (
-    <AuthProvider>
-      <div className="min-h-screen bg-slate-950 relative">
-        {/* Luxury Velvet Black Background */}
-        <div 
-          className="fixed inset-0 z-0"
-          style={{
-            background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
-            backgroundSize: 'cover',
-          }}
-        />
-        
-        {/* Velvet texture overlay */}
-        <div 
-          className="fixed inset-0 z-1 pointer-events-none"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(
-                0deg,
-                rgba(255, 255, 255, 0.03) 0px,
-                transparent 1px,
-                transparent 2px,
-                rgba(255, 255, 255, 0.03) 3px
-              ),
-              repeating-linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0.03) 0px,
-                transparent 1px,
-                transparent 2px,
-                rgba(255, 255, 255, 0.03) 3px
-              )
-            `,
-            opacity: 0.4
-          }}
-        />
-        
-        {/* Content */}
-        <div className="relative z-10">
-          <Header />
-          <div className="pt-20 pb-12 px-4 max-w-7xl mx-auto">
-          {/* Page Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-4">Discover Jewelry Designs</h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Browse thousands of AI-generated jewelry designs created by our community. 
-              Get 5% off when you order a shared design.
+    <div className="min-h-screen relative bg-slate-950">
+      <Header />
+      
+      {/* Background */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)',
+        }}
+      />
+      
+      {/* Texture overlay */}
+      <div 
+        className="fixed inset-0 z-1 pointer-events-none"
+        style={{
+          backgroundImage: `
+            repeating-linear-gradient(
+              0deg,
+              rgba(255, 255, 255, 0.03) 0px,
+              transparent 1px,
+              transparent 2px,
+              rgba(255, 255, 255, 0.03) 3px
+            ),
+            repeating-linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.03) 0px,
+              transparent 1px,
+              transparent 2px,
+              rgba(255, 255, 255, 0.03) 3px
+            )
+          `,
+          opacity: 0.4
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 px-4 sm:px-6 py-12 pt-24">
+        <div className="max-w-7xl mx-auto">
+          
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+              Browse Custom Designs
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto">
+              Explore AI-generated jewelry designs. Click any design to use it as inspiration or customize it.
             </p>
           </div>
 
-          {/* Search and Filters */}
-          <div className="bg-black/30 backdrop-blur-md rounded-lg p-6 mb-8 border border-gray-700/50">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              {/* Search */}
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search designs, materials, styles..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-white focus:outline-none"
-                />
-              </div>
-
-              {/* Type Filter */}
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className="px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-white focus:outline-none"
-              >
-                {jewelryTypes.map(type => (
-                  <option key={type} value={type}>
-                    {type === 'all' ? 'All Types' : type.charAt(0).toUpperCase() + type.slice(1)}
-                  </option>
+          {/* Tag Filter */}
+          {tags.length > 1 && (
+            <div className="mb-8">
+              <div className="flex flex-wrap gap-2 justify-center">
+                {tags.map(tag => (
+                  <button
+                    key={tag}
+                    onClick={() => setSelectedTag(tag)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      selectedTag === tag
+                        ? 'bg-white text-black'
+                        : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                    }`}
+                  >
+                    {tag === 'all' ? 'All Designs' : tag}
+                  </button>
                 ))}
-              </select>
-
-              {/* Sort */}
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-white focus:outline-none"
-              >
-                <option value="newest">Newest</option>
-                <option value="popular">Most Popular</option>
-                <option value="price_low">Price: Low to High</option>
-                <option value="price_high">Price: High to Low</option>
-              </select>
-            </div>
-
-            <div className="flex items-center justify-between mt-4">
-              <p className="text-gray-400">
-                {filteredDesigns.length} design{filteredDesigns.length !== 1 ? 's' : ''} found
-              </p>
-              
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <TrendingUp className="w-4 h-4" />
-                <span>Community designs with 5% creator commission</span>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Design Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredDesigns.map((design) => (
-              <div key={design.id} className="bg-black/40 backdrop-blur-md rounded-lg overflow-hidden border border-gray-700/50 hover:border-gray-500 transition-all group">
-                {/* Image */}
-                <div className="aspect-square relative">
-                  <img
-                    src={design.images[0]?.local_url || design.images[0]?.url || '/placeholder-jewelry.jpg'}
-                    alt={design.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                  
-                  {/* Overlay Actions */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button
-                      onClick={() => toggleFavorite(design.id)}
-                      className={`p-2 rounded-full backdrop-blur-sm transition-colors ${
-                        favorites.has(design.id)
-                          ? 'bg-red-500 text-white'
-                          : 'bg-white/20 text-white hover:bg-white/30'
-                      }`}
-                    >
-                      <Heart className={`w-4 h-4 ${favorites.has(design.id) ? 'fill-current' : ''}`} />
-                    </button>
-                    
-                    <ShareButton
-                      title={design.title}
-                      description={design.prompt}
-                      imageUrl={design.images[0]?.local_url || design.images[0]?.url}
-                      designUrl={typeof window !== 'undefined' ? `${window.location.origin}/designs/${design.id}` : `/designs/${design.id}`}
-                      className="p-2 rounded-full bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm"
-                    >
-                      <Share2 className="w-4 h-4" />
-                    </ShareButton>
-                  </div>
+          {/* Loading State */}
+          {loading && (
+            <div className="text-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+              <p className="text-gray-400">Loading designs...</p>
+            </div>
+          )}
 
-                  {/* Popular Badge */}
-                  {design.total_orders > 10 && (
-                    <div className="absolute top-3 left-3 bg-yellow-500 text-black text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
-                      <Star className="w-3 h-3" />
-                      Popular
-                    </div>
-                  )}
-
-                  {/* Discount Badge */}
-                  <div className="absolute top-3 right-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                    5% OFF
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-4">
-                  <h3 className="font-semibold text-white mb-2 line-clamp-1">{design.title}</h3>
-                  <p className="text-gray-400 text-sm mb-3 line-clamp-2">{design.prompt}</p>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {design.tags.slice(0, 3).map((tag, index) => (
-                      <span key={index} className="px-2 py-1 bg-gray-800 text-gray-300 text-xs rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Price and Stats */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <div className="text-lg font-bold text-white">
-                        ${Math.round(design.estimated_price * 0.95).toLocaleString()}
+          {/* Designs Grid */}
+          {!loading && filteredDesigns.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredDesigns.map((design, index) => (
+                <Link 
+                  key={`${design.id}-${index}`}
+                  href={`/design?prompt=${encodeURIComponent(design.prompt || '')}`}
+                  className="group bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all hover:transform hover:scale-105"
+                >
+                  <div className="aspect-square relative bg-stone-900">
+                    {design.image_url ? (
+                      <img
+                        src={design.image_url}
+                        alt={design.title || 'Jewelry design'}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Sparkles className="w-12 h-12 text-stone-500" />
                       </div>
-                      <div className="text-xs text-gray-400 line-through">
-                        ${design.estimated_price.toLocaleString()}
-                      </div>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="text-xs text-gray-400">
-                        {design.total_orders} order{design.total_orders !== 1 ? 's' : ''}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        by {design.creator?.email?.split('@')[0] || 'Community'}
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+                      <div className="text-white font-medium text-sm bg-black/50 backdrop-blur-sm px-3 py-2 rounded-full">
+                        Use this design →
                       </div>
                     </div>
                   </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={() => handleOrder(design)}
-                      className="flex-1 bg-white text-black hover:bg-gray-200 font-semibold text-sm"
-                    >
-                      <ShoppingCart className="w-4 h-4 mr-1" />
-                      Order
-                    </Button>
-                    
-                    <Link href={`/design?prompt=${encodeURIComponent(design.prompt)}`}>
-                      <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 text-sm">
-                        Customize
-                      </Button>
-                    </Link>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-white mb-2 line-clamp-1">
+                      {design.title || 'Custom Design'}
+                    </h3>
+                    <p className="text-stone-400 text-sm line-clamp-2 mb-3">
+                      {design.prompt?.slice(0, 100)}...
+                    </p>
+                    {design.tags && design.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {design.tags.slice(0, 2).map((tag, i) => (
+                          <span key={i} className="px-2 py-1 bg-stone-800 text-stone-300 rounded-full text-xs">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* Empty State */}
-          {filteredDesigns.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-gray-500 mb-4">
-                <Search className="w-16 h-16 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No designs found</h3>
-                <p>Try adjusting your search or filters</p>
-              </div>
-              
+          {!loading && filteredDesigns.length === 0 && (
+            <div className="text-center py-20">
+              <Sparkles className="w-16 h-16 text-stone-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-2">No designs found</h3>
+              <p className="text-gray-400 mb-6">
+                {selectedTag === 'all' 
+                  ? 'No designs available yet. Be the first to create one!' 
+                  : `No designs found with tag "${selectedTag}"`}
+              </p>
               <Link href="/design">
-                <Button className="bg-white text-black hover:bg-gray-200">
-                  Create New Design
+                <Button className="bg-white hover:bg-gray-100 text-black font-semibold px-8 py-6">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Create Your Design
                 </Button>
               </Link>
             </div>
           )}
 
-          {/* Call to Action */}
-          <div className="mt-12 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Share Your Designs</h2>
-            <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-              Create and share your own jewelry designs to earn 5% commission on every sale. 
-              Help others discover unique pieces while earning from your creativity.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+          {/* CTA Section */}
+          {!loading && filteredDesigns.length > 0 && (
+            <div className="mt-16 text-center bg-gradient-to-r from-black/30 to-gray-800/30 border border-gray-700/50 rounded-2xl p-8 sm:p-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                Create Your Own Design
+              </h2>
+              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Don't see exactly what you want? Describe your dream jewelry and our AI will create it in seconds.
+              </p>
               <Link href="/design">
-                <Button className="bg-white text-black hover:bg-gray-200 font-semibold">
-                  Create Design
-                </Button>
-              </Link>
-              <Link href="/dashboard">
-                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                  My Dashboard
+                <Button className="bg-white hover:bg-gray-100 text-black font-bold px-10 py-7 text-lg group">
+                  Start Designing
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
             </div>
-          </div>
-          </div>
+          )}
+
         </div>
       </div>
-    </AuthProvider>
+    </div>
   );
 }
