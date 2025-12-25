@@ -401,7 +401,7 @@ export function SimpleDesignForm() {
 
       // Set timeout for the fetch request
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout (3 images = faster)
+      const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout for HD quality images
 
       const response = await fetch('/api/design/generate', {
         method: 'POST',
@@ -846,29 +846,73 @@ export function SimpleDesignForm() {
                 className="w-full h-32 p-4 bg-stone-800 border border-stone-600 rounded-lg text-stone-100 placeholder-stone-500 focus:border-stone-400 focus:outline-none resize-none"
                 rows={6}
               />
-              <div className="flex justify-between items-center mt-2">
-                <span className={`text-sm ${vision.length >= 20 ? 'text-stone-400' : 'text-stone-500'}`}>
-                  {vision.length}/20 characters minimum
-                </span>
+              <div className="flex justify-between items-center mt-3">
+                {/* Character Counter */}
+                <div className="flex items-center gap-2">
+                  <div className="relative w-10 h-10">
+                    <svg className="w-10 h-10 transform -rotate-90" viewBox="0 0 36 36">
+                      <circle
+                        cx="18"
+                        cy="18"
+                        r="16"
+                        fill="none"
+                        className="stroke-stone-700"
+                        strokeWidth="2"
+                      />
+                      <circle
+                        cx="18"
+                        cy="18"
+                        r="16"
+                        fill="none"
+                        className={vision.length >= 20 ? 'stroke-green-500' : 'stroke-yellow-500'}
+                        strokeWidth="2"
+                        strokeDasharray={`${Math.min(100, (vision.length / 20) * 100)} 100`}
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className={`text-[10px] font-bold ${vision.length >= 20 ? 'text-green-400' : 'text-yellow-400'}`}>
+                        {Math.min(100, Math.round((vision.length / 20) * 100))}%
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className={`text-xs font-semibold ${vision.length >= 20 ? 'text-green-400' : 'text-yellow-400'}`}>
+                      {vision.length}/20 minimum
+                    </div>
+                    <div className="text-[10px] text-stone-500">
+                      {vision.length < 20 ? `${20 - vision.length} more needed` : 'Ready to generate'}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quality Indicator */}
                 {vision.length >= 20 && (
                   <button
                     onClick={() => setShowPromptTips(true)}
-                    className="flex items-center gap-2 text-sm text-stone-300 hover:text-stone-200 transition-colors group"
+                    className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-yellow-900/20 to-amber-900/20 hover:from-yellow-900/30 hover:to-amber-900/30 border border-yellow-700/30 rounded-lg transition-all group"
                   >
                     <div className="flex items-center gap-1">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
                           key={star}
-                          className={`w-3 h-3 ${
+                          className={`w-4 h-4 transition-all ${
                             star <= promptQuality
-                              ? 'fill-yellow-400 text-yellow-400'
-                              : 'fill-stone-600 text-stone-600'
+                              ? 'fill-yellow-400 text-yellow-400 drop-shadow-[0_0_3px_rgba(250,204,21,0.5)]'
+                              : 'fill-stone-700 text-stone-700'
                           }`}
                         />
                       ))}
                     </div>
-                    <span>{getQualityMessage(promptQuality)}</span>
-                    <HelpCircle className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="text-left">
+                      <div className="text-sm font-semibold text-yellow-200">
+                        {getQualityMessage(promptQuality)}
+                      </div>
+                      <div className="text-[10px] text-yellow-400/70 flex items-center gap-1">
+                        <HelpCircle className="w-3 h-3" />
+                        Click for tips
+                      </div>
+                    </div>
                   </button>
                 )}
               </div>
@@ -1008,24 +1052,63 @@ export function SimpleDesignForm() {
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || !vision.trim() || vision.length < 20}
-              className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200 disabled:opacity-50 disabled:cursor-not-allowed h-12 text-lg"
+              className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200 disabled:opacity-50 disabled:cursor-not-allowed h-16 text-lg relative overflow-hidden group"
             >
               {isGenerating ? (
-                <div className="flex flex-col items-center justify-center w-full space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-stone-900"></div>
-                    <span>Designing jewelry...</span>
+                <div className="flex flex-col items-center justify-center w-full space-y-3 py-2">
+                  {/* Animated Icon and Text */}
+                  <div className="flex items-center space-x-3">
+                    <div className="relative">
+                      <div className="absolute inset-0 animate-ping">
+                        <Sparkles className="w-5 h-5 text-stone-600 opacity-40" />
+                      </div>
+                      <Sparkles className="w-5 h-5 text-stone-900 animate-pulse" />
+                    </div>
+                    <span className="font-semibold text-base">Crafting your masterpiece...</span>
                   </div>
-                  <div className="w-full bg-stone-300 rounded-full h-1.5 overflow-hidden">
-                    <div 
-                      className="bg-stone-900 h-full transition-all duration-500 ease-out"
-                      style={{ width: `${generationProgress}%` }}
-                    />
+                  
+                  {/* Enhanced Progress Bar */}
+                  <div className="w-full px-4">
+                    <div className="relative w-full bg-stone-300 rounded-full h-2.5 overflow-hidden shadow-inner">
+                      {/* Shimmer effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_infinite]" 
+                        style={{
+                          backgroundSize: '200% 100%',
+                          animation: 'shimmer 2s infinite'
+                        }}
+                      />
+                      {/* Progress fill */}
+                      <div 
+                        className="relative h-full bg-gradient-to-r from-stone-700 via-stone-800 to-stone-900 transition-all duration-500 ease-out shadow-lg"
+                        style={{ width: `${generationProgress}%` }}
+                      >
+                        {/* Glowing edge */}
+                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/60 blur-sm" />
+                      </div>
+                    </div>
+                    
+                    {/* Progress percentage with better styling */}
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-xs font-medium text-stone-700">
+                        {Math.round(generationProgress) < 30 && '✨ Analyzing design...'}
+                        {Math.round(generationProgress) >= 30 && Math.round(generationProgress) < 70 && '🎨 Creating imagery...'}
+                        {Math.round(generationProgress) >= 70 && '💎 Perfecting details...'}
+                      </span>
+                      <span className="text-xs font-bold text-stone-900 bg-stone-200 px-2 py-0.5 rounded-full">
+                        {Math.round(generationProgress)}%
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-xs text-stone-700">{Math.round(generationProgress)}% complete</span>
                 </div>
               ) : (
-                currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'
+                <>
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5" />
+                    {currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'}
+                  </span>
+                  {/* Hover effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-stone-200 to-stone-100 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </>
               )}
             </Button>
 
@@ -1053,26 +1136,36 @@ export function SimpleDesignForm() {
               Your Generated Design
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {generatedImages.map((image, index) => (
-                <div key={index} className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg overflow-hidden">
-                  <div className="aspect-square relative">
-                    <img
-                      src={image.url}
-                      alt={`Generated jewelry design ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {generatedImages.map((image, index) => {
+                const viewDescriptions: Record<string, string> = {
+                  hero_angle: 'Dramatic Studio View - Showcasing depth and dimension',
+                  packshot_front: 'Clean Product View - Perfect for detailed inspection'
+                };
+                const viewName = image.type.replace('_', ' ').split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                
+                return (
+                  <div key={index} className="group bg-gradient-to-br from-stone-900/50 to-black/50 backdrop-blur-md border border-stone-700/50 hover:border-stone-600 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-stone-900/50">
+                    <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900">
+                      <img
+                        src={image.url}
+                        alt={`${viewName} of your custom jewelry design`}
+                        className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {/* Elegant overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                    <div className="p-5 bg-gradient-to-br from-stone-900/80 to-black/80">
+                      <h3 className="font-semibold text-stone-100 mb-1.5 text-base">
+                        {viewName}
+                      </h3>
+                      <p className="text-xs text-stone-400 leading-relaxed">
+                        {viewDescriptions[image.type] || 'Professional jewelry photography'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-medium text-stone-200 mb-2 capitalize">
-                      {image.type.replace('_', ' ')}
-                    </h3>
-                    <p className="text-sm text-stone-400">
-                      {image.prompt.slice(0, 100)}...
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
               <div className="text-center pt-8">

@@ -32,13 +32,13 @@ STRICT MANUFACTURING REQUIREMENTS - DO NOT DEVIATE:
 const IMAGE_TYPES = [
   {
     type: 'hero_angle', 
-    description: 'professional product photography, 3/4 angle view on dark velvet surface with dramatic studio lighting creating natural shadows, no hands, no models, jewelry piece only',
-    consistency_note: 'Three-quarter angle showing full design with depth and dimension, product only'
+    description: 'luxury editorial photography, dramatic 3/4 perspective on rich black velvet with cinematic studio lighting, capturing every facet and sparkle, romantic atmosphere with soft bokeh background, museum-quality presentation, no hands or models',
+    consistency_note: 'Three-quarter hero angle showing the complete design with breathtaking depth, dimension, and emotional appeal'
   },
   {
     type: 'packshot_front',
-    description: 'clean white background, perfectly centered front view, professional product photography, studio lighting, jewelry piece isolated, no hands, no models',
-    consistency_note: 'Front facing view of the exact same piece showing complete design, product only'
+    description: 'pristine white seamless background, perfectly centered top-down view, bright even studio lighting showing every intricate detail, magazine-quality product photography, crystal-clear sharpness, no hands or models',
+    consistency_note: 'Direct overhead view of the same exact piece revealing all details, settings, and craftsmanship'
   }
 ];
 
@@ -81,22 +81,30 @@ export async function POST(request: NextRequest) {
 
     // Create MASTER design specification for consistency (NO pre-generation step)
     const masterDesignSpec = `
-⚠️ CRITICAL: YOU ARE PHOTOGRAPHING ONE SINGLE PHYSICAL JEWELRY PIECE FROM DIFFERENT ANGLES ⚠️
+CREATE A STUNNING, EMOTIONALLY COMPELLING JEWELRY PIECE:
 
-DESIGN TO CREATE (LOCK THIS SPECIFICATION):
 ${sanitizedVision}
 
-ABSOLUTE CONSISTENCY RULES:
-• SAME metal type, color, finish in ALL 4 images
-• SAME number of gemstones (count must match exactly)
-• SAME gemstone sizes, colors, cuts, settings
-• SAME design pattern/motif (exact repeats, not approximate)
-• SAME dimensions and proportions
-• ONLY CHANGE: Camera angle and lighting
-• NEVER CHANGE: The jewelry design itself
+DESIGN EXCELLENCE REQUIREMENTS:
+• Create ONE exquisite, photorealistic jewelry piece with breathtaking beauty
+• Capture the emotional essence: romance, elegance, timeless luxury, heirloom quality
+• Every detail must evoke desire and sophistication
+• Showcase the sparkle, brilliance, and fire of gemstones with cinematic lighting
+• The piece should look so beautiful it takes your breath away
+• Professional museum-quality photography that makes viewers fall in love
 
-Think: A photographer photographs ONE bracelet 4 times from different angles.
-NOT: An artist creates 4 different interpretations.
+CONSISTENCY BETWEEN PHOTOS (CRITICAL):
+• You are photographing THE SAME EXACT PHYSICAL PIECE from different camera angles
+• SAME metal type, color, and finish in ALL photos
+• SAME gemstone count, sizes, cuts, colors, and settings
+• SAME proportions, dimensions, and design details
+• ONLY the camera angle and lighting change between photos
+• The piece must be instantly recognizable as the same jewelry in both views
+
+EMOTIONAL IMPACT:
+• Make it irresistibly beautiful - viewers should imagine wearing it or giving it as a gift
+• Capture luxury, romance, craftsmanship, and emotional connection
+• Create photography that belongs in Vogue, Harper's Bazaar, or Tiffany's catalog
 
 ${MANUFACTURING_GUARDRAILS}
 `.trim();
@@ -109,11 +117,17 @@ ${MANUFACTURING_GUARDRAILS}
       
       const fullPrompt = `${masterDesignSpec}
 
-PHOTO ${index + 1}/4: ${imageType.type.toUpperCase()}
-Camera: ${imageType.description}
-Consistency: ${imageType.consistency_note}
+PHOTOGRAPHY SETUP FOR THIS VIEW:
+View Type: ${imageType.type.toUpperCase()}
+Camera Setup: ${imageType.description}
+What to Show: ${imageType.consistency_note}
 
-Professional luxury jewelry photography, 4K, photorealistic. Same exact piece as other photos, only camera angle changes.`;
+FINAL QUALITY CHECK:
+• Ultra-high resolution, photorealistic, magazine-quality
+• Emotionally compelling - viewers should feel desire and admiration
+• Perfect lighting that makes gemstones sparkle and metals gleam
+• Professional luxury jewelry photography worthy of a cover shoot
+• If this is not the first photo: ensure it's THE SAME EXACT jewelry piece, just different camera angle`;
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       
@@ -123,7 +137,7 @@ Professional luxury jewelry photography, 4K, photorealistic. Same exact piece as
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          quality: "standard", // Changed from "hd" for 2x faster generation
+          quality: "hd", // High definition for compelling, breathtaking imagery
           style: "natural"
         });
 
@@ -144,9 +158,9 @@ Professional luxury jewelry photography, 4K, photorealistic. Same exact piece as
         });
       }
       
-      // Small delay between images to avoid rate limiting
+      // Small delay between images to avoid rate limiting and improve quality
       if (index < IMAGE_TYPES.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500)); // Reduced from 1000ms
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Longer delay for HD quality
       }
     }
 
