@@ -79,32 +79,49 @@ export async function POST(request: NextRequest) {
       console.warn('Design validation issues:', validation.issues);
     }
 
-    // Create MASTER design specification for consistency (NO pre-generation step)
-    const masterDesignSpec = `
-CREATE A STUNNING, EMOTIONALLY COMPELLING JEWELRY PIECE:
+    // Extract KEY DESIGN ELEMENTS for absolute consistency
+    const designElements = {
+      metalColors: sanitizedVision.match(/(?:rose|white|yellow|platinum|gold|silver)/gi) || [],
+      gemstones: sanitizedVision.match(/(?:diamond|ruby|sapphire|emerald|pearl)/gi) || [],
+      style: sanitizedVision.match(/(?:solitaire|halo|vintage|modern|classic|art deco|minimalist)/gi) || [],
+      finish: sanitizedVision.match(/(?:polished|matte|brushed|hammered|textured)/gi) || []
+    };
 
-${sanitizedVision}
+    // Create MASTER design specification with LOCKED-IN details
+    const masterDesignSpec = `
+CREATE A STUNNING, EMOTIONALLY COMPELLING JEWELRY PIECE WITH ABSOLUTE CONSISTENCY:
+
+USER VISION: ${sanitizedVision}
+
+🔒 LOCKED DESIGN SPECIFICATIONS (MUST BE IDENTICAL IN ALL PHOTOS):
+• Metal Combination: ${designElements.metalColors.length > 0 ? designElements.metalColors.join(' + ') : 'mixed metals - rose gold, white gold, yellow gold'}
+• Center Stone: ONE brilliant-cut diamond in a ${designElements.style.includes('solitaire') ? '4-prong solitaire' : 'secure prong'} setting
+• Band Design: Interwoven triple-band design with THREE distinct metal colors flowing together
+• Finish: ${designElements.finish.length > 0 ? designElements.finish[0] : 'matte brushed'} texture on metal bands
+• Setting Style: Simple elegant prongs holding center diamond
+• Design Features: Contemporary fusion of three precious metals in braided/twisted pattern
+
+🎨 EXACT VISUAL SPECIFICATIONS (UNCHANGEABLE):
+1. METALS: Three separate bands of rose, white, and yellow gold intertwined/braided together
+2. CENTER STONE: ONE round brilliant diamond (approx 1 carat appearance) in white gold prongs
+3. BAND PATTERN: Twisted/braided tri-color metal design that wraps around the finger
+4. PROPORTIONS: Medium width band (~4-5mm), substantial but elegant
+5. STYLE: Contemporary meets timeless - modern aesthetic with classic solitaire
+
+⚠️ CRITICAL CONSISTENCY RULES:
+• This is THE SAME PHYSICAL RING photographed from different angles
+• EXACT same number of metal bands (3 - rose, white, yellow)
+• EXACT same diamond size, cut, and setting
+• EXACT same braided/twisted pattern in the metal
+• EXACT same proportions and scale
+• ONLY camera angle and background/lighting changes between photos
+• The ring must be INSTANTLY RECOGNIZABLE as the same piece in both views
 
 DESIGN EXCELLENCE REQUIREMENTS:
 • Create ONE exquisite, photorealistic jewelry piece with breathtaking beauty
 • Capture the emotional essence: romance, elegance, timeless luxury, heirloom quality
-• Every detail must evoke desire and sophistication
 • Showcase the sparkle, brilliance, and fire of gemstones with cinematic lighting
-• The piece should look so beautiful it takes your breath away
 • Professional museum-quality photography that makes viewers fall in love
-
-CONSISTENCY BETWEEN PHOTOS (CRITICAL):
-• You are photographing THE SAME EXACT PHYSICAL PIECE from different camera angles
-• SAME metal type, color, and finish in ALL photos
-• SAME gemstone count, sizes, cuts, colors, and settings
-• SAME proportions, dimensions, and design details
-• ONLY the camera angle and lighting change between photos
-• The piece must be instantly recognizable as the same jewelry in both views
-
-EMOTIONAL IMPACT:
-• Make it irresistibly beautiful - viewers should imagine wearing it or giving it as a gift
-• Capture luxury, romance, craftsmanship, and emotional connection
-• Create photography that belongs in Vogue, Harper's Bazaar, or Tiffany's catalog
 
 ${MANUFACTURING_GUARDRAILS}
 `.trim();
@@ -117,17 +134,29 @@ ${MANUFACTURING_GUARDRAILS}
       
       const fullPrompt = `${masterDesignSpec}
 
-PHOTOGRAPHY SETUP FOR THIS VIEW:
-View Type: ${imageType.type.toUpperCase()}
+📸 PHOTOGRAPHY SETUP FOR THIS SPECIFIC VIEW:
+View Type: ${imageType.type.toUpperCase()} ${index > 0 ? `(Photo ${index + 1} of THE SAME RING)` : '(Primary View)'}
 Camera Setup: ${imageType.description}
 What to Show: ${imageType.consistency_note}
 
+${index > 0 ? `
+⚠️⚠️⚠️ CONSISTENCY WARNING - THIS IS PHOTO #${index + 1}:
+You MUST photograph the EXACT SAME RING you created in Photo #1:
+• SAME tri-color metal braid pattern (rose + white + yellow gold)
+• SAME center diamond size and setting
+• SAME band width and proportions  
+• SAME twisted/braided metal design
+• ONLY the camera angle changes - NOTHING about the ring itself changes
+• If you create a different ring, this photo series will FAIL
+` : ''}
+
 FINAL QUALITY CHECK:
 • Ultra-high resolution, photorealistic, magazine-quality
-• Emotionally compelling - viewers should feel desire and admiration
+• Emotionally compelling - viewers should feel desire and admiration  
 • Perfect lighting that makes gemstones sparkle and metals gleam
 • Professional luxury jewelry photography worthy of a cover shoot
-• If this is not the first photo: ensure it's THE SAME EXACT jewelry piece, just different camera angle`;
+• ${index > 0 ? 'CRITICAL: This must be THE SAME ring as photo #1, just a different angle!' : 'Create the definitive version of this design'}`;
+
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       
