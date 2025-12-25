@@ -22,15 +22,59 @@ STRICT MANUFACTURING REQUIREMENTS - DO NOT DEVIATE:
 `.trim();
 
 const CONSISTENCY_GUARDRAILS = `
-ABSOLUTE CONSISTENCY RULES - SAME EXACT JEWELRY PIECE:
-- Maintain IDENTICAL dimensions, proportions, and scale in every image
-- Keep EXACT same metal color, finish, and texture across all views
-- Use IDENTICAL gemstone count, size, color, cut, and placement
-- Preserve EXACT same design details, engravings, and decorative elements
-- Maintain IDENTICAL style, era aesthetic, and design motifs
-- Keep SAME level of wear/patina (should be pristine/new for all)
-- All images must show THE SAME SINGULAR PHYSICAL PIECE from different angles
-- Think of it as photographing ONE real jewelry piece that exists, not creating variations
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  CRITICAL: ABSOLUTE ZERO-VARIATION CONSISTENCY REQUIREMENT  ⚠️
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+YOU ARE PHOTOGRAPHING ONE SINGLE PHYSICAL JEWELRY PIECE FROM DIFFERENT ANGLES.
+DO NOT CREATE VARIATIONS. DO NOT REINTERPRET. DO NOT REDESIGN.
+
+IMAGINE: A professional photographer takes 4 photos of the SAME bracelet/ring/necklace that is sitting on the table in front of them. Each photo is a different angle of that ONE EXACT PIECE.
+
+LOCKED DESIGN ELEMENTS (DO NOT CHANGE BETWEEN IMAGES):
+
+1. METAL SPECIFICATION (LOCKED):
+   - Exact same metal type and color (yellow gold = yellow gold in ALL images)
+   - Exact same finish (polished = polished in ALL, matte = matte in ALL)
+   - Exact same thickness and weight appearance
+
+2. GEMSTONE SPECIFICATION (LOCKED):
+   - EXACT same number of stones (if 20 diamonds in image 1, must be 20 in ALL)
+   - EXACT same stone sizes and shapes
+   - EXACT same stone colors and clarity
+   - EXACT same stone arrangement/pattern
+   - EXACT same setting style for each stone
+
+3. DESIGN PATTERN (LOCKED):
+   - EXACT same repeating pattern (e.g., if alternating diamond-sapphire, keep exact pattern)
+   - EXACT same number of pattern repeats
+   - EXACT same link/element shapes
+   - EXACT same proportions between elements
+
+4. DIMENSIONS (LOCKED):
+   - EXACT same width/height/depth
+   - EXACT same length (if chain/bracelet)
+   - EXACT same scale relationships
+
+5. DECORATIVE ELEMENTS (LOCKED):
+   - EXACT same engravings, if any
+   - EXACT same texture details
+   - EXACT same architectural elements
+   - NO adding or removing details between images
+
+WHAT CHANGES: ONLY THE CAMERA ANGLE AND LIGHTING
+WHAT NEVER CHANGES: EVERYTHING ABOUT THE JEWELRY ITSELF
+
+VIOLATION CHECK:
+❌ If image 1 has round diamonds, image 2 CANNOT have baguette diamonds
+❌ If image 1 has 15 stones, image 2 CANNOT have 20 stones
+❌ If image 1 has geometric links, image 2 CANNOT have curved links
+❌ If image 1 is yellow gold, image 2 CANNOT be white gold
+❌ DO NOT "improve" or "enhance" the design between images
+
+✅ CORRECT: Same bracelet, rotated 45 degrees
+✅ CORRECT: Same ring, zoomed in to show detail
+✅ CORRECT: Same necklace, now worn on model
 `.trim();
 
 // Image types for jewelry photography - SAME design, different views
@@ -86,33 +130,79 @@ export async function POST(request: NextRequest) {
       console.warn('Design validation issues:', validation.issues);
     }
 
+    // First, generate a detailed design lock
+    const designLockPrompt = `Based on this jewelry description: "${sanitizedVision}"
+
+Create a precise technical specification with LOCKED parameters that will be IDENTICAL in all 4 photos:
+
+1. Metal: [specific type, color, finish]
+2. Gemstones: [exact count, type, size, cut, color, setting]
+3. Design Pattern: [exact pattern description with count]
+4. Dimensions: [width, length, thickness]
+5. Key Features: [list all distinctive elements]
+
+Be extremely specific with numbers and descriptions.`;
+
+    // Get design lock (we'll use this across all images)
+    let designLock = '';
+    try {
+      const lockResponse = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [{ role: "user", content: designLockPrompt }],
+        max_tokens: 300,
+        temperature: 0.1 // Very low for consistency
+      });
+      designLock = lockResponse.choices[0].message.content || '';
+      console.log('Design Lock Created:', designLock);
+    } catch (err) {
+      console.error('Failed to create design lock:', err);
+      designLock = sanitizedVision; // Fallback
+    }
+
     // Create MASTER design specification for consistency
     const masterDesignSpec = `
-MASTER JEWELRY SPECIFICATION (THIS EXACT PIECE FOR ALL IMAGES):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MASTER JEWELRY SPECIFICATION - DESIGN LOCKED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THIS IS THE SINGLE PHYSICAL PIECE YOU ARE PHOTOGRAPHING:
+
+${designLock}
+
+ORIGINAL USER VISION:
 ${sanitizedVision}
 
 ${MANUFACTURING_GUARDRAILS}
 
 ${CONSISTENCY_GUARDRAILS}
 
-TECHNICAL SPECIFICATIONS:
-- Professional jewelry photography
-- High-end craftsmanship quality
-- Pristine new condition
-- Accurate scale and proportions
-- Realistic materials and finishes
-- Production-ready design
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  REMINDER: You are creating 4 photos of ONE piece, not 4 different pieces
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `.trim();
     
     const imagePromises = IMAGE_TYPES.map(async (imageType, index) => {
       const fullPrompt = `${masterDesignSpec}
 
-PHOTOGRAPHY SPECIFICATION FOR THIS VIEW:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHOTO ${index + 1} OF 4: ${imageType.type.toUpperCase()}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CAMERA ANGLE FOR THIS PHOTO:
 ${imageType.description}
 
-CONSISTENCY REMINDER: ${imageType.consistency_note}
+⚠️ CRITICAL CONSISTENCY CHECK:
+${imageType.consistency_note}
 
-Style: Professional luxury jewelry photography, 4K resolution, photorealistic rendering`;
+YOU MUST USE THE EXACT SAME DESIGN AS SPECIFIED IN THE DESIGN LOCK ABOVE.
+DO NOT CREATE A NEW INTERPRETATION. DO NOT VARY THE DESIGN.
+ONLY CHANGE: Camera angle and lighting
+NEVER CHANGE: The jewelry design itself
+
+Photo Requirements:
+- Professional luxury jewelry photography
+- 4K resolution, photorealistic rendering
+- Same piece as all other photos, just different angle`;
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       
