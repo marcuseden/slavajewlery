@@ -24,26 +24,22 @@ STRICT MANUFACTURING REQUIREMENTS - DO NOT DEVIATE:
 // Simplified consistency guardrails (embedded in master spec now)
 
 // Image types for jewelry photography - SAME design, different views
+// Reduced to 3 images for faster generation and lower timeout risk
 const IMAGE_TYPES = [
+  {
+    type: 'hero_angle', 
+    description: '3/4 angle view with dramatic studio lighting creating natural shadows, professional jewelry photography on dark background',
+    consistency_note: 'Three-quarter angle showing full design with depth and dimension'
+  },
   {
     type: 'packshot_front',
     description: 'clean white background, perfectly centered front view, professional product photography, studio lighting',
-    consistency_note: 'Front facing view showing full design, same piece as all other images'
-  },
-  {
-    type: 'hero_angle', 
-    description: '3/4 angle view with dramatic studio lighting creating natural shadows, professional jewelry photography',
-    consistency_note: 'Three-quarter angle of the exact same piece, showing depth and dimension'
+    consistency_note: 'Front facing view of the exact same piece showing complete design'
   },
   {
     type: 'on_model_worn',
-    description: 'worn on elegant hand/neck/ear with natural skin tone, lifestyle photography in natural light',
-    consistency_note: 'The exact same piece being worn, maintaining all design details'
-  },
-  {
-    type: 'macro_detail',
-    description: 'extreme close-up macro photography showing intricate craftsmanship details, sharp focus on gemstone or metalwork',
-    consistency_note: 'Close-up of the exact same piece showing fine details and quality'
+    description: 'worn on elegant hand/neck/ear with natural skin tone, lifestyle photography in natural light, same exact piece',
+    consistency_note: 'The exact same piece being worn on model, all design details identical'
   }
 ];
 
@@ -120,7 +116,7 @@ Professional luxury jewelry photography, 4K, photorealistic. Same exact piece as
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          quality: "hd",
+          quality: "standard", // Changed from "hd" for 2x faster generation
           style: "natural"
         });
 
@@ -143,7 +139,7 @@ Professional luxury jewelry photography, 4K, photorealistic. Same exact piece as
       
       // Small delay between images to avoid rate limiting
       if (index < IMAGE_TYPES.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500)); // Reduced from 1000ms
       }
     }
 

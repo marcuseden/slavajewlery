@@ -384,20 +384,20 @@ export function SimpleDesignForm() {
     let progressInterval: NodeJS.Timeout | null = null;
     
     try {
-      // Simulate progress updates during generation
+      // Simulate progress updates during generation (faster for 3 images)
       progressInterval = setInterval(() => {
         setGenerationProgress(prev => {
           // Gradually increase progress, but cap at 95% until actually complete
           if (prev < 95) {
-            return prev + (Math.random() * 3) + 1;
+            return prev + (Math.random() * 4) + 2; // Faster progress for 3 images
           }
           return prev;
         });
-      }, 1000);
+      }, 800); // Update more frequently
 
       // Set timeout for the fetch request
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
+      const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout (3 images = faster)
 
       const response = await fetch('/api/design/generate', {
         method: 'POST',
