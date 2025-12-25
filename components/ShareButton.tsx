@@ -25,9 +25,33 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
       name: 'Instagram Stories',
       icon: Instagram,
       color: 'bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500',
-      action: () => {
-        // Instagram sharing requires app integration
-        if (navigator.share) {
+      action: async () => {
+        // Try to share with image if available
+        if (navigator.share && imageUrl) {
+          try {
+            // Fetch the image and create a file
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            const file = new File([blob], 'jewelry-design.jpg', { type: blob.type });
+            
+            await navigator.share({
+              title: title,
+              text: shareText,
+              files: [file],
+            });
+          } catch (error) {
+            // Fallback to sharing without image
+            if (navigator.share) {
+              navigator.share({
+                title: title,
+                text: shareText,
+                url: shareUrl,
+              });
+            } else {
+              copyToClipboard();
+            }
+          }
+        } else if (navigator.share) {
           navigator.share({
             title: title,
             text: shareText,
@@ -46,8 +70,32 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
         </svg>
       ),
       color: 'bg-black border border-white/20',
-      action: () => {
-        if (navigator.share) {
+      action: async () => {
+        if (navigator.share && imageUrl) {
+          try {
+            // Try to share with image
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            const file = new File([blob], 'jewelry-design.jpg', { type: blob.type });
+            
+            await navigator.share({
+              title: title,
+              text: shareText,
+              files: [file],
+            });
+          } catch (error) {
+            // Fallback
+            if (navigator.share) {
+              navigator.share({
+                title: title,
+                text: shareText,
+                url: shareUrl,
+              });
+            } else {
+              copyToClipboard();
+            }
+          }
+        } else if (navigator.share) {
           navigator.share({
             title: title,
             text: shareText,
@@ -156,37 +204,55 @@ export function ShareButton({ title, description, imageUrl, designUrl, className
 
             {/* Share Content */}
             <div className="bg-gray-950 rounded-2xl p-6 border border-gray-800">
+              {/* Image Preview */}
+              {imageUrl && (
+                <div className="mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-stone-800 to-stone-900 border border-gray-700">
+                  <img 
+                    src={imageUrl} 
+                    alt={title}
+                    className="w-full h-48 object-contain p-4"
+                  />
+                </div>
+              )}
+
               {/* Title */}
               <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-              <p className="text-sm text-gray-400 mb-6">{description}</p>
+              <p className="text-sm text-gray-400 mb-6 line-clamp-2">{description}</p>
 
               {/* Icon Grid */}
-              <div className="flex justify-center items-center gap-8 mb-6 py-4">
-                {shareOptions.map((option) => (
-                  <button
-                    key={option.name}
-                    onClick={() => {
-                      option.action();
-                      if (option.name !== 'Copy Link') {
-                        setIsOpen(false);
-                      }
-                    }}
-                    className="group"
-                    aria-label={option.name}
-                  >
-                    {option.name === 'Copy Link' && copied ? (
-                      <Check className="w-7 h-7 text-green-400 transition-all active:scale-90" />
-                    ) : typeof option.icon === 'function' ? (
-                      <div className="transition-all active:scale-90 text-gray-300 group-hover:text-white">
-                        <option.icon />
-                      </div>
-                    ) : (
-                      React.createElement(option.icon, { 
-                        className: "w-7 h-7 text-gray-300 group-hover:text-white transition-all active:scale-90" 
-                      })
-                    )}
-                  </button>
-                ))}
+              <div className="mb-6">
+                <div className="flex justify-center items-center gap-8 py-4">
+                  {shareOptions.map((option) => (
+                    <button
+                      key={option.name}
+                      onClick={() => {
+                        option.action();
+                        if (option.name !== 'Copy Link') {
+                          setIsOpen(false);
+                        }
+                      }}
+                      className="group"
+                      aria-label={option.name}
+                    >
+                      {option.name === 'Copy Link' && copied ? (
+                        <Check className="w-7 h-7 text-green-400 transition-all active:scale-90" />
+                      ) : typeof option.icon === 'function' ? (
+                        <div className="transition-all active:scale-90 text-gray-300 group-hover:text-white">
+                          <option.icon />
+                        </div>
+                      ) : (
+                        React.createElement(option.icon, { 
+                          className: "w-7 h-7 text-gray-300 group-hover:text-white transition-all active:scale-90" 
+                        })
+                      )}
+                    </button>
+                  ))}
+                </div>
+                {imageUrl && (
+                  <p className="text-xs text-gray-500 text-center mt-2">
+                    ✨ Your jewelry design image will be included
+                  </p>
+                )}
               </div>
 
               {/* Link */}
