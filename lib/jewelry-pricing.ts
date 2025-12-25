@@ -184,7 +184,7 @@ export async function calculateJewelryPrice(specs: JewelrySpecs): Promise<Pricin
   };
 }
 
-// Parse jewelry specifications from AI-generated prompt
+// Parse jewelry specifications from user prompt
 export function parseJewelrySpecs(prompt: string): JewelrySpecs {
   const lowerPrompt = prompt.toLowerCase();
   
