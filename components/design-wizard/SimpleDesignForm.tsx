@@ -5,23 +5,176 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
-import { Star, HelpCircle, X, Calculator } from 'lucide-react';
+import { Star, HelpCircle, X, Calculator, Sparkles } from 'lucide-react';
 import { calculateJewelryPrice, parseJewelrySpecs, type PricingBreakdown } from '@/lib/jewelry-pricing';
 
-// Simplified tag clouds - only Type, Style, and Material
-const JEWELRY_TYPES = [
-  'engagement ring', 'wedding band', 'necklace', 'earrings', 'bracelet', 
-  'pendant', 'cocktail ring', 'tennis bracelet', 'choker', 'cuff bracelet'
+// Enhanced tag system with design rules based on top-selling products
+interface TagDefinition {
+  label: string;
+  prompt: string;
+  description: string;
+}
+
+// Top 10 Best-Selling Jewelry Types (based on market data)
+const JEWELRY_TYPES: TagDefinition[] = [
+  { 
+    label: 'engagement ring', 
+    prompt: 'engagement ring with solitaire setting, timeless design, brilliant center diamond',
+    description: '#1 seller - Classic solitaire style'
+  },
+  { 
+    label: 'wedding band', 
+    prompt: 'wedding band with comfort fit, elegant simplicity, polished or matte finish',
+    description: '#2 seller - Timeless bands'
+  },
+  { 
+    label: 'stud earrings', 
+    prompt: 'classic stud earrings, secure screw-back setting, everyday elegance',
+    description: '#3 seller - Daily essentials'
+  },
+  { 
+    label: 'tennis bracelet', 
+    prompt: 'tennis bracelet with continuous line of stones, secure clasp, luxury statement',
+    description: '#4 seller - Luxury classic'
+  },
+  { 
+    label: 'pendant necklace', 
+    prompt: 'pendant necklace with delicate chain, meaningful centerpiece, adjustable length',
+    description: '#5 seller - Personal style'
+  },
+  { 
+    label: 'hoop earrings', 
+    prompt: 'hoop earrings with smooth closure, versatile size, polished finish',
+    description: '#6 seller - Versatile hoops'
+  },
+  { 
+    label: 'eternity band', 
+    prompt: 'eternity band with continuous stones, anniversary style, sparkle all around',
+    description: '#7 seller - Anniversary favorite'
+  },
+  { 
+    label: 'charm bracelet', 
+    prompt: 'charm bracelet with personalized charms, storytelling jewelry, secure links',
+    description: '#8 seller - Personal story'
+  },
+  { 
+    label: 'cocktail ring', 
+    prompt: 'cocktail ring with bold center stone, statement design, elegant proportions',
+    description: '#9 seller - Statement piece'
+  },
+  { 
+    label: 'chain necklace', 
+    prompt: 'chain necklace with classic link style, layering friendly, adjustable length',
+    description: '#10 seller - Layering essential'
+  }
 ];
 
-const STYLES = [
-  'vintage', 'modern', 'minimalist', 'art deco', 'classic', 'bohemian',
-  'punk', 'disco', 'victorian', 'romantic', 'bold', 'delicate'
+// Top 10 Best-Selling Jewelry Styles
+const STYLES: TagDefinition[] = [
+  { 
+    label: 'classic', 
+    prompt: 'classic timeless style, elegant proportions, clean lines, enduring beauty',
+    description: '#1 - Never goes out of style'
+  },
+  { 
+    label: 'minimalist', 
+    prompt: 'minimalist modern design, simple elegance, refined details, understated luxury',
+    description: '#2 - Modern simplicity'
+  },
+  { 
+    label: 'vintage', 
+    prompt: 'vintage-inspired design, romantic details, heirloom quality, nostalgic beauty',
+    description: '#3 - Romantic heritage'
+  },
+  { 
+    label: 'art deco', 
+    prompt: 'art deco geometric style, 1920s glamour, symmetrical patterns, bold elegance',
+    description: '#4 - Roaring twenties'
+  },
+  { 
+    label: 'contemporary', 
+    prompt: 'contemporary innovative design, current trends, fresh aesthetic, modern edge',
+    description: '#5 - Today\'s trends'
+  },
+  { 
+    label: 'romantic', 
+    prompt: 'romantic flowing design, soft curves, feminine details, delicate beauty',
+    description: '#6 - Soft & feminine'
+  },
+  { 
+    label: 'bohemian', 
+    prompt: 'bohemian free-spirit style, organic textures, artistic flair, unique character',
+    description: '#7 - Artistic soul'
+  },
+  { 
+    label: 'glamorous', 
+    prompt: 'glamorous luxury design, maximum sparkle, red carpet worthy, showstopping beauty',
+    description: '#8 - Red carpet ready'
+  },
+  { 
+    label: 'geometric', 
+    prompt: 'geometric modern style, clean angles, architectural lines, bold shapes',
+    description: '#9 - Sharp & modern'
+  },
+  { 
+    label: 'nature-inspired', 
+    prompt: 'nature-inspired organic design, floral or leaf motifs, natural beauty, flowing forms',
+    description: '#10 - Organic elegance'
+  }
 ];
 
-const MATERIALS = [
-  'platinum', 'yellow gold', 'white gold', 'rose gold', 'sterling silver',
-  '14k gold', '18k gold', 'brushed steel', 'polished finish', 'matte finish'
+// Top 10 Best-Selling Materials
+const MATERIALS: TagDefinition[] = [
+  { 
+    label: '14k gold', 
+    prompt: '14k gold durable and practical, perfect balance of purity and strength, warm luster',
+    description: '#1 - Most popular gold'
+  },
+  { 
+    label: 'platinum', 
+    prompt: 'platinum pure and precious, hypoallergenic luxury, naturally white, heirloom quality',
+    description: '#2 - Ultimate luxury'
+  },
+  { 
+    label: 'white gold', 
+    prompt: 'white gold rhodium-plated, modern silvery tone, diamond\'s best friend, elegant finish',
+    description: '#3 - Modern classic'
+  },
+  { 
+    label: 'rose gold', 
+    prompt: 'rose gold romantic copper tones, vintage-modern hybrid, trending favorite, warm blush',
+    description: '#4 - Romantic trend'
+  },
+  { 
+    label: '18k gold', 
+    prompt: '18k gold high purity, rich color, luxury standard, vibrant yellow tone',
+    description: '#5 - Luxury standard'
+  },
+  { 
+    label: 'sterling silver', 
+    prompt: 'sterling silver .925 pure, accessible luxury, bright shine, versatile base',
+    description: '#6 - Accessible luxury'
+  },
+  { 
+    label: 'two-tone', 
+    prompt: 'two-tone mixed metals, yellow and white gold combination, dimensional interest, modern classic',
+    description: '#7 - Best of both'
+  },
+  { 
+    label: 'yellow gold', 
+    prompt: 'yellow gold traditional warmth, classic beauty, timeless appeal, rich golden glow',
+    description: '#8 - Traditional choice'
+  },
+  { 
+    label: 'mixed metals', 
+    prompt: 'mixed metals contemporary fusion, rose-white-yellow combination, modern aesthetic, versatile pairing',
+    description: '#9 - Modern fusion'
+  },
+  { 
+    label: 'polished finish', 
+    prompt: 'polished mirror finish, maximum shine, reflective beauty, classic luster',
+    description: '#10 - Mirror shine'
+  }
 ];
 
 // Example prompts with celebrity and subculture inspiration
@@ -135,11 +288,20 @@ export function SimpleDesignForm() {
     }
   };
 
-  const addToVision = (text: string) => {
+  const addToVision = (text: string, isEnhancedTag: boolean = false) => {
     const currentText = vision.trim();
-    const separator = currentText.length > 0 ? (currentText.endsWith('.') || currentText.endsWith(',') ? ' ' : ', ') : '';
-    const newVision = currentText + separator + text;
-    setVision(newVision);
+    
+    if (isEnhancedTag) {
+      // For enhanced tags with full prompt guidance
+      const separator = currentText.length > 0 ? ' ' : '';
+      const newVision = currentText + separator + text;
+      setVision(newVision);
+    } else {
+      // For simple text additions
+      const separator = currentText.length > 0 ? (currentText.endsWith('.') || currentText.endsWith(',') ? ' ' : ', ') : '';
+      const newVision = currentText + separator + text;
+      setVision(newVision);
+    }
   };
 
   // Evaluate prompt quality on a 1-5 scale
@@ -275,82 +437,122 @@ export function SimpleDesignForm() {
           <div className="text-center mb-6">
             <button
               onClick={() => setShowTips(true)}
-              className="text-stone-400 hover:text-stone-300 text-sm underline"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-stone-800/50 hover:bg-stone-700/50 border border-stone-600 hover:border-stone-500 rounded-lg text-stone-300 hover:text-stone-200 text-sm transition-all"
             >
-              Show design helper tags
+              <Sparkles className="w-4 h-4" />
+              Show design helper tags (Top sellers)
             </button>
           </div>
         )}
 
-        {/* Simplified Tag Clouds */}
+        {/* Enhanced Tag Clouds with Best-Seller Guidance */}
         {showTips && (
-          <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 mb-6">
+          <div className="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-lg p-6 mb-6 relative z-10">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-stone-100">
-                Design Helper Tags
-              </h2>
+              <div>
+                <h2 className="text-xl font-semibold text-stone-100">
+                  Top-Selling Design Tags
+                </h2>
+                <p className="text-xs text-stone-400 mt-1">
+                  Click any tag to add expert design guidance to your prompt
+                </p>
+              </div>
               <button
                 onClick={() => setShowTips(false)}
-                className="text-stone-400 hover:text-stone-300 text-sm"
+                className="text-stone-400 hover:text-stone-300 text-sm px-3 py-1 hover:bg-stone-800 rounded transition-all"
               >
                 Hide ×
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Type */}
+              {/* Type - Top 10 Best Sellers */}
               <div>
-                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                  Type
+                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider flex items-center gap-2">
+                  <span>Type</span>
+                  <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {JEWELRY_TYPES.map((type) => (
+                  {JEWELRY_TYPES.map((type, index) => (
                     <button
-                      key={type}
-                      onClick={() => addToVision(type)}
-                      className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
+                      key={type.label}
+                      onClick={() => addToVision(type.prompt, true)}
+                      title={type.description}
+                      className="group relative px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all cursor-pointer active:scale-95"
                     >
-                      {type}
+                      <span className="flex items-center gap-1">
+                        <span className="text-[10px] text-stone-500">#{index + 1}</span>
+                        {type.label}
+                      </span>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                        {type.description}
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Style */}
+              {/* Style - Top 10 Best Sellers */}
               <div>
-                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                  Style
+                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider flex items-center gap-2">
+                  <span>Style</span>
+                  <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {STYLES.map((style) => (
+                  {STYLES.map((style, index) => (
                     <button
-                      key={style}
-                      onClick={() => addToVision(style)}
-                      className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
+                      key={style.label}
+                      onClick={() => addToVision(style.prompt, true)}
+                      title={style.description}
+                      className="group relative px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all cursor-pointer active:scale-95"
                     >
-                      {style}
+                      <span className="flex items-center gap-1">
+                        <span className="text-[10px] text-stone-500">#{index + 1}</span>
+                        {style.label}
+                      </span>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                        {style.description}
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Material */}
+              {/* Material - Top 10 Best Sellers */}
               <div>
-                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider">
-                  Material
+                <h3 className="text-sm font-medium text-stone-200 mb-3 uppercase tracking-wider flex items-center gap-2">
+                  <span>Material</span>
+                  <span className="text-[10px] text-stone-500 normal-case">(Top 10 sellers)</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {MATERIALS.map((material) => (
+                  {MATERIALS.map((material, index) => (
                     <button
-                      key={material}
-                      onClick={() => addToVision(material)}
-                      className="px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all"
+                      key={material.label}
+                      onClick={() => addToVision(material.prompt, true)}
+                      title={material.description}
+                      className="group relative px-3 py-1.5 text-sm bg-stone-800 border border-stone-600 rounded-full text-stone-300 hover:bg-stone-700 hover:border-stone-500 hover:text-stone-200 transition-all cursor-pointer active:scale-95"
                     >
-                      {material}
+                      <span className="flex items-center gap-1">
+                        <span className="text-[10px] text-stone-500">#{index + 1}</span>
+                        {material.label}
+                      </span>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                        {material.description}
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
+            </div>
+
+            {/* Info box */}
+            <div className="mt-6 p-4 bg-stone-800/50 border border-stone-700 rounded-lg">
+              <p className="text-xs text-stone-300">
+                💡 <strong>Pro tip:</strong> These tags are based on our top-selling jewelry categories. Each tag adds specific design guidance that our AI uses to create the most popular, proven styles. Click multiple tags to combine best-selling elements.
+              </p>
             </div>
           </div>
         )}
