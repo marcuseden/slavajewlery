@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard, MapPin, User, Check, Clock } from 'lucide-react';
+import { ArrowLeft, CreditCard, MapPin, User, Check, Clock, Shield } from 'lucide-react';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
-import { AuthProvider } from '@/components/AuthProvider';
+import { AuthProvider, useAuth } from '@/components/AuthProvider';
+import { GDPRConsent, GDPRConsents } from '@/components/GDPRConsent';
 
 interface CheckoutData {
   designId?: string;
@@ -32,10 +33,12 @@ interface ShippingInfo {
   country: string;
 }
 
-export default function CheckoutPage() {
+function CheckoutPageContent() {
   const router = useRouter();
-  const [step, setStep] = useState(1); // 1: Info, 2: Payment, 3: Confirmation
+  const { user, loading } = useAuth();
+  const [step, setStep] = useState(1); // 1: GDPR Consent, 2: Shipping Info, 3: Payment, 4: Confirmation
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
+  const [gdprConsents, setGdprConsents] = useState<GDPRConsents | null>(null);
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
     firstName: '',
     lastName: '',
@@ -52,6 +55,12 @@ export default function CheckoutPage() {
   const [orderId, setOrderId] = useState<string>('');
 
   useEffect(() => {
+    // Redirect to login if not authenticated
+    if (!loading && !user) {
+      router.push('/?signup=true');
+      return;
+    }
+
     // Get checkout data from localStorage or URL params
     const savedData = localStorage.getItem('checkoutData');
     if (savedData) {
@@ -60,11 +69,62 @@ export default function CheckoutPage() {
       // Redirect back if no checkout data
       router.push('/design');
     }
-  }, [router]);
+  }, [router, user, loading]);
+
+  const handleGDPRConsentComplete = async (consents: GDPRConsents) => {
+    setGdprConsents(consents);
+    
+    // Record consent in database
+    if (user) {
+      try {
+        await fetch('/api/user/consent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.id,
+            consentType: 'privacy',
+            consentGiven: consents.privacyAccepted,
+            consentVersion: consents.consentVersion,
+            consentText: 'Privacy policy accepted during checkout'
+          })
+        });
+
+        await fetch('/api/user/consent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.id,
+            consentType: 'terms',
+            consentGiven: consents.termsAccepted,
+            consentVersion: consents.consentVersion,
+            consentText: 'Terms of service accepted during checkout'
+          })
+        });
+
+        if (consents.marketingConsent) {
+          await fetch('/api/user/consent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId: user.id,
+              consentType: 'marketing',
+              consentGiven: true,
+              consentVersion: consents.consentVersion,
+              consentText: 'Marketing consent granted during checkout'
+            })
+          });
+        }
+      } catch (error) {
+        console.error('Failed to record consent');
+      }
+    }
+    
+    setStep(2);
+  };
 
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStep(2);
+    setStep(3);
   };
 
   const handlePaymentSubmit = async (e: React.FormEvent) => {
@@ -83,13 +143,14 @@ export default function CheckoutPage() {
           ...checkoutData,
           shippingInfo,
           paymentMethod,
+          gdprConsents,
           stripePaymentIntentId: 'pi_mock_' + Math.random().toString(36)
         })
       });
 
       const order = await orderResponse.json();
       setOrderId(order.id);
-      setStep(3);
+      setStep(4);
       
       // Clear checkout data
       localStorage.removeItem('checkoutData');
@@ -102,22 +163,19 @@ export default function CheckoutPage() {
     }
   };
 
-  if (!checkoutData) {
+  if (loading || !checkoutData) {
     return (
-      <AuthProvider>
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-          <div className="text-white text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
-            <p>Loading checkout...</p>
-          </div>
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+          <p>Loading checkout...</p>
         </div>
-      </AuthProvider>
+      </div>
     );
   }
 
   return (
-    <AuthProvider>
-      <div className="min-h-screen bg-slate-950 relative">
+    <div className="min-h-screen bg-slate-950 relative">
         {/* Luxury Velvet Black Background */}
         <div 
           className="fixed inset-0 z-0"
@@ -157,7 +215,7 @@ export default function CheckoutPage() {
           <div className="pt-20 pb-12 px-4 max-w-4xl mx-auto">
           {/* Progress Steps */}
           <div className="flex items-center justify-center mb-8">
-            {[1, 2, 3].map((stepNumber) => (
+            {[1, 2, 3, 4].map((stepNumber) => (
               <div key={stepNumber} className="flex items-center">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                   step >= stepNumber 
@@ -166,7 +224,7 @@ export default function CheckoutPage() {
                 }`}>
                   {step > stepNumber ? <Check className="w-4 h-4" /> : stepNumber}
                 </div>
-                {stepNumber < 3 && (
+                {stepNumber < 4 && (
                   <div className={`w-16 h-1 mx-2 ${
                     step > stepNumber ? 'bg-white' : 'bg-gray-700'
                   }`} />
@@ -179,6 +237,22 @@ export default function CheckoutPage() {
             {/* Left Column - Forms */}
             <div>
               {step === 1 && (
+                <div className="bg-black/30 backdrop-blur-md rounded-lg p-6">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <Shield className="w-6 h-6" />
+                    Privacy & Data Protection
+                  </h2>
+                  
+                  <GDPRConsent
+                    context="checkout"
+                    showMarketing={true}
+                    required={true}
+                    onConsentChange={handleGDPRConsentComplete}
+                  />
+                </div>
+              )}
+
+              {step === 2 && (
                 <div className="bg-black/30 backdrop-blur-md rounded-lg p-6">
                   <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <User className="w-6 h-6" />
@@ -341,7 +415,7 @@ export default function CheckoutPage() {
                     <div className="flex gap-3">
                       <Button 
                         type="button"
-                        onClick={() => setStep(1)}
+                        onClick={() => setStep(2)}
                         variant="outline"
                         className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-800"
                       >
@@ -368,7 +442,7 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {step === 3 && (
+              {step === 4 && (
                 <div className="bg-black/30 backdrop-blur-md rounded-lg p-6 text-center">
                   <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Check className="w-8 h-8 text-white" />
@@ -462,9 +536,16 @@ export default function CheckoutPage() {
               </div>
             </div>
           </div>
-          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <AuthProvider>
+      <CheckoutPageContent />
     </AuthProvider>
   );
 }

@@ -81,18 +81,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithEmail = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
+    if (error) {
+      // Provide user-friendly error messages
+      if (error.message.includes('Invalid login credentials') || error.message.includes('invalid')) {
+        throw new Error('Invalid email or password. Please check your credentials and try again.');
+      } else if (error.message.includes('rate limit')) {
+        throw new Error('Too many login attempts. Please wait a minute and try again.');
+      }
+      throw error;
+    }
   };
 
   const signUpWithEmail = async (email: string, password: string, name: string) => {
-    const { error } = await supabase.auth.signUp({
+    // Check if user already exists first
+    const { data: existingUser } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (existingUser?.user) {
+      // User already exists with this email/password combo - just sign them in
+      return;
+    }
+
+    // Attempt to create new account
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { full_name: name },
       },
     });
-    if (error) throw error;
+
+    if (error) {
+      // Provide user-friendly error messages
+      if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+        throw new Error('An account with this email already exists. Please sign in instead or use a different email.');
+      } else if (error.message.includes('rate limit')) {
+        throw new Error('Too many signup attempts. Please wait a minute and try again.');
+      } else if (error.message.includes('invalid email')) {
+        throw new Error('Please enter a valid email address.');
+      } else if (error.message.includes('password')) {
+        throw new Error('Password must be at least 6 characters long.');
+      }
+      throw error;
+    }
   };
 
   const signOut = async () => {

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { validateDesignForProduction, sanitizePromptForProduction } from '@/lib/manufacturing-rules';
+import { createClient } from '@/lib/supabase';
+import { logger } from '@/lib/secure-logger';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -42,10 +44,23 @@ const IMAGE_TYPES = [
 
 export async function POST(request: NextRequest) {
   try {
+    // AUTHENTICATION REQUIRED - GDPR & Security Compliance
+    const supabase = createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !user) {
+      logger.warn('Unauthorized design generation attempt');
+      return NextResponse.json(
+        { error: 'Authentication required. Please sign in to create designs.' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { user_vision, ...designData } = body;
 
     if (!user_vision || typeof user_vision !== 'string' || user_vision.trim().length < 10) {
+      logger.info('Invalid design prompt', { userId: user.id, promptLength: user_vision?.length || 0 });
       return NextResponse.json(
         { error: 'Please provide a detailed description of your jewelry vision' },
         { status: 400 }
@@ -64,6 +79,8 @@ export async function POST(request: NextRequest) {
     // Validate and sanitize for manufacturing
     const validation = validateDesignForProduction(user_vision);
     const sanitizedVision = sanitizePromptForProduction(user_vision);
+    
+    logger.info('Design generation started', { userId: user.id });
     
     if (!validation.isValid) {
       console.warn('Design validation issues:', validation.issues);
