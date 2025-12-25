@@ -14,9 +14,9 @@ export function Header() {
 
   const navItems = [
     { href: '/designs', label: 'Browse Designs' },
-    { href: '#how-it-works', label: 'How it works' },
-    { href: '#examples', label: 'Examples' },
-    { href: '#guarantee', label: 'Guarantee' },
+    { href: '/how-it-works', label: 'How it works' },
+    { href: '/examples', label: 'Examples' },
+    { href: '/guarantee', label: 'Guarantee' },
   ];
 
   const handleSignOut = async () => {
@@ -40,23 +40,13 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                item.href.startsWith('#') ? (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    className="text-slate-300 hover:text-white transition-colors text-sm font-medium"
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-slate-300 hover:text-white transition-colors text-sm font-medium"
-                  >
-                    {item.label}
-                  </Link>
-                )
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-slate-300 hover:text-white transition-colors text-sm font-medium"
+                >
+                  {item.label}
+                </Link>
               ))}
             </nav>
 
@@ -122,25 +112,14 @@ export function Header() {
             <div className="md:hidden py-4 border-t border-slate-800">
               <nav className="space-y-2">
                 {navItems.map((item) => (
-                  item.href.startsWith('#') ? (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  )
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                  >
+                    {item.label}
+                  </Link>
                 ))}
               </nav>
               
