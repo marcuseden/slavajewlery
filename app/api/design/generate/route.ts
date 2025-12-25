@@ -100,85 +100,123 @@ export async function POST(request: NextRequest) {
     const hasBezelSetting = sanitizedVision.toLowerCase().includes('bezel');
     const hasPaveSetting = sanitizedVision.toLowerCase().includes('pave') || sanitizedVision.toLowerCase().includes('pavé');
     
-    // Build dynamic jewelry type description
+    // Build dynamic but DETAILED jewelry type description with emotional language
     let typeSpecificDescription = '';
     if (isEarring) {
-      typeSpecificDescription = `JEWELRY TYPE: EARRINGS (Pair)
-• Design: Matching pair of earrings with identical design elements
-• Backing: Secure post and butterfly back (for studs) or hinged closure (for hoops)
-• Size: Proportional for ear wear, comfortable and balanced
-• Symmetry: BOTH earrings must be perfectly identical mirror images`;
+      typeSpecificDescription = `JEWELRY TYPE: EARRINGS (Matching Pair)
+• Structure: TWO perfectly matching earrings with IDENTICAL design in every detail
+• Proportions: Elegant, balanced size perfect for showcasing on the ear
+• Backing: Professional-grade secure post and butterfly back (for studs) OR smooth hinged closure (for hoops)
+• Symmetry: CRITICAL - Both earrings must be perfect mirror images, same size, same stones, same metals
+• Wearability: Comfortable weight distribution, designed for all-day elegance
+• Impact: Frame the face with timeless beauty and sophisticated sparkle`;
     } else if (isBracelet) {
-      typeSpecificDescription = `JEWELRY TYPE: BRACELET
-• Design: Wrist-wrapping design with elegant flow
-• Closure: Secure clasp mechanism (lobster, box, or toggle clasp)
-• Sizing: Comfortable wrist fit with slight movement allowance
-• Structure: Flexible or rigid structure as specified`;
+      typeSpecificDescription = `JEWELRY TYPE: BRACELET (Wrist Adornment)
+• Structure: Gracefully wraps around the wrist with fluid, elegant movement
+• Dimensions: Substantial presence without overwhelming, perfect balance of weight and delicacy
+• Closure: Secure, high-quality clasp (lobster, box, or decorative toggle) with safety catch
+• Flexibility: Articulated links OR rigid bangle structure that moves naturally with the wearer
+• Fit: Designed for comfortable all-day wear with slight movement allowance
+• Impact: Creates a luxurious statement on the wrist, catches light with every gesture`;
     } else if (isNecklace) {
-      typeSpecificDescription = `JEWELRY TYPE: NECKLACE
-• Design: Elegant chain or pendant design for neck wear
-• Chain: ${sanitizedVision.toLowerCase().includes('chain') ? 'Delicate chain with secure links' : 'Pendant centerpiece design'}
-• Clasp: Secure lobster or spring ring clasp
-• Length: Standard necklace proportions`;
+      typeSpecificDescription = `JEWELRY TYPE: NECKLACE (Neck Statement)
+• Structure: ${sanitizedVision.toLowerCase().includes('pendant') ? 'Stunning pendant centerpiece suspended from delicate chain' : 'Continuous chain design with flowing, elegant drape'}
+• Chain: Professional-grade links with smooth action and luxurious feel
+• Proportions: Perfect length that rests elegantly at the décolletage
+• Clasp: Secure spring ring or lobster clasp with polished finish
+• Movement: Natural drape that follows the curves of the neck and collarbone
+• Impact: Draws the eye with sophisticated elegance and timeless beauty`;
     } else {
-      // Default to ring
-      typeSpecificDescription = `JEWELRY TYPE: RING
-• Design: Elegant ring design for finger wear
-• Band: Comfortable band structure that wraps around finger
-• Sizing: Standard ring proportions with proper band width
-• Structure: Secure and wearable construction`;
+      // Default to ring with compelling detail
+      typeSpecificDescription = `JEWELRY TYPE: RING (Statement of Commitment & Style)
+• Structure: Exquisite band that wraps elegantly around the finger
+• Proportions: Perfectly balanced width and height - substantial yet refined
+• Comfort: Interior comfort-fit design for all-day wearability
+• Profile: Dimensionally interesting from every angle - beautiful from top view AND side view
+• Presence: Makes a confident statement without overwhelming the hand
+• Impact: An heirloom-quality piece that commands attention and admiration`;
     }
 
-    // Build gemstone description dynamically
+    // Build gemstone description with EMOTIONAL, DETAILED language
     let gemstoneDescription = '';
     if (designElements.gemstones.length > 0) {
       const primaryGemstone = designElements.gemstones[0];
       const gemstoneCount = designElements.gemstones.length;
       
       if (primaryGemstone.toLowerCase() === 'pearl') {
-        gemstoneDescription = `• Gemstones: ${gemstoneCount > 1 ? 'Multiple' : 'Lustrous'} ${primaryGemstone.toLowerCase()}(s) with natural iridescence
-• Setting: ${hasProngSetting ? 'Prong or peg setting' : 'Secure cup or glue setting appropriate for pearls'}`;
+        gemstoneDescription = `• Gemstones: ${gemstoneCount > 1 ? 'Multiple luminous' : 'One lustrous'} ${primaryGemstone.toLowerCase()}${gemstoneCount > 1 ? 's' : ''} with natural iridescent glow and mirror-like surface
+• Pearl Quality: High-luster cultured pearls with creamy, radiant complexion
+• Setting: ${hasProngSetting ? 'Elegant prong or peg setting showcasing pearl beauty' : 'Secure cup setting that cradles the pearl perfectly'}
+• Visual Impact: Timeless elegance with soft, romantic luminescence that catches light beautifully`;
       } else {
-        gemstoneDescription = `• Gemstones: ${primaryGemstone} ${gemstoneCount > 1 ? '(multiple stones)' : '(center stone)'}
-• Setting: ${hasProngSetting ? 'Classic prong setting' : hasBezelSetting ? 'Modern bezel setting' : hasPaveSetting ? 'Pavé setting' : 'Secure stone setting'}`;
+        const settingStyle = hasProngSetting ? 'Classic prong setting that elevates and showcases the stone brilliance' : 
+                           hasBezelSetting ? 'Modern bezel setting with sleek, protective metal embrace' : 
+                           hasPaveSetting ? 'Micro-pavé setting with continuous diamond sparkle' : 
+                           'Secure, expertly crafted setting that maximizes light performance';
+        
+        gemstoneDescription = `• Gemstones: ${gemstoneCount > 1 ? `Multiple brilliant ${primaryGemstone}s creating continuous sparkle` : `One breathtaking ${primaryGemstone} center stone with exceptional fire`}
+• Cut & Quality: Expertly cut with optimal proportions for maximum brilliance and light return
+• Setting: ${settingStyle}
+• Visual Impact: Dazzling sparkle that captures light from every angle, creating mesmerizing fire and scintillation`;
       }
     } else {
-      gemstoneDescription = `• Style: Metal-only design without gemstones (if no stones mentioned)`;
+      gemstoneDescription = `• Design Focus: Pure metal artistry - letting the precious metal's beauty shine through craftsmanship
+• Visual Impact: Sculptural elegance through expert metalwork, surface texture, and dimensional design`;
     }
 
-    // Build metal description
+    // Build metal description with luxurious language
     const metalDescription = designElements.metalColors.length > 0 
-      ? designElements.metalColors.slice(0, 3).join(' and ') 
-      : 'precious metal';
+      ? designElements.metalColors.slice(0, 3).map(m => m.toLowerCase()).join(' beautifully combined with ') + ' in a harmonious fusion'
+      : 'premium precious metal with exquisite finish';
 
-    // Create MASTER design specification with DYNAMIC details based on user input
+    // Create MASTER design specification with DYNAMIC details AND emotional, detailed language
     const masterDesignSpec = `
-CREATE A STUNNING, EMOTIONALLY COMPELLING JEWELRY PIECE WITH ABSOLUTE CONSISTENCY:
+CREATE A MUSEUM-WORTHY, EMOTIONALLY CAPTIVATING JEWELRY MASTERPIECE WITH ABSOLUTE CONSISTENCY:
 
-USER VISION: ${sanitizedVision}
+USER'S DREAM VISION: ${sanitizedVision}
 
-🔒 LOCKED DESIGN SPECIFICATIONS (MUST BE IDENTICAL IN ALL PHOTOS):
+🎨 MASTER DESIGN BLUEPRINT - LOCK IN THESE EXACT SPECIFICATIONS:
+
 ${typeSpecificDescription}
-• Metal: ${metalDescription}
+
+💎 PRECIOUS MATERIALS & CRAFTSMANSHIP:
+• Metal Composition: ${metalDescription}
+• Surface Treatment: ${designElements.finish.length > 0 ? designElements.finish[0] : 'mirror-polished'} finish with luxurious tactile quality
+• Metalwork: Expert craftsmanship with smooth, refined edges and perfect symmetry
+
 ${gemstoneDescription}
-• Finish: ${designElements.finish.length > 0 ? designElements.finish[0] : 'polished'} finish
-• Style: ${designElements.style.length > 0 ? designElements.style.join(', ') : 'elegant and timeless'}
 
-⚠️ CRITICAL CONSISTENCY RULES:
-• This is THE SAME PHYSICAL PIECE photographed from different angles
-• EXACT same design elements in every photo
-• EXACT same gemstone types, sizes, and placement (if gemstones are specified)
-• EXACT same metal colors and finish
-• EXACT same proportions and scale
-• ONLY camera angle and background/lighting changes between photos
-• The jewelry must be INSTANTLY RECOGNIZABLE as the same piece in both views
+✨ AESTHETIC & STYLE DIRECTION:
+• Design Language: ${designElements.style.length > 0 ? designElements.style.join(', ') + ' styling with' : 'Timeless elegance with'} sophisticated visual appeal
+• Emotional Impact: This piece should evoke desire, admiration, and emotional connection
+• Heirloom Quality: Designed to be treasured for generations, becoming a family legacy
+• Luxury Presence: Museum-worthy presentation that commands attention and respect
 
-DESIGN EXCELLENCE REQUIREMENTS:
-• Create ONE exquisite, photorealistic jewelry piece with breathtaking beauty
-• Capture the emotional essence: romance, elegance, timeless luxury, heirloom quality
-• Showcase the sparkle, brilliance, and fire of gemstones with cinematic lighting (if applicable)
-• Professional museum-quality photography that makes viewers fall in love
-• Honor ALL user specifications exactly as described
+⚠️⚠️⚠️ ABSOLUTE CONSISTENCY REQUIREMENTS - CRITICAL:
+• You are photographing THE SAME EXACT PHYSICAL PIECE from different camera angles
+• IDENTICAL design elements in EVERY photo - no variations allowed
+• EXACT same gemstone count, sizes, colors, cuts, and precise placement
+• EXACT same metal colors, finish, texture, and surface treatment  
+• EXACT same dimensional proportions, scale, and structural details
+• EXACT same decorative elements, patterns, engravings, or embellishments
+• ONLY the camera position and lighting setup changes between photos
+• Someone should look at both photos and INSTANTLY recognize it's the same piece
+• If you create even slightly different versions, this entire series FAILS quality control
+
+🏆 DESIGN EXCELLENCE MANDATE - NON-NEGOTIABLE QUALITY STANDARDS:
+• Photorealism: Ultra-high resolution, magazine-cover quality, award-winning jewelry photography
+• Emotional Resonance: This image should make viewers fall in love, feel desire, imagine wearing it
+• Light Performance: Showcase how light dances across metal surfaces and through gemstones
+• Dimensional Beauty: Capture depth, dimension, shadows, and three-dimensional form
+• Craftsmanship Details: Show the precision, refinement, and expert artisanship
+• Aspirational Appeal: This should look like it belongs in a luxury jewelry magazine spread
+• Investment Quality: Communicate that this is a significant, valuable, treasured piece
+
+💫 EMOTIONAL STORYTELLING:
+• This jewelry represents love, commitment, celebration, personal expression, or treasured memory
+• Every detail should communicate luxury, quality, exclusivity, and timeless beauty
+• The viewer should imagine the joy of owning this piece, the compliments they'd receive
+• Create an image that becomes the standard against which all other jewelry is measured
 
 ${MANUFACTURING_GUARDRAILS}
 `.trim();

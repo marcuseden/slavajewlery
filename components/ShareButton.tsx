@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Share2, Instagram, MessageSquare, Facebook, Send, X, Check, Copy } from 'lucide-react';
+import { Share2, Instagram, MessageSquare, Facebook, Send, X, Check, Copy, LogIn } from 'lucide-react';
+import { useAuth } from '@/components/AuthProvider';
 
 interface ShareButtonProps {
   title: string;
@@ -33,12 +34,23 @@ export function ShareButton({
   design,
   sharedDesignId 
 }: ShareButtonProps) {
+  const { user, loading: authLoading } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isCreatingLink, setIsCreatingLink] = useState(false);
   const [actualShareUrl, setActualShareUrl] = useState(designUrl || '');
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const shareText = `Check out this custom jewelry design: ${title}`;
+
+  // Handle click - check auth first
+  const handleShareClick = () => {
+    if (!user && !authLoading) {
+      setShowLoginPrompt(true);
+      return;
+    }
+    setIsOpen(true);
+  };
 
   // Create shareable link when modal opens
   useEffect(() => {
@@ -253,12 +265,12 @@ export function ShareButton({
     <>
       {/* Trigger Button */}
       {children ? (
-        <div onClick={() => setIsOpen(true)} className={className} style={{ cursor: 'pointer' }}>
+        <div onClick={handleShareClick} className={className} style={{ cursor: 'pointer' }}>
           {children}
         </div>
       ) : (
         <Button
-          onClick={() => setIsOpen(true)}
+          onClick={handleShareClick}
           variant="outline"
           size="sm"
           className="border-slate-600 text-slate-300 hover:bg-slate-800"
@@ -266,6 +278,45 @@ export function ShareButton({
           <Share2 className="w-4 h-4 mr-2" />
           Share
         </Button>
+      )}
+
+      {/* Login Prompt Modal */}
+      {showLoginPrompt && (
+        <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-gray-950 rounded-2xl p-8 border border-gray-800 max-w-md w-full">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <LogIn className="w-8 h-8 text-blue-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Sign in to Share</h3>
+              <p className="text-gray-400 mb-6">
+                Create a free account to save and share your custom jewelry designs with friends and family.
+              </p>
+              
+              <div className="space-y-3">
+                <Button 
+                  onClick={() => window.location.href = '/?signup=true'}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                >
+                  Create Free Account
+                </Button>
+                <Button 
+                  onClick={() => window.location.href = '/?login=true'}
+                  variant="outline"
+                  className="w-full border-gray-600 text-gray-300 hover:bg-gray-800"
+                >
+                  Sign In
+                </Button>
+                <button
+                  onClick={() => setShowLoginPrompt(false)}
+                  className="w-full text-gray-500 hover:text-gray-300 text-sm py-2"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Inline Share Panel - Replaces Product Info */}
