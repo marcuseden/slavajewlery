@@ -342,6 +342,7 @@ export function SimpleDesignForm() {
   const [pricingBreakdown, setPricingBreakdown] = useState<PricingBreakdown | null>(null);
   const [isCalculatingPrice, setIsCalculatingPrice] = useState(false);
   const [promptSuggestions, setPromptSuggestions] = useState<PromptSuggestion[]>([]);
+  const [generationProgress, setGenerationProgress] = useState(0);
 
   // Pre-fill the form with prompt from URL parameters
   useEffect(() => {
@@ -378,8 +379,22 @@ export function SimpleDesignForm() {
     setError('');
     setGeneratedImages([]);
     setPromptSuggestions([]); // Hide suggestions during generation
+    setGenerationProgress(0); // Reset progress
 
+    let progressInterval: NodeJS.Timeout | null = null;
+    
     try {
+      // Simulate progress updates during generation
+      progressInterval = setInterval(() => {
+        setGenerationProgress(prev => {
+          // Gradually increase progress, but cap at 95% until actually complete
+          if (prev < 95) {
+            return prev + (Math.random() * 3) + 1;
+          }
+          return prev;
+        });
+      }, 1000);
+
       // Set timeout for the fetch request
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
@@ -404,6 +419,7 @@ export function SimpleDesignForm() {
       });
 
       clearTimeout(timeoutId);
+      if (progressInterval) clearInterval(progressInterval);
 
       if (!response.ok) {
         if (response.status === 504 || response.status === 408) {
@@ -415,13 +431,17 @@ export function SimpleDesignForm() {
       const result = await response.json();
       
       if (result.images && Array.isArray(result.images)) {
-        setGeneratedImages(result.images);
+        setGenerationProgress(100); // Complete!
+        setTimeout(() => {
+          setGeneratedImages(result.images);
+        }, 500); // Small delay to show 100%
       } else {
         throw new Error('Invalid response format');
       }
 
     } catch (err) {
       console.error('Generation error:', err);
+      if (progressInterval) clearInterval(progressInterval);
       if (err instanceof Error) {
         if (err.name === 'AbortError') {
           setError('Request timed out. The design is complex - try adding more specific details or simplifying your description.');
@@ -433,6 +453,7 @@ export function SimpleDesignForm() {
       }
     } finally {
       setIsGenerating(false);
+      setGenerationProgress(0);
     }
   };
 
@@ -983,9 +1004,18 @@ export function SimpleDesignForm() {
               className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200 disabled:opacity-50 disabled:cursor-not-allowed h-12 text-lg"
             >
               {isGenerating ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-stone-900"></div>
-                  <span>Generating design...</span>
+                <div className="flex flex-col items-center justify-center w-full space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-stone-900"></div>
+                    <span>Designing jewelry...</span>
+                  </div>
+                  <div className="w-full bg-stone-300 rounded-full h-1.5 overflow-hidden">
+                    <div 
+                      className="bg-stone-900 h-full transition-all duration-500 ease-out"
+                      style={{ width: `${generationProgress}%` }}
+                    />
+                  </div>
+                  <span className="text-xs text-stone-700">{Math.round(generationProgress)}% complete</span>
                 </div>
               ) : (
                 currentExample ? 'Generate Custom Version' : 'Generate Jewelry Design'
