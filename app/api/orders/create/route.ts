@@ -71,13 +71,23 @@ export async function POST(request: NextRequest) {
 
     // Update shared design stats if applicable
     if (shared_design_id) {
-      await supabase
+      // Fetch current stats
+      const { data: currentStats } = await supabase
         .from('shared_designs')
-        .update({
-          total_orders: supabase.sql`total_orders + 1`,
-          total_revenue: supabase.sql`total_revenue + ${pricingBreakdown.total * 100}`
-        })
-        .eq('id', shared_design_id);
+        .select('total_orders, total_revenue')
+        .eq('id', shared_design_id)
+        .single();
+      
+      if (currentStats) {
+        // Increment and update
+        await supabase
+          .from('shared_designs')
+          .update({
+            total_orders: (currentStats.total_orders || 0) + 1,
+            total_revenue: (currentStats.total_revenue || 0) + (pricingBreakdown.total * 100)
+          })
+          .eq('id', shared_design_id);
+      }
         
       // Create commission payment record
       if (commission_cents > 0) {
