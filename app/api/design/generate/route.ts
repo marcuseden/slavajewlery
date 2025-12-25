@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const { user_vision, ...designData } = body;
 
     if (!user_vision || typeof user_vision !== 'string' || user_vision.trim().length < 10) {
-      logger.info('Invalid design prompt', { userId: user.id, promptLength: user_vision?.length || 0 });
+      logger.info('Invalid design prompt', { userId: user?.id || 'anonymous', promptLength: user_vision?.length || 0 });
       return NextResponse.json(
         { error: 'Please provide a detailed description of your jewelry vision' },
         { status: 400 }
