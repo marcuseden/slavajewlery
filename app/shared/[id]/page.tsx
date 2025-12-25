@@ -157,48 +157,20 @@ export default function SharedDesignPage() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-12 pt-24">
         
-        {/* About MakeIt Banner - Critical for non-logged-in users */}
-        <div className="mb-8 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 border border-amber-700/30 rounded-xl p-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-              <Sparkles className="w-6 h-6 text-amber-400" />
-            </div>
-            <div className="flex-1">
-              <h2 className="text-xl font-bold text-amber-100 mb-2">
-                Welcome to MakeIt - Custom Jewelry Made Simple
-              </h2>
-              <p className="text-amber-200/80 text-sm leading-relaxed">
-                MakeIt transforms your jewelry dreams into reality. Simply describe your vision, 
-                and our AI creates photorealistic designs. Our NYC master jewelers then handcraft 
-                each piece with premium materials. From engagement rings to custom necklaces, 
-                we bring your unique style to life.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-4 text-xs text-amber-300">
-                <div className="flex items-center gap-1">
-                  <Shield className="w-4 h-4" />
-                  <span>Lifetime Guarantee</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Award className="w-4 h-4" />
-                  <span>Master Jewelers</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  <span>4-6 Week Delivery</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Shared By Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            {design.creator?.full_name || design.creator?.email?.split('@')[0] || 'Markus'} has shared this design with you
+          </h1>
+          <p className="text-2xl text-stone-300 font-semibold">
+            {design.title}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           
           {/* Left Column - Images */}
           <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-stone-100">
-              {design.title}
-            </h1>
-
             {/* Main Image */}
             {design.images && design.images.length > 0 && (
               <div className="space-y-4">
@@ -464,6 +436,40 @@ export default function SharedDesignPage() {
                     <div className="font-medium text-stone-200">Handcrafted in NYC</div>
                     <div className="text-stone-400 text-xs">Master jewelers bring it to life (4-6 weeks)</div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* About MakeIt Banner - Below product details for context */}
+        <div className="mt-12 bg-gradient-to-r from-amber-900/20 to-yellow-900/20 border border-amber-700/30 rounded-xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-6 h-6 text-amber-400" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-amber-100 mb-2">
+                Welcome to MakeIt - Custom Jewelry Made Simple
+              </h2>
+              <p className="text-amber-200/80 text-sm leading-relaxed">
+                MakeIt transforms your jewelry dreams into reality. Simply describe your vision, 
+                and our AI creates photorealistic designs. Our NYC master jewelers then handcraft 
+                each piece with premium materials. From engagement rings to custom necklaces, 
+                we bring your unique style to life.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-4 text-xs text-amber-300">
+                <div className="flex items-center gap-1">
+                  <Shield className="w-4 h-4" />
+                  <span>Lifetime Guarantee</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Award className="w-4 h-4" />
+                  <span>Master Jewelers</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  <span>4-6 Week Delivery</span>
                 </div>
               </div>
             </div>
