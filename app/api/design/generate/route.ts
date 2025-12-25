@@ -163,14 +163,8 @@ ${numberOfChains ? '- Chains: ' + numberOfChains + ' delicate chains' : ''}
 Professional jewelry photography, luxury lighting, photorealistic.
 `.trim();
 
-    // MINIMAL PROMPT - Just user's vision
-    const masterDesignSpec = `
-${sanitizedVision}
-
-${nameText ? `The pendant displays the name "${nameText}" in elegant script.` : ''}
-
-Professional luxury jewelry photography, photorealistic, high quality.
-`.trim();
+    // ABSOLUTE BARE MINIMUM - Just user's exact words
+    const masterDesignSpec = sanitizedVision;
     
     // Generate images SEQUENTIALLY to reduce server load and improve consistency
     const images: any[] = [];
@@ -179,13 +173,10 @@ Professional luxury jewelry photography, photorealistic, high quality.
     for (let index = 0; index < IMAGE_TYPES.length; index++) {
       const imageType = IMAGE_TYPES[index];
       
-      const fullPrompt = `${masterDesignSpec}
-
-${imageType.description}
-${imageType.consistency_note}
-
-${index > 0 ? `Same jewelry piece as photo 1, just different camera angle.` : ''}
-`.trim();
+      // ABSOLUTE MINIMAL - user's vision + just camera angle
+      const fullPrompt = index === 0 
+        ? masterDesignSpec 
+        : `${masterDesignSpec}, ${imageType.description.toLowerCase()}`;
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       

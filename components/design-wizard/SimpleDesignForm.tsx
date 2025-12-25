@@ -1011,19 +1011,19 @@ export function SimpleDesignForm() {
               } disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-base py-6 shadow-lg transition-all`}
             >
               {isGenerating ? (
-                <div className="flex flex-col items-center gap-3 w-full px-4 py-2">
+                <div className="flex flex-col items-center gap-4 w-full px-8 py-6">
                   <div className="flex items-center gap-3">
                     <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                     <span className="font-semibold text-white">Creating your design...</span>
                   </div>
-                  <div className="w-full max-w-md px-2">
-                    <div className="w-full bg-black/20 backdrop-blur-sm border border-white/10 rounded-full h-2.5 overflow-hidden">
+                  <div className="w-full max-w-lg px-4">
+                    <div className="w-full bg-black/20 backdrop-blur-sm border border-white/10 rounded-full h-3 overflow-hidden shadow-inner">
                       <div 
                         className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 shadow-lg shadow-purple-500/50"
                         style={{ width: `${generationProgress}%` }}
                       />
                     </div>
-                    <div className="text-xs text-gray-300 mt-2 text-center font-medium">
+                    <div className="text-sm text-gray-300 mt-3 text-center font-medium">
                       {Math.round(generationProgress)}%
                     </div>
                   </div>
