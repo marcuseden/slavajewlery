@@ -21,61 +21,7 @@ STRICT MANUFACTURING REQUIREMENTS - DO NOT DEVIATE:
 - Each piece must be wearable and durable for daily use
 `.trim();
 
-const CONSISTENCY_GUARDRAILS = `
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️  CRITICAL: ABSOLUTE ZERO-VARIATION CONSISTENCY REQUIREMENT  ⚠️
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-YOU ARE PHOTOGRAPHING ONE SINGLE PHYSICAL JEWELRY PIECE FROM DIFFERENT ANGLES.
-DO NOT CREATE VARIATIONS. DO NOT REINTERPRET. DO NOT REDESIGN.
-
-IMAGINE: A professional photographer takes 4 photos of the SAME bracelet/ring/necklace that is sitting on the table in front of them. Each photo is a different angle of that ONE EXACT PIECE.
-
-LOCKED DESIGN ELEMENTS (DO NOT CHANGE BETWEEN IMAGES):
-
-1. METAL SPECIFICATION (LOCKED):
-   - Exact same metal type and color (yellow gold = yellow gold in ALL images)
-   - Exact same finish (polished = polished in ALL, matte = matte in ALL)
-   - Exact same thickness and weight appearance
-
-2. GEMSTONE SPECIFICATION (LOCKED):
-   - EXACT same number of stones (if 20 diamonds in image 1, must be 20 in ALL)
-   - EXACT same stone sizes and shapes
-   - EXACT same stone colors and clarity
-   - EXACT same stone arrangement/pattern
-   - EXACT same setting style for each stone
-
-3. DESIGN PATTERN (LOCKED):
-   - EXACT same repeating pattern (e.g., if alternating diamond-sapphire, keep exact pattern)
-   - EXACT same number of pattern repeats
-   - EXACT same link/element shapes
-   - EXACT same proportions between elements
-
-4. DIMENSIONS (LOCKED):
-   - EXACT same width/height/depth
-   - EXACT same length (if chain/bracelet)
-   - EXACT same scale relationships
-
-5. DECORATIVE ELEMENTS (LOCKED):
-   - EXACT same engravings, if any
-   - EXACT same texture details
-   - EXACT same architectural elements
-   - NO adding or removing details between images
-
-WHAT CHANGES: ONLY THE CAMERA ANGLE AND LIGHTING
-WHAT NEVER CHANGES: EVERYTHING ABOUT THE JEWELRY ITSELF
-
-VIOLATION CHECK:
-❌ If image 1 has round diamonds, image 2 CANNOT have baguette diamonds
-❌ If image 1 has 15 stones, image 2 CANNOT have 20 stones
-❌ If image 1 has geometric links, image 2 CANNOT have curved links
-❌ If image 1 is yellow gold, image 2 CANNOT be white gold
-❌ DO NOT "improve" or "enhance" the design between images
-
-✅ CORRECT: Same bracelet, rotated 45 degrees
-✅ CORRECT: Same ring, zoomed in to show detail
-✅ CORRECT: Same necklace, now worn on model
-`.trim();
+// Simplified consistency guardrails (embedded in master spec now)
 
 // Image types for jewelry photography - SAME design, different views
 const IMAGE_TYPES = [
@@ -130,110 +76,76 @@ export async function POST(request: NextRequest) {
       console.warn('Design validation issues:', validation.issues);
     }
 
-    // First, generate a detailed design lock
-    const designLockPrompt = `Based on this jewelry description: "${sanitizedVision}"
-
-Create a precise technical specification with LOCKED parameters that will be IDENTICAL in all 4 photos:
-
-1. Metal: [specific type, color, finish]
-2. Gemstones: [exact count, type, size, cut, color, setting]
-3. Design Pattern: [exact pattern description with count]
-4. Dimensions: [width, length, thickness]
-5. Key Features: [list all distinctive elements]
-
-Be extremely specific with numbers and descriptions.`;
-
-    // Get design lock (we'll use this across all images)
-    let designLock = '';
-    try {
-      const lockResponse = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [{ role: "user", content: designLockPrompt }],
-        max_tokens: 300,
-        temperature: 0.1 // Very low for consistency
-      });
-      designLock = lockResponse.choices[0].message.content || '';
-      console.log('Design Lock Created:', designLock);
-    } catch (err) {
-      console.error('Failed to create design lock:', err);
-      designLock = sanitizedVision; // Fallback
-    }
-
-    // Create MASTER design specification for consistency
+    // Create MASTER design specification for consistency (NO pre-generation step)
     const masterDesignSpec = `
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-MASTER JEWELRY SPECIFICATION - DESIGN LOCKED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ CRITICAL: YOU ARE PHOTOGRAPHING ONE SINGLE PHYSICAL JEWELRY PIECE FROM DIFFERENT ANGLES ⚠️
 
-THIS IS THE SINGLE PHYSICAL PIECE YOU ARE PHOTOGRAPHING:
-
-${designLock}
-
-ORIGINAL USER VISION:
+DESIGN TO CREATE (LOCK THIS SPECIFICATION):
 ${sanitizedVision}
 
+ABSOLUTE CONSISTENCY RULES:
+• SAME metal type, color, finish in ALL 4 images
+• SAME number of gemstones (count must match exactly)
+• SAME gemstone sizes, colors, cuts, settings
+• SAME design pattern/motif (exact repeats, not approximate)
+• SAME dimensions and proportions
+• ONLY CHANGE: Camera angle and lighting
+• NEVER CHANGE: The jewelry design itself
+
+Think: A photographer photographs ONE bracelet 4 times from different angles.
+NOT: An artist creates 4 different interpretations.
+
 ${MANUFACTURING_GUARDRAILS}
-
-${CONSISTENCY_GUARDRAILS}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️  REMINDER: You are creating 4 photos of ONE piece, not 4 different pieces
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `.trim();
     
-    const imagePromises = IMAGE_TYPES.map(async (imageType, index) => {
+    // Generate images SEQUENTIALLY to reduce server load and improve consistency
+    const images: any[] = [];
+    
+    for (let index = 0; index < IMAGE_TYPES.length; index++) {
+      const imageType = IMAGE_TYPES[index];
+      
       const fullPrompt = `${masterDesignSpec}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PHOTO ${index + 1} OF 4: ${imageType.type.toUpperCase()}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHOTO ${index + 1}/4: ${imageType.type.toUpperCase()}
+Camera: ${imageType.description}
+Consistency: ${imageType.consistency_note}
 
-CAMERA ANGLE FOR THIS PHOTO:
-${imageType.description}
-
-⚠️ CRITICAL CONSISTENCY CHECK:
-${imageType.consistency_note}
-
-YOU MUST USE THE EXACT SAME DESIGN AS SPECIFIED IN THE DESIGN LOCK ABOVE.
-DO NOT CREATE A NEW INTERPRETATION. DO NOT VARY THE DESIGN.
-ONLY CHANGE: Camera angle and lighting
-NEVER CHANGE: The jewelry design itself
-
-Photo Requirements:
-- Professional luxury jewelry photography
-- 4K resolution, photorealistic rendering
-- Same piece as all other photos, just different angle`;
+Professional luxury jewelry photography, 4K, photorealistic. Same exact piece as other photos, only camera angle changes.`;
 
       console.log(`Generating ${imageType.type} (${index + 1}/${IMAGE_TYPES.length})...`);
       
       try {
         const imageResponse = await openai.images.generate({
-          model: "dall-e-3", // Best for consistency and quality
+          model: "dall-e-3",
           prompt: fullPrompt,
           n: 1,
           size: "1024x1024",
-          quality: "hd", // Essential for jewelry detail
-          style: "natural" // Most realistic for product photography
+          quality: "hd",
+          style: "natural"
         });
 
-        return {
+        images.push({
           type: imageType.type,
           url: imageResponse.data?.[0]?.url || null,
           prompt: fullPrompt,
           revised_prompt: imageResponse.data?.[0]?.revised_prompt || null
-        };
+        });
+        
+        console.log(`✓ Generated ${imageType.type} successfully`);
       } catch (imageError) {
         console.error(`Error generating ${imageType.type}:`, imageError);
-        return {
+        images.push({
           type: imageType.type,
           url: null,
           error: imageError instanceof Error ? imageError.message : 'Image generation failed'
-        };
+        });
       }
-    });
-
-    // Wait for all images to generate
-    const images = await Promise.all(imagePromises);
+      
+      // Small delay between images to avoid rate limiting
+      if (index < IMAGE_TYPES.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
 
     // Filter out failed generations
     const successfulImages = images.filter(img => img.url);
