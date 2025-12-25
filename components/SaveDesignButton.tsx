@@ -159,9 +159,9 @@ export function SaveDesignButton({
         disabled={isSaving || authLoading}
         className={`${
           isSaved
-            ? 'bg-green-500 hover:bg-green-600'
-            : 'bg-slate-800 hover:bg-slate-700'
-        } text-white font-semibold transition-all disabled:opacity-50 ${className}`}
+            ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600'
+            : 'bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700'
+        } text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 ${className}`}
       >
         {isSaving ? (
           <>
@@ -176,7 +176,7 @@ export function SaveDesignButton({
         ) : (
           <>
             <Heart className="w-5 h-5 mr-2" />
-            {user ? 'Save Design' : 'Save Design (Sign Up)'}
+            {user ? 'Save Design' : 'Save Design'}
           </>
         )}
       </Button>

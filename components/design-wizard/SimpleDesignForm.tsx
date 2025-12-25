@@ -1244,28 +1244,27 @@ export function SimpleDesignForm() {
                       designUrl={typeof window !== 'undefined' ? window.location.href : ''}
                     >
                       <Button 
-                        variant="outline" 
-                        className="w-full bg-stone-900 border-stone-600 hover:bg-stone-800"
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
                       >
                         <Sparkles className="w-5 h-5 mr-2" />
-                        Share
+                        Share Design
                       </Button>
                     </ShareButton>
                   </div>
 
-                  <Button className="w-full bg-stone-100 text-stone-900 hover:bg-stone-200">
-                    Request Custom Quote
+                  <Button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                    💎 Request Custom Quote
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="w-full bg-stone-900 border-stone-600 hover:bg-stone-800"
+                    className="w-full bg-transparent border-2 border-stone-400 text-stone-200 hover:bg-stone-800 hover:border-stone-300 transition-all duration-300"
                     onClick={() => {
                       setGeneratedImages([]);
                       setGeneratedSpecs('');
                       setVision('');
                     }}
                   >
-                    Generate Another Design
+                    ✨ Generate Another Design
                   </Button>
                 </div>
               </div>
