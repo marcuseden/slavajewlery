@@ -20,6 +20,7 @@ import {
   generateConsistencyReport,
   quickConsistencyCheck
 } from '@/lib/consistency-validator';
+import { storeDesignImages } from '@/lib/image-storage';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -208,6 +209,43 @@ export async function POST(request: NextRequest) {
     const failedImages = images.filter(img => !img.url);
 
     console.log(`Generated ${successfulImages.length}/${images.length} images successfully`);
+
+    // ============================================================================
+    // STORE IMAGES IN SUPABASE STORAGE - Permanent URLs
+    // ============================================================================
+    
+    if (successfulImages.length > 0) {
+      console.log('\n💾 Storing images in Supabase Storage...');
+      
+      const imagesToStore = successfulImages.map(img => ({
+        url: img.url,
+        viewNumber: img.view_number
+      }));
+      
+      const storageResults = await storeDesignImages(
+        imagesToStore,
+        designFingerprint.id,
+        user?.id
+      );
+      
+      // Update image URLs with permanent storage URLs
+      storageResults.forEach((result, index) => {
+        if (result.storageUrl) {
+          successfulImages[index].storage_url = result.storageUrl;
+          successfulImages[index].original_url = result.originalUrl;
+          console.log(`✅ View ${result.viewNumber} stored: ${result.storageUrl}`);
+        } else {
+          console.warn(`⚠️ View ${result.viewNumber} storage failed: ${result.error}`);
+        }
+      });
+      
+      logger.info('Images stored in Supabase', {
+        userId: user?.id || 'anonymous',
+        designId: designFingerprint.id,
+        storedCount: storageResults.filter(r => r.storageUrl).length,
+        totalImages: successfulImages.length
+      });
+    }
 
     // ============================================================================
     // FINAL VALIDATION REPORT - Custom Text & Names
