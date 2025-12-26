@@ -358,21 +358,21 @@ export function getViewSpec(viewNumber: 1 | 2): ViewSpec {
     return {
       type: 'HERO',
       viewNumber: 1,
-      cameraAngle: '45° angle showing front and side, slight elevation for depth',
-      lighting: 'Bright even studio lighting, soft shadows, all details visible',
-      background: 'Clean white background, professional product photography',
-      purpose: 'Clear product view showing exact appearance and details',
-      aesthetic: 'Professional e-commerce product photography - clean, clear, accurate'
+      cameraAngle: '45° angle showing front and side',
+      lighting: 'Bright even studio lighting',
+      background: 'Pure white seamless background',
+      purpose: 'Product shot - ONLY jewelry, nothing else',
+      aesthetic: 'Clean isolated product photo on white'
     };
   } else {
     return {
       type: 'TECHNICAL',
       viewNumber: 2,
-      cameraAngle: 'Straight-on front view at eye level, centered',
-      lighting: 'Bright even front lighting, no shadows, maximum clarity',
+      cameraAngle: 'Straight-on front view, centered',
+      lighting: 'Bright even lighting',
       background: 'Pure white seamless background',
-      purpose: 'Show exact front appearance as customer will see it',
-      aesthetic: 'Amazon/Blue Nile product photography - crystal clear, accurate colors'
+      purpose: 'Product shot - ONLY jewelry, nothing else',
+      aesthetic: 'Clean isolated product photo on white'
     };
   }
 }
@@ -399,22 +399,24 @@ export function buildElitePrompt(
   
   // View-specific photography details (COMPACT for 4000 char limit)
   const photographySpec = viewSpec.type === 'HERO' ? `
-CAMERA: Professional product camera, 100mm macro, f/8 for sharp focus, ${viewSpec.cameraAngle}
-LIGHTING: Bright even studio softbox lighting from front and sides, soft shadows showing dimension, all details clearly visible
-BACKGROUND: ${viewSpec.background}, jewelry clearly stands out
-STYLE: ${viewSpec.purpose} | Clean, clear, accurate representation | ${viewSpec.aesthetic}` 
+PHOTO: Product shot, ${viewSpec.cameraAngle}, bright even lighting
+BACKGROUND: Pure white seamless (RGB 255,255,255), NOTHING else visible
+CRITICAL: ONLY the ${jewelryType} - NO props, NO hands, NO text, NO diagrams, NO scenes, NO backgrounds other than plain white` 
   : `
-CAMERA: Professional product camera, 100mm macro, f/11 for maximum sharpness, ${viewSpec.cameraAngle}
-LIGHTING: Bright even frontal lighting, soft fill from all sides, no harsh shadows, true color reproduction
-BACKGROUND: ${viewSpec.background}, professional e-commerce standard
-STYLE: ${viewSpec.purpose} | ${viewSpec.aesthetic}`;
+PHOTO: Product shot, ${viewSpec.cameraAngle}, bright even lighting  
+BACKGROUND: Pure white seamless (RGB 255,255,255), NOTHING else visible
+CRITICAL: ONLY the ${jewelryType} - NO props, NO hands, NO text, NO diagrams, NO scenes, NO backgrounds other than plain white`;
 
   // Build consistency verification for view 2 (COMPACT)
   const consistencyReminder = viewSpec.viewNumber === 2 ? `
 
-⚠️ CRITICAL: EXACT SAME piece from View 1 - only camera angle changed
-VERIFY: ${metal.type} ${metal.finish} | ${gemstones.map(g => `${g.count}× ${g.type}`).join(', ') || 'no stones'} | ${dimensions.length}×${dimensions.width}×${dimensions.height} | ${distinctiveFeatures.join('; ')}
-Cannot alter jewelry - only photographing from different angle.` 
+⚠️⚠️⚠️ CRITICAL CONSISTENCY REQUIREMENT:
+This is the EXACT SAME physical ${jewelryType} from View 1 - DO NOT CHANGE THE DESIGN
+SAME metal: ${metal.type} ${metal.finish}
+SAME stones: ${gemstones.map(g => `${g.count}× ${g.type}`).join(', ') || 'no stones'}
+SAME size: ${dimensions.length}×${dimensions.width}×${dimensions.height}
+SAME details: ${distinctiveFeatures.join('; ')}
+ONLY THE CAMERA ANGLE IS DIFFERENT - The jewelry itself is IDENTICAL` 
   : '';
 
   // Build compact elite prompt (MUST be under 4000 chars for DALL-E 3)
@@ -431,17 +433,16 @@ Features: ${distinctiveFeatures.join('; ')}
 
 ${photographySpec}
 
-RENDERING REQUIREMENTS:
-✓ CLEAR PRODUCT PHOTOGRAPHY - customer must see exactly what they will receive
-✓ ALL DETAILS VISIBLE - every gemstone, engraving, chain link, surface clearly shown
-✓ ACCURATE COLORS - true metal tones (rose gold = pinkish, white gold = silver-white, yellow gold = golden)
-✓ REALISTIC MATERIALS - proper metal reflectivity, gemstone sparkle, but not exaggerated
-✓ SHARP FOCUS - entire piece in focus, no artistic blur
-✓ PROFESSIONAL E-COMMERCE - like Blue Nile, James Allen, Brilliant Earth product photos
-✗ NO artistic effects, hands, people, models, dramatic shadows, impossible geometry, cartoon sparkles, text
+CRITICAL - ISOLATED PRODUCT ONLY:
+✓ ONLY the ${jewelryType} visible - NOTHING else in frame
+✓ Pure white background (RGB 255,255,255) - NO scenes, NO props, NO settings
+✓ NO hands, NO fingers, NO models, NO mannequins, NO holders
+✓ NO text, NO labels, NO diagrams, NO arrows, NO annotations, NO watermarks
+✓ NO artistic backgrounds - NO red carpets, NO velvet, NO decorative elements
+✓ Just jewelry floating/resting on white - clean product catalog style
 ${consistencyReminder}
 
-Create clear professional product photo of ${jewelryType} showing exact appearance for online jewelry shopping.
+Isolated ${jewelryType} product photo on pure white background.
 `.trim();
 
   // CRITICAL: Enforce DALL-E 3's 4000 character limit
@@ -470,17 +471,16 @@ Features: ${distinctiveFeatures.join('; ')}
 
 ${photographySpec}
 
-RENDERING REQUIREMENTS:
-✓ CLEAR PRODUCT PHOTOGRAPHY - customer must see exactly what they will receive
-✓ ALL DETAILS VISIBLE - every gemstone, engraving, chain link, surface clearly shown
-✓ ACCURATE COLORS - true metal tones (rose gold = pinkish, white gold = silver-white, yellow gold = golden)
-✓ REALISTIC MATERIALS - proper metal reflectivity, gemstone sparkle, but not exaggerated
-✓ SHARP FOCUS - entire piece in focus, no artistic blur
-✓ PROFESSIONAL E-COMMERCE - like Blue Nile, James Allen, Brilliant Earth product photos
-✗ NO artistic effects, hands, people, models, dramatic shadows, impossible geometry, cartoon sparkles, text
+CRITICAL - ISOLATED PRODUCT ONLY:
+✓ ONLY the ${jewelryType} visible - NOTHING else in frame
+✓ Pure white background (RGB 255,255,255) - NO scenes, NO props, NO settings
+✓ NO hands, NO fingers, NO models, NO mannequins, NO holders
+✓ NO text, NO labels, NO diagrams, NO arrows, NO annotations, NO watermarks
+✓ NO artistic backgrounds - NO red carpets, NO velvet, NO decorative elements
+✓ Just jewelry floating/resting on white - clean product catalog style
 ${consistencyReminder}
 
-Create clear professional product photo of ${jewelryType} showing exact appearance for online jewelry shopping.
+Isolated ${jewelryType} product photo on pure white background.
 `.trim();
   }
   
