@@ -127,9 +127,9 @@ export async function initializeStorageBucket(): Promise<{ success: boolean; mes
       return { success: true, message: `Bucket '${BUCKET_NAME}' already exists` };
     }
 
-    // Create bucket
+    // Create bucket (private - controlled by RLS policies)
     const { data, error } = await supabase.storage.createBucket(BUCKET_NAME, {
-      public: true, // Make images publicly accessible
+      public: false, // Use RLS policies instead
       fileSizeLimit: 10485760, // 10MB limit per file
       allowedMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp']
     });
@@ -144,6 +144,128 @@ export async function initializeStorageBucket(): Promise<{ success: boolean; mes
     return { 
       success: false, 
       message: error instanceof Error ? error.message : 'Unknown error' 
+    };
+  }
+}
+
+/**
+ * Create a shareable link for design images (expires in 30 days)
+ */
+export async function createShareableLink(
+  designId: string,
+  userId: string,
+  imagePaths: string[]
+): Promise<{ success: boolean; shareToken?: string; shareUrl?: string; expiresAt?: string; error?: string }> {
+  try {
+    // Insert share record
+    const { data, error } = await supabase
+      .from('shared_images')
+      .insert({
+        design_id: designId,
+        user_id: userId,
+        image_paths: imagePaths
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating shareable link:', error);
+      return { success: false, error: error.message };
+    }
+
+    const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/shared/${data.share_token}`;
+
+    console.log(`✅ Shareable link created: ${shareUrl}`);
+    console.log(`   Expires: ${data.expires_at}`);
+
+    return {
+      success: true,
+      shareToken: data.share_token,
+      shareUrl,
+      expiresAt: data.expires_at
+    };
+  } catch (error) {
+    console.error('Error in createShareableLink:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+}
+
+/**
+ * Get shared images by token (for public access)
+ */
+export async function getSharedImages(
+  shareToken: string
+): Promise<{ success: boolean; images?: string[]; designId?: string; expiresAt?: string; error?: string }> {
+  try {
+    // Get share record
+    const { data, error } = await supabase
+      .from('shared_images')
+      .select('*')
+      .eq('share_token', shareToken)
+      .gt('expires_at', new Date().toISOString())
+      .single();
+
+    if (error || !data) {
+      return { success: false, error: 'Share link not found or expired' };
+    }
+
+    // Increment view count
+    await supabase.rpc('increment_share_view', { token: shareToken });
+
+    // Get public URLs for the images
+    const imagePaths = data.image_paths as string[];
+    const imageUrls = imagePaths.map(path => {
+      const { data: { publicUrl } } = supabase.storage
+        .from(BUCKET_NAME)
+        .getPublicUrl(path);
+      return publicUrl;
+    });
+
+    return {
+      success: true,
+      images: imageUrls,
+      designId: data.design_id,
+      expiresAt: data.expires_at
+    };
+  } catch (error) {
+    console.error('Error in getSharedImages:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+}
+
+/**
+ * Get user's image URL with proper authentication
+ */
+export async function getUserImageUrl(
+  imagePath: string,
+  userId: string
+): Promise<{ success: boolean; url?: string; error?: string }> {
+  try {
+    // Verify user owns this image
+    if (!imagePath.startsWith(`${userId}/`)) {
+      return { success: false, error: 'Unauthorized access to image' };
+    }
+
+    // Get authenticated URL
+    const { data, error } = await supabase.storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(imagePath, 3600); // 1 hour expiry
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, url: data.signedUrl };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
     };
   }
 }
